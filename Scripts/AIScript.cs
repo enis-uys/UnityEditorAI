@@ -1,8 +1,10 @@
 using UnityEditor;
 using UnityEngine;
-using System.IO;
 
-using Unity;
+// for the dictionary
+using System.Collections.Generic;
+// for ToArray()
+using System.Linq;
 
 public class AIScript : SingleExtensionApplication
 {
@@ -12,22 +14,45 @@ public class AIScript : SingleExtensionApplication
     private MonoScript inputScript;
     private string inputField = "";
     private Vector2 inputScrollPosition;
-    private bool shouldUpdateExistingScript = false;
-    private const int standardSpace = 20;
+
+    //TODO: Implement system that updates existing script and asks for confirmation
+    //private bool shouldUpdateExistingScript = false;
+    private const int standardSpace = 10;
+
+    private Dictionary<int, string> prompts = new Dictionary<int, string>
+    {
+        { 0, "Improve script" },
+        { 1, "Write Comments" },
+        { 2, "Remove unused variables" },
+        { 3, "Remove Debug Logs" },
+        { 4, "Auto-Generate Serialization" },
+        { 5, "Category/Option A" },
+        { 6, "Category/Option B" }
+    };
+    private int selectedPromptKey = 0;
 
     public override void OnGUI()
     {
+        inputScript = (MonoScript)
+            EditorGUILayout.ObjectField(
+                inputScript,
+                typeof(MonoScript),
+                true,
+                GUILayout.Width(300)
+            );
+        GUILayout.Space(standardSpace);
+
+        RenderPopupField();
+        GUILayout.Space(standardSpace);
+
         RenderInputField();
         GUILayout.Space(standardSpace);
-        //Delete later
+
         GUILayout.Label(
             "Those are placeholders. Later you can put in files that need to be changed.",
             EditorStyles.boldLabel
         );
         csPrefab = (GameObject)EditorGUILayout.ObjectField(csPrefab, typeof(GameObject), true);
-        GUILayout.Space(standardSpace);
-        inputScript = (MonoScript)
-            EditorGUILayout.ObjectField(inputScript, typeof(MonoScript), true);
     }
 
     private void RenderInputField()
@@ -35,24 +60,19 @@ public class AIScript : SingleExtensionApplication
         GUILayout.Label(
             new GUIContent(
                 "Describe your prompt.",
-                "Describe what need to be changed / added to the script or explain what the new script should do."
+                "Describe what needs to be changed/added to the script or explain what the new script should do."
             ),
             EditorStyles.boldLabel
         );
+
         inputScrollPosition = EditorGUILayout.BeginScrollView(
             inputScrollPosition,
             GUILayout.MinHeight(150)
         );
         inputField = EditorGUILayout.TextArea(inputField, GUILayout.ExpandHeight(true));
-
         EditorGUILayout.EndScrollView();
-        // not needed right now. I just will create new script inside the folder for now
-        // shouldUpdateExistingScript = GUILayout.Toggle(
-        //     shouldUpdateExistingScript,
-        //     "Update the existing script instead of creating a new one in the same folder."
-        // );
-        GUILayout.BeginHorizontal();
 
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("Clear"))
         {
             inputScript = null;
@@ -61,61 +81,57 @@ public class AIScript : SingleExtensionApplication
             inputField = "";
         }
 
-        if (GUILayout.Button("Send", GUILayout.ExpandWidth(true)))
+        if (GUILayout.Button("Send Text", GUILayout.ExpandWidth(true)))
         {
-            if (!string.IsNullOrEmpty(inputField))
+            if (string.IsNullOrEmpty(inputField))
             {
-                try
-                {
-                    //Will lead to Create New Script Based On Input
-                    CreateScriptAndCheckTheConditions(inputField, inputScript);
-                }
-                catch (System.Exception ex)
-                {
-                    Debug.LogError("An error occurred during AI processing: " + ex.Message);
-                }
+                Debug.Log("Empty input");
+                return;
             }
             else
             {
-                //later helpbox
-                Debug.Log("Empty input");
+                ProcessInputPrompt(inputField);
             }
         }
 
         GUILayout.EndHorizontal();
     }
 
-    private void CreateScriptAndCheckTheConditions(string inputPrompt, MonoScript inputScript)
+    private void RenderPopupField()
     {
-        //need to create if inside because of GUILayout.Button
-        if (shouldUpdateExistingScript && inputScript != null)
+        GUILayout.BeginHorizontal();
+        string[] promptOptions = prompts.Values.ToArray();
+        selectedPromptKey = EditorGUILayout.Popup(
+            "Example Prompts:",
+            selectedPromptKey,
+            promptOptions,
+            GUILayout.Width(400)
+        );
+
+        if (GUILayout.Button("Execute Selected Prompt"))
         {
-            // not implemented yet --> need to create a system to preview and apply before updating
-            // UpdateExistingScript("Update script");
-            Debug.Log("UpdateExistingScript (not implemented yet)");
+            string prompt = prompts[selectedPromptKey];
+            ProcessInputPrompt(prompt);
         }
-        // always true so this is the only call for now --> empty string already checked
-        else if (true || (!shouldUpdateExistingScript && inputScript == null))
+
+        GUILayout.EndHorizontal();
+    }
+
+    private void ProcessInputPrompt(string prompt)
+    {
+        if (IsInputScriptSelected())
         {
-            // no script selected
-            Debug.Log("Create a complete new script.");
-            CreateNewScriptBasedOnInput(inputPrompt);
-        }
-        else if (!shouldUpdateExistingScript && inputScript != null)
-        {
-            //  script selected
-            Debug.Log("Create new version of the selected script.");
-            CreateNewScriptVersion(inputPrompt, inputScript);
+            CreateNewScriptVersion(inputField);
         }
         else
         {
-            Debug.Log("Something went wrong.");
+            CreateNewScriptBasedOnInput(inputField);
         }
     }
 
     private void CreateNewScriptBasedOnInput(string inputPrompt)
     {
-        var gptScriptResponse = OpenAiManager.InputToGptCreateScript(inputPrompt);
+        string gptScriptResponse = OpenAiManager.InputToGptCreateScript(inputPrompt);
         Debug.Log(gptScriptResponse);
         string gptScriptClassName = FileManager<string>.ExtractClassNameFromScript(
             gptScriptResponse
@@ -130,23 +146,46 @@ public class AIScript : SingleExtensionApplication
         // GUIUtility.keyboardControl = 0;
     }
 
-    private void CreateNewScriptVersion(string inputPrompt, MonoScript inputScript)
+    private void CreateNewScriptVersion(string inputPrompt)
     {
-        //not implemented yet. Do later --> need a new prompt system for it
-        Debug.Log(inputScript.name);
         // Read the content of the MonoScript asset
+
+        if (inputScript == null)
+        {
+            //TODO: Check if valid script --> you need to write this method anyway in the FileManager
+
+            Debug.Log("Input script is null");
+            return;
+        }
+
         string scriptContent = inputScript.ToString();
-        //Writes scriptContent to newScriptVersion.json in standard Path
-        FileManager<string>.SaveStringToFileInDefaultPath(
-            scriptContent,
-            inputScript.name + "NewVersion.cs"
+        Debug.Log(inputScript.name + " Got read and sent to GPT");
+        string gptScriptResponse = OpenAiManager.InputScriptToGptCreateScript(
+            inputPrompt,
+            scriptContent
+        );
+        Debug.Log(gptScriptResponse);
+        string gptScriptClassName = FileManager<string>.ExtractClassNameFromScript(
+            gptScriptResponse
+        );
+        FileManager<string>.SaveStringToFileInGeneratedPath(
+            gptScriptResponse,
+            gptScriptClassName + ".cs"
         );
     }
 
-    private void UpdateExistingScript(string inputPrompt) { }
+    private bool IsInputScriptSelected()
+    {
+        return inputScript != null;
+    }
+
+    private void UpdateExistingScript(string inputPrompt)
+    {
+        // TODO: Implement updating the existing script
+    }
 
     public override void OnEnable()
     {
-        //api Key from file save or other first time things
+        // TODO: Initialize or set API Key from file or other sources here
     }
 }

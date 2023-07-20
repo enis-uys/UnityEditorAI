@@ -34,7 +34,25 @@ public class OpenAiManager
 
     public static string InputToGptCreateScript(string inputPrompt)
     {
-        string gptInput = OpenAiStandardPrompts.CreateNewBaseScriptPrompt(inputPrompt);
+        //TODO: make sure the output is a runnable script
+
+        string gptInput = OpenAiStandardPrompts.CreateNewScriptWithPrompt(inputPrompt);
+        return SendMessageToGpt(
+            settingsOpenAiApiKey,
+            gptInput,
+            settingsOpenAiModel,
+            settingsOpenAiTemperature
+        );
+    }
+
+    public static string InputScriptToGptCreateScript(string inputPrompt, string inputScriptString)
+    {
+        //TODO: make sure the output is a runnable script
+
+        string gptInput = OpenAiStandardPrompts.UpdateExistingScriptWithPrompt(
+            inputPrompt,
+            inputScriptString
+        );
         return SendMessageToGpt(
             settingsOpenAiApiKey,
             gptInput,
