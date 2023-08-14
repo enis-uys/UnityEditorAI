@@ -13,11 +13,11 @@ using Cysharp.Threading.Tasks;
 public class AIScript : SingleExtensionApplication
 {
     public override string DisplayName => "AI Script";
-    private GameObject csPrefab;
-
     private MonoScript inputScript;
     private string inputField = "";
     private Vector2 inputScrollPosition;
+    private GameObject csPrefab;
+
     HelpBox helpBox = HelpBox.GetInstance();
 
     //TODO: Implement system that updates existing script and asks for confirmation
@@ -36,30 +36,45 @@ public class AIScript : SingleExtensionApplication
     };
     private int selectedPromptKey = 0;
 
+    private const string InputScriptKey = "InputScript";
+    private const string InputFieldKey = "InputField";
+    private const string SelectedPromptKey = "SelectedPrompt";
+
     public override void OnGUI()
     {
-        inputScript = (MonoScript)
-            EditorGUILayout.ObjectField(
-                inputScript,
-                typeof(MonoScript),
-                true,
-                GUILayout.Width(300)
+        try
+        {
+            EditorGUILayout.BeginVertical("Box");
+
+            LoadEditorPrefs();
+            inputScript = (MonoScript)
+                EditorGUILayout.ObjectField(
+                    inputScript,
+                    typeof(MonoScript),
+                    true,
+                    GUILayout.Width(300)
+                );
+            GUILayout.Space(standardSpace);
+
+            RenderPopupField();
+            GUILayout.Space(standardSpace);
+
+            RenderInputField();
+            GUILayout.Space(standardSpace);
+
+            GUILayout.Label(
+                "Those are placeholders. Later you can put in files that need to be changed.",
+                EditorStyles.boldLabel
             );
-        GUILayout.Space(standardSpace);
-
-        RenderPopupField();
-        GUILayout.Space(standardSpace);
-
-        RenderInputField();
-        GUILayout.Space(standardSpace);
-
-        GUILayout.Label(
-            "Those are placeholders. Later you can put in files that need to be changed.",
-            EditorStyles.boldLabel
-        );
-        csPrefab = (GameObject)EditorGUILayout.ObjectField(csPrefab, typeof(GameObject), true);
-        GUILayout.Space(standardSpace);
-        EditorGUILayout.HelpBox(helpBox.HelpBoxMessage, helpBox.HelpBoxMessageType);
+            csPrefab = (GameObject)EditorGUILayout.ObjectField(csPrefab, typeof(GameObject), true);
+            GUILayout.Space(standardSpace);
+            EditorGUILayout.HelpBox(helpBox.HelpBoxMessage, helpBox.HelpBoxMessageType);
+            SetEditorPrefs();
+        }
+        finally
+        {
+            EditorGUILayout.EndVertical();
+        }
     }
 
     private void RenderInputField()
@@ -78,7 +93,6 @@ public class AIScript : SingleExtensionApplication
         );
         inputField = EditorGUILayout.TextArea(inputField, GUILayout.ExpandHeight(true));
         EditorGUILayout.EndScrollView();
-
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Clear"))
         {
@@ -216,8 +230,34 @@ public class AIScript : SingleExtensionApplication
         // TODO: Implement updating the existing script
     }
 
-    public override void OnEnable()
+    private void LoadEditorPrefs()
     {
-        // TODO: Initialize or set API Key from file or other sources here
+        if (EditorPrefs.HasKey(InputScriptKey))
+        {
+            string inputScriptPath = EditorPrefs.GetString(InputScriptKey);
+            inputScript = AssetDatabase.LoadAssetAtPath<MonoScript>(inputScriptPath);
+        }
+        if (EditorPrefs.HasKey(InputFieldKey))
+        {
+            inputField = EditorPrefs.GetString(InputFieldKey);
+        }
+        if (EditorPrefs.HasKey(SelectedPromptKey))
+        {
+            selectedPromptKey = EditorPrefs.GetInt(SelectedPromptKey);
+        }
+    }
+
+    private void SetEditorPrefs()
+    {
+        if (inputScript != null)
+        {
+            string inputScriptPath = AssetDatabase.GetAssetPath(inputScript);
+            EditorPrefs.SetString(InputScriptKey, inputScriptPath);
+        }
+        if (!string.IsNullOrEmpty(inputField))
+        {
+            EditorPrefs.SetString(InputFieldKey, inputField);
+        }
+        EditorPrefs.SetInt(SelectedPromptKey, selectedPromptKey);
     }
 }

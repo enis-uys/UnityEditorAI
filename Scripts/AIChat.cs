@@ -37,6 +37,9 @@ public class AIChat : SingleExtensionApplication
 
     HelpBox helpBox = HelpBox.GetInstance();
 
+    private const string InputFieldKey = "InputField";
+    private const string OutputFieldKey = "OutputFieldKey";
+
     /// <summary>
     /// GUI callback for rendering the AI Chat extension.
     /// </summary>
@@ -44,12 +47,13 @@ public class AIChat : SingleExtensionApplication
     {
         try
         {
-            // Overall layout
+            LoadEditorPrefs();
             EditorGUILayout.BeginVertical("Box");
             InitializeRichTextStyle();
             RenderInputField();
             GUILayout.Space(20);
             RenderOutputField();
+            SetEditorPrefs();
         }
         finally
         {
@@ -241,5 +245,29 @@ public class AIChat : SingleExtensionApplication
     {
         var lorem = "Lorem Ipsum doremi fas soll la to di \n";
         messageHistoryOutputField += "Lorem: " + lorem + lorem + lorem + lorem;
+    }
+
+    private void LoadEditorPrefs()
+    {
+        if (EditorPrefs.HasKey(InputFieldKey))
+        {
+            inputText = EditorPrefs.GetString(InputFieldKey);
+        }
+        if (EditorPrefs.HasKey(OutputFieldKey))
+        {
+            messageHistoryOutputField = EditorPrefs.GetString(OutputFieldKey);
+        }
+    }
+
+    private void SetEditorPrefs()
+    {
+        if (!string.IsNullOrEmpty(inputText))
+        {
+            EditorPrefs.SetString(InputFieldKey, inputText);
+        }
+        if (!string.IsNullOrEmpty(messageHistoryOutputField))
+        {
+            EditorPrefs.SetString(OutputFieldKey, messageHistoryOutputField);
+        }
     }
 }
