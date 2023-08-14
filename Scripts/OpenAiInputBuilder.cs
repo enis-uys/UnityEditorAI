@@ -4,28 +4,13 @@ using UnityEngine;
 
 public class OpenAiInputBuilder
 {
-    [System.Serializable]
-    public class RequestMessage
-    {
-        public string role;
-        public string content;
-    }
-
-    [System.Serializable]
-    public class Request
-    {
-        public string model;
-        public RequestMessage[] messages;
-
-        public float temperature;
-    }
-
     public class RequestBuilder
     {
         private string model;
         private List<RequestMessage> messages = new List<RequestMessage>();
 
         private float temperature;
+        public int maxTokens;
 
         public RequestBuilder WithModel(string model)
         {
@@ -36,6 +21,12 @@ public class OpenAiInputBuilder
         public RequestBuilder WithTemperature(float temperature)
         {
             this.temperature = temperature;
+            return this;
+        }
+
+        public RequestBuilder WithMaxTokens(int maxTokens)
+        {
+            this.maxTokens = maxTokens;
             return this;
         }
 
@@ -51,10 +42,9 @@ public class OpenAiInputBuilder
             {
                 model = model,
                 messages = messages.ToArray(),
-                temperature = temperature
+                temperature = temperature,
+                max_tokens = maxTokens
             };
-
-            Debug.Log(JsonUtility.ToJson(req)); //
             return JsonUtility.ToJson(req);
         }
     }
@@ -64,6 +54,23 @@ public class OpenAiInputBuilder
     {
         public string id;
         public ResponseChoice[] choices;
+    }
+
+    [System.Serializable]
+    public class RequestMessage
+    {
+        public string role;
+        public string content;
+    }
+
+    [System.Serializable]
+    public class Request
+    {
+        public string model;
+        public RequestMessage[] messages;
+
+        public float temperature;
+        public int max_tokens;
     }
 
     [System.Serializable]

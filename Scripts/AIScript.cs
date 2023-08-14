@@ -6,6 +6,10 @@ using System.Collections.Generic;
 // for ToArray()
 using System.Linq;
 
+//TODO: reference to the dll
+//https://github.com/Cysharp/UniTask
+using Cysharp.Threading.Tasks;
+
 public class AIScript : SingleExtensionApplication
 {
     public override string DisplayName => "AI Script";
@@ -14,6 +18,7 @@ public class AIScript : SingleExtensionApplication
     private MonoScript inputScript;
     private string inputField = "";
     private Vector2 inputScrollPosition;
+    HelpBox helpBox = HelpBox.GetInstance();
 
     //TODO: Implement system that updates existing script and asks for confirmation
     //private bool shouldUpdateExistingScript = false;
@@ -53,6 +58,8 @@ public class AIScript : SingleExtensionApplication
             EditorStyles.boldLabel
         );
         csPrefab = (GameObject)EditorGUILayout.ObjectField(csPrefab, typeof(GameObject), true);
+        GUILayout.Space(standardSpace);
+        EditorGUILayout.HelpBox(helpBox.HelpBoxMessage, helpBox.HelpBoxMessageType);
     }
 
     private void RenderInputField()
@@ -85,12 +92,25 @@ public class AIScript : SingleExtensionApplication
         {
             if (string.IsNullOrEmpty(inputField))
             {
-                Debug.Log("Empty input");
-                return;
+                helpBox.UpdateHelpBoxMessageAndType(
+                    "Please enter a prompt in the input field.",
+                    MessageType.Error
+                );
             }
             else
             {
-                ProcessInputPrompt(inputField);
+                try
+                {
+                    ProcessInputPrompt(inputField);
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogError("An error occurred: " + ex.Message);
+                    helpBox.UpdateHelpBoxMessageAndType(
+                        "An error occurred while processing the input.",
+                        MessageType.Error
+                    );
+                }
             }
         }
 
@@ -129,10 +149,15 @@ public class AIScript : SingleExtensionApplication
         }
     }
 
-    private void CreateNewScriptBasedOnInput(string inputPrompt)
+    private async void CreateNewScriptBasedOnInput(string inputPrompt)
     {
-        string gptScriptResponse = OpenAiManager.InputToGptCreateScript(inputPrompt);
-        Debug.Log(gptScriptResponse);
+        string gptScriptResponse = await OpenAiManager.InputToGptCreateScript(inputPrompt);
+        // maybe convert this to a readable view Debug.Log(gptScriptResponse);
+        //if no response is given, do nothing
+        if (string.IsNullOrEmpty(gptScriptResponse))
+        {
+            return;
+        }
         string gptScriptClassName = FileManager<string>.ExtractClassNameFromScript(
             gptScriptResponse
         );
@@ -140,31 +165,38 @@ public class AIScript : SingleExtensionApplication
             gptScriptResponse,
             gptScriptClassName + ".cs"
         );
+
         // UpdateListToGui(input, gptResponse);
         //clears the input field --> not needed now
         // inputField = "";
         // GUIUtility.keyboardControl = 0;
     }
 
-    private void CreateNewScriptVersion(string inputPrompt)
+    private async void CreateNewScriptVersion(string inputPrompt)
     {
-        // Read the content of the MonoScript asset
-
         if (inputScript == null)
         {
-            //TODO: Check if valid script --> you need to write this method anyway in the FileManager
-
-            Debug.Log("Input script is null");
+            //TODO: Remove null check and insted check if valid script --> you need to write this method anyway in the FileManager
+            helpBox.UpdateHelpBoxMessageAndType("Please select a valid script.", MessageType.Error);
             return;
         }
-
+        // Read the content of the MonoScript asset
         string scriptContent = inputScript.ToString();
-        Debug.Log(inputScript.name + " Got read and sent to GPT");
-        string gptScriptResponse = OpenAiManager.InputScriptToGptCreateScript(
+        helpBox.UpdateHelpBoxMessageAndType(
+            inputScript.name + " got read and sent to GPT.",
+            MessageType.Info
+        );
+        string gptScriptResponse = await OpenAiManager.InputScriptToGptCreateScript(
             inputPrompt,
             scriptContent
         );
-        Debug.Log(gptScriptResponse);
+
+        // maybe convert this to a readable view  Debug.Log(gptScriptResponse);
+        //if no response is given, do nothing
+        if (string.IsNullOrEmpty(gptScriptResponse))
+        {
+            return;
+        }
         string gptScriptClassName = FileManager<string>.ExtractClassNameFromScript(
             gptScriptResponse
         );

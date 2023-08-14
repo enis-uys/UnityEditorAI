@@ -1,8 +1,15 @@
 using System;
+
 using System.Threading.Tasks;
+using System.Text;
+
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Text;
+
+//TODO: reference to the dll
+//https://github.com/Cysharp/UniTask
+using Cysharp.Threading.Tasks;
+
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -10,108 +17,80 @@ public class OpenAiManager
 {
     const string endpoint = "https://api.openai.com/v1/chat/completions";
 
-    //later include the api Key here and read it from here
-    private static string settingsOpenAiApiKey =
-        "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";
+    private static AISettingsFileManager settingsFM = new AISettingsFileManager();
 
     private static string settingsOpenAiModel = "gpt-3.5-turbo";
-    private static float settingsOpenAiTemperature = 1f;
 
-    public static string TestConnection(
+    public static async Task<string> TestConnection(
         string apiKey,
         string gptModel = null,
-        float temperature = 1f
+        float? temperature = 1f,
+        int? maxTokens = 4,
+        int? timeoutInSeconds = 15
     )
     {
-        return SendMessageToGpt(
-            settingsOpenAiApiKey,
+        AISettingsSerializable settings = settingsFM.LoadAndConvertSettingsFromFile();
+        return await SendMessageToGpt(
+            settings.apiKey,
             "Hello World!",
-            settingsOpenAiModel,
-            settingsOpenAiTemperature
+            settings.selectedGptModel,
+            settings.temperature.Value,
+            settings.maxTokens.Value,
+            settings.timeoutInSeconds.Value
         );
         // do some settings helpBox logic here later
     }
 
-    public static string InputToGptCreateScript(string inputPrompt)
+    public static async Task<string> InputToGptCreateScript(string inputPrompt)
     {
-        //TODO: make sure the output is a runnable script
+        //TODO: make sure the output is a runnable script by removing ```
 
         string gptInput = OpenAiStandardPrompts.CreateNewScriptWithPrompt(inputPrompt);
-        return SendMessageToGpt(
-            settingsOpenAiApiKey,
+        AISettingsSerializable settings = settingsFM.LoadAndConvertSettingsFromFile();
+
+        return await SendMessageToGpt(
+            settings.apiKey,
             gptInput,
-            settingsOpenAiModel,
-            settingsOpenAiTemperature
+            settings.selectedGptModel,
+            settings.temperature.Value,
+            settings.maxTokens.Value,
+            settings.timeoutInSeconds.Value
         );
     }
 
-    public static string InputScriptToGptCreateScript(string inputPrompt, string inputScriptString)
+    public static async Task<string> InputScriptToGptCreateScript(
+        string inputPrompt,
+        string inputScriptString
+    )
     {
-        //TODO: make sure the output is a runnable script
+        //TODO: make sure the output is a runnable script by removing ```
 
         string gptInput = OpenAiStandardPrompts.UpdateExistingScriptWithPrompt(
             inputPrompt,
             inputScriptString
         );
-        return SendMessageToGpt(
-            settingsOpenAiApiKey,
+        AISettingsSerializable settings = settingsFM.LoadAndConvertSettingsFromFile();
+        return await SendMessageToGpt(
+            settings.apiKey,
             gptInput,
-            settingsOpenAiModel,
-            settingsOpenAiTemperature
+            settings.selectedGptModel,
+            settings.temperature.Value,
+            settings.maxTokens.Value,
+            settings.timeoutInSeconds.Value
         );
     }
 
-    public static string ChatToGpt(string requestMessage)
+    public static async Task<string> ChatToGpt(string requestMessage)
     {
-        return SendMessageToGpt(
-            settingsOpenAiApiKey,
+        AISettingsSerializable settings = settingsFM.LoadAndConvertSettingsFromFile();
+        return await SendMessageToGpt(
+            settingsFM.LoadAPIKeyFromFile(),
             requestMessage,
-            settingsOpenAiModel,
-            settingsOpenAiTemperature
+            settingsFM.LoadSelectedGptModelAsStringFromFile(),
+            settingsFM.LoadTemperatureFromFile(),
+            settingsFM.LoadMaxTokensFromFile(),
+            settingsFM.LoadTimeoutInSecondsFromFile()
         );
-    }
-
-    //parts of this method are from github AICommand
-    //used an optional parameter for the model
-    //TODO: add more parameters (max_tokens, top_p, frequency_penalty, presence_penalty,
-    //stop, n, logprobs, echo, stream, best_of, logit_bias, return_prompt, return_metadata, return_sequences, expand, **kwargs)
-    public static string SendMessageToGpt(
-        string apiKey,
-        string requestMessage,
-        string gptModel,
-        float temperature // default value
-    )
-    {
-        try
-        {
-            // gptModel = GetModelFromFile();
-            gptModel = CheckGptModel(gptModel);
-
-            var requestBody = BuildOpenApiRequest(gptModel, requestMessage, temperature);
-
-            var jsonResponse = SendOpenApiRequest(apiKey, requestBody);
-
-            string responseResult = ParseOpenApiResponse(jsonResponse);
-
-            return responseResult;
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-            return null;
-        }
-    }
-
-    private string GetAPIKeyFromFile()
-    {
-        //later implementation
-        return settingsOpenAiApiKey;
-    }
-
-    private string GetModelFromFile()
-    {
-        //later implementation
-        return settingsOpenAiModel;
     }
 
     private static string CheckGptModel(string gptModel)
@@ -134,7 +113,8 @@ public class OpenAiManager
     private static string BuildOpenApiRequest(
         string gptModel,
         string requestMessage,
-        float temperature
+        float temperature,
+        int maxTokens
     )
     {
         //you have to change the endpoints depending on the model used
@@ -143,28 +123,102 @@ public class OpenAiManager
             .WithModel(gptModel)
             .AddMessage("user", requestMessage)
             .WithTemperature(temperature)
+            .WithMaxTokens(maxTokens)
             .Build();
 
         return requestBody;
     }
 
-    private static string SendOpenApiRequest(string apiKey, string requestBody)
+    //parts of this method are from github AICommand
+    //used an optional parameter for the model
+    //TODO: add more parameters (max_tokens, top_p, frequency_penalty, presence_penalty,
+    //stop, n, logprobs, echo, stream, best_of, logit_bias, return_prompt, return_metadata, return_sequences, expand, **kwargs)
+    public static async Task<string> SendMessageToGpt(
+        string apiKey,
+        string requestMessage,
+        string gptModel,
+        float temperature,
+        int maxTokens,
+        int timeoutInSeconds
+    )
+    {
+        try
+        {
+            // gptModel = GetModelFromFile();
+            gptModel = CheckGptModel(gptModel);
+
+            var requestBody = BuildOpenApiRequest(gptModel, requestMessage, temperature, maxTokens);
+
+            string jsonResponse = await SendGptApiRequestAsync(
+                apiKey,
+                requestBody,
+                timeoutInSeconds
+            );
+            string responseResult = ParseOpenApiResponse(jsonResponse);
+
+            return responseResult;
+        }
+        // catch errors that occur while preparing the request
+        catch (Exception e)
+        {
+            HelpBox
+                .GetInstance()
+                .UpdateHelpBoxMessageAndType(
+                    "Error while sending message to GPT: "
+                        + e.Message
+                        + "\nSet a higher timeout in the settings.",
+                    MessageType.Error
+                );
+            return null;
+        }
+    }
+
+    private static async Task<string> SendGptApiRequestAsync(
+        string apiKey,
+        string requestBody,
+        int timeoutInSeconds = 20
+    )
     {
         //using calls the dispose method after the code block is done
-
-        using (var post = UnityWebRequest.Post(endpoint, requestBody, "application/json"))
+        try
         {
-            post.timeout = 20;
-            post.SetRequestHeader("Authorization", "Bearer " + apiKey);
-            var req = post.SendWebRequest();
-            // Maybe add a progress bar here also change the while loop (not good practice)
-
-            while (!req.isDone)
+            using (var post = UnityWebRequest.Post(endpoint, requestBody, "application/json"))
             {
-                System.Threading.Thread.Sleep(100);
+                // Set the timeout to the value specified in the settings
+                post.timeout = timeoutInSeconds;
+                post.SetRequestHeader("Authorization", "Bearer " + apiKey);
+
+                var req = post.SendWebRequest();
+
+                // The await keyword will yield control back to the caller while the request is being processed.
+                await req;
+                // Maybe add a progress bar here also change the while loop (not good practice)
+
+                if (
+                    post.result == UnityWebRequest.Result.ConnectionError
+                    || post.result == UnityWebRequest.Result.ProtocolError
+                )
+                {
+                    HelpBox
+                        .GetInstance()
+                        .UpdateHelpBoxMessageAndType("Error: " + post.error, MessageType.Error);
+                    return null;
+                }
+
+                var jsonResponse = post.downloadHandler.text;
+                return jsonResponse;
             }
-            var jsonResponse = post.downloadHandler.text;
-            return jsonResponse;
+        }
+        // catch errors that occur while getting a response
+        catch (Exception e)
+        {
+            HelpBox
+                .GetInstance()
+                .UpdateHelpBoxMessageAndType(
+                    "Error while sending message to GPT: " + e.Message,
+                    MessageType.Error
+                );
+            return null;
         }
     }
 

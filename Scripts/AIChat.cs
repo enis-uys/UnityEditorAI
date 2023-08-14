@@ -35,6 +35,8 @@ public class AIChat : SingleExtensionApplication
     private Vector2 inputScrollPosition;
     private Vector2 outputScrollPosition;
 
+    HelpBox helpBox = HelpBox.GetInstance();
+
     /// <summary>
     /// GUI callback for rendering the AI Chat extension.
     /// </summary>
@@ -72,6 +74,7 @@ public class AIChat : SingleExtensionApplication
     /// </summary>
     private void RenderInputField()
     {
+        EditorGUILayout.LabelField("Input:");
         inputScrollPosition = EditorGUILayout.BeginScrollView(
             inputScrollPosition,
             GUILayout.MinHeight(150)
@@ -97,6 +100,10 @@ public class AIChat : SingleExtensionApplication
             }
             catch (System.Exception ex)
             {
+                helpBox.UpdateHelpBoxMessageAndType(
+                    "An error occurred during AI processing: " + ex.Message,
+                    MessageType.Error
+                );
                 Debug.LogError("An error occurred during AI processing: " + ex.Message);
             }
         }
@@ -151,15 +158,16 @@ public class AIChat : SingleExtensionApplication
         }
 
         GUILayout.EndHorizontal();
+        EditorGUILayout.HelpBox(helpBox.HelpBoxMessage, helpBox.HelpBoxMessageType);
     }
 
     /// <summary>
     /// Sends the user input to the AI model for processing.
     /// </summary>
     /// <param name="input">The user input message.</param>
-    private void GptInputSend(string input)
+    private async void GptInputSend(string input)
     {
-        var gptResponse = OpenAiManager.ChatToGpt(input);
+        var gptResponse = await OpenAiManager.ChatToGpt(input);
         UpdateListToGui(input, gptResponse);
         GUIUtility.keyboardControl = 0;
         inputText = "";

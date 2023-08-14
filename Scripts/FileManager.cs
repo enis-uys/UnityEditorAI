@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using System.IO;
 //permissive open-source license (MIT License) --> https://opensource.org/licenses/MIT
 //TODO: Add the dll to the project but include the proper licence and attribution
+// --> include in code references
 using Newtonsoft.Json;
 
 // for class name extraction
@@ -55,10 +57,15 @@ public class FileManager<T>
 
     public static void SaveToJsonFileWithPath(T data, string folderPath, string fileName)
     {
+        HelpBox helpBox = HelpBox.GetInstance();
         var jsonData = JsonConvert.SerializeObject(data);
         string fileNameWithJson = fileName + ".json";
         if (!Directory.Exists(folderPath))
         {
+            helpBox.UpdateHelpBoxMessageAndType(
+                "Directory does not exist, creating directory at: " + folderPath,
+                MessageType.Info
+            );
             Debug.Log("Directory does not exist, creating directory: " + folderPath);
             Directory.CreateDirectory(folderPath);
         }
@@ -78,21 +85,32 @@ public class FileManager<T>
 
     public static J LoadDeserializedJsonFromPath<J>(string folderPath, string fileName)
     {
+        HelpBox helpBox = HelpBox.GetInstance();
+        helpBox.UpdateHelpBoxMessageAndType(
+            "Loading data from: " + folderPath + fileName + ".json",
+            MessageType.Info
+        );
         string fileNameWithJson = fileName + ".json";
         if (!Directory.Exists(folderPath))
         {
-            Debug.Log("Directory does not exist, creating directory: " + folderPath);
+            helpBox.AppendHelpBoxMessage(
+                "Directory does not exist, creating directory at: " + folderPath
+            );
             Directory.CreateDirectory(folderPath);
         }
         if (File.Exists(folderPath + fileNameWithJson))
         {
             string jsonData = File.ReadAllText(folderPath + fileNameWithJson);
             J data = JsonConvert.DeserializeObject<J>(jsonData);
-            Debug.Log("Data loaded from file: " + folderPath + fileNameWithJson);
+            helpBox.UpdateHelpBoxMessage("Data loaded from: " + folderPath + fileNameWithJson);
             return data;
         }
         else
         {
+            helpBox.AppendHelpBoxMessageAndType(
+                "File not found: " + folderPath + fileNameWithJson,
+                MessageType.Error
+            );
             Debug.LogError("File not found: " + folderPath + fileNameWithJson);
             return default;
         }

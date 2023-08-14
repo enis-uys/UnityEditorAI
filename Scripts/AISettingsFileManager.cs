@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using System;
 using System.IO;
 using System.Collections.Generic;
 
@@ -28,9 +29,12 @@ public class AISettingsFileManager
 
     private string apiKey;
     private string outputFolderPath = "Assets/UnityEditorAI/UserFiles/";
-    private string outputSettingsFileName = "AISettings.txt";
-    private float temperature = 1f;
+    private string outputSettingsFileName = "settings";
+    private float temperature;
+    private int maxTokens;
     private GptModels selectedGptModel = GptModels.Gpt35Turbo;
+    private int timeoutInSeconds;
+    HelpBox helpBox = HelpBox.GetInstance();
 
     public string ApiKey
     {
@@ -52,46 +56,20 @@ public class AISettingsFileManager
         get => temperature;
         set => temperature = value;
     }
+    public int MaxTokens
+    {
+        get => maxTokens;
+        set => maxTokens = value;
+    }
+    public int TimeoutInSeconds
+    {
+        get => timeoutInSeconds;
+        set => timeoutInSeconds = value;
+    }
     public GptModels SelectedGptModel
     {
         get => selectedGptModel;
         set => selectedGptModel = value;
-    }
-
-    // Serializable AISettings class
-    [System.Serializable]
-    public class AISettingsSerializable
-    {
-        public string apiKey;
-        public string outputFolderPath;
-        public string outputSettingsFileName;
-        public float temperature;
-        public string selectedGptModel;
-    }
-
-    public void SaveAPIKey()
-    {
-        string outputFilePath = OutputFolderPath + outputSettingsFileName;
-        File.WriteAllText(outputFilePath, ApiKey);
-    }
-
-    public void LoadAPIKeyFromFile()
-    {
-        string outputFilePath = OutputFolderPath + outputSettingsFileName;
-        apiKey = File.Exists(outputFilePath) ? File.ReadAllText(outputFilePath) : string.Empty;
-    }
-
-    public void LoadSettingsFromJson()
-    {
-        string outputFilePath = OutputFolderPath + "settings.json";
-        string json = File.Exists(outputFilePath) ? File.ReadAllText(outputFilePath) : string.Empty;
-        AISettingsSerializable settings = JsonUtility.FromJson<AISettingsSerializable>(json);
-        apiKey = settings.apiKey;
-        temperature = settings.temperature;
-        selectedGptModel = (GptModels)
-            System.Enum.Parse(typeof(GptModels), settings.selectedGptModel);
-
-        AISettings.UpdateHelpMessage("Settings successfully loaded!", MessageType.Info);
     }
 
     public void SaveSettingsInJson()
@@ -101,10 +79,130 @@ public class AISettingsFileManager
         settings.outputFolderPath = this.outputFolderPath;
         settings.outputSettingsFileName = this.outputSettingsFileName;
         settings.temperature = this.temperature;
+        settings.maxTokens = this.maxTokens;
+        settings.timeoutInSeconds = this.timeoutInSeconds;
         settings.selectedGptModel = this.selectedGptModel.ToString();
-        string json = JsonUtility.ToJson(settings);
-        string outputFilePath = OutputFolderPath + "settings.json";
-        File.WriteAllText(outputFilePath, json);
-        AISettings.UpdateHelpMessage("Settings successfully saved!", MessageType.Info);
+        FileManager<AISettingsSerializable>.SaveToJsonFileWithPath(
+            settings,
+            outputFolderPath,
+            outputSettingsFileName
+        );
+        helpBox.UpdateHelpBoxMessageAndType("Settings successfully saved!", MessageType.Info);
     }
+
+    public void LoadCustomSettings()
+    {
+        AISettingsSerializable settings = LoadAndConvertSettingsFromFile();
+        if (settings == null)
+        {
+            helpBox.UpdateHelpBoxMessageAndType("No settings file found!", MessageType.Error);
+            return;
+        }
+        apiKey = settings.apiKey;
+        temperature = settings.temperature.Value;
+        maxTokens = settings.maxTokens.Value;
+        selectedGptModel = (GptModels)
+            System.Enum.Parse(typeof(GptModels), settings.selectedGptModel);
+        helpBox.UpdateHelpBoxMessageAndType("Settings successfully loaded!", MessageType.Info);
+    }
+
+    public void LoadSettingsFromFile()
+    {
+        string path = EditorUtility.OpenFilePanel("Load Settings", "", "json");
+        if (!string.IsNullOrEmpty(path))
+        {
+            try
+            {
+                string json = File.ReadAllText(path);
+                Debug.Log(json);
+                //LoadAndConvertSettingsFromFile(json);
+            }
+            catch (Exception ex)
+            {
+                helpBox.UpdateHelpBoxMessageAndType(
+                    "Error loading settings from file: " + ex.Message,
+                    MessageType.Error
+                );
+                Debug.LogError("Error loading settings from file: " + ex.Message);
+            }
+        }
+        helpBox.UpdateHelpBoxMessageAndType("Function!", MessageType.Info);
+    }
+
+    public AISettingsSerializable LoadAndConvertSettingsFromFile()
+    {
+        //uses FileManager to load settings from json file
+        AISettingsSerializable settings =
+            FileManager<AISettingsSerializable>.LoadDeserializedJsonFromPath<AISettingsSerializable>(
+                outputFolderPath,
+                outputSettingsFileName
+            );
+        //check if setting is defined otherwise set default value
+        if (!settings.temperature.HasValue)
+        {
+            settings.temperature = 1f;
+        }
+        if (!settings.maxTokens.HasValue)
+        {
+            settings.maxTokens = 4096;
+        }
+        if (!settings.timeoutInSeconds.HasValue)
+        {
+            settings.timeoutInSeconds = 20;
+        }
+        return settings;
+    }
+
+    public string LoadAPIKeyFromFile()
+    {
+        AISettingsSerializable settings = LoadAndConvertSettingsFromFile();
+        return settings.apiKey;
+    }
+
+    public float LoadTemperatureFromFile()
+    {
+        AISettingsSerializable settings = LoadAndConvertSettingsFromFile();
+        return settings.temperature.Value;
+    }
+
+    public int LoadMaxTokensFromFile()
+    {
+        AISettingsSerializable settings = LoadAndConvertSettingsFromFile();
+        return settings.maxTokens.Value;
+    }
+
+    public int LoadTimeoutInSecondsFromFile()
+    {
+        AISettingsSerializable settings = LoadAndConvertSettingsFromFile();
+        return settings.timeoutInSeconds.Value;
+    }
+
+    public string LoadSelectedGptModelAsStringFromFile()
+    {
+        AISettingsSerializable settings = LoadAndConvertSettingsFromFile();
+        return settings.selectedGptModel;
+    }
+
+    public GptModels LoadSelectedGptModelAsEnumFromFile()
+    {
+        string gptModel = LoadSelectedGptModelAsStringFromFile();
+        return (GptModels)System.Enum.Parse(typeof(GptModels), gptModel);
+    }
+}
+
+// Serializable AISettings class
+[System.Serializable]
+public class AISettingsSerializable
+{
+    public string apiKey;
+    public string outputFolderPath;
+    public string outputSettingsFileName;
+
+    [SerializeField]
+    public float? temperature;
+
+    [SerializeField]
+    public int? maxTokens;
+    public int? timeoutInSeconds;
+    public string selectedGptModel;
 }

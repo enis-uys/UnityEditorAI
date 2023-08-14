@@ -9,6 +9,7 @@ public class ExtensionTabs : EditorWindow
     private static SingleExtensionApplication[] applications;
     private static string[] displayNames => applications.Select(a => a.DisplayName).ToArray();
     private int currentApplication;
+    private bool hasInit = false;
 
     [MenuItem("Window/AI Tabs")]
     public static void ShowWindow()
@@ -18,7 +19,10 @@ public class ExtensionTabs : EditorWindow
 
     private void OnEnable()
     {
-        Initialize();
+        if (!hasInit)
+        {
+            Initialize();
+        }
     }
 
     private void Initialize()

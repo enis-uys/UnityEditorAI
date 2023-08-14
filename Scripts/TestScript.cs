@@ -8,7 +8,8 @@ public class TestScript : MonoBehaviour
     private int x = 5;
     private int y = 10;
     private int z = 15;
-    private bool neverUsed = false;
+
+    //    private bool neverUsed = false;
     private bool isMoving = false;
 
     // Some debug logs (may clutter the console)
