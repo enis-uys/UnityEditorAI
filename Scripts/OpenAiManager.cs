@@ -130,6 +130,7 @@ public class OpenAiManager
     }
 
     //parts of this method are from github AICommand
+    //https://github.com/keijiro/AICommand
     //used an optional parameter for the model
     //TODO: add more parameters (max_tokens, top_p, frequency_penalty, presence_penalty,
     //stop, n, logprobs, echo, stream, best_of, logit_bias, return_prompt, return_metadata, return_sequences, expand, **kwargs)

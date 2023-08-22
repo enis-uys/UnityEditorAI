@@ -1,7 +1,10 @@
 using UnityEditor;
 using UnityEngine;
+
+using System;
 using System.Collections.Generic;
 
+//TODO: Update with standard space
 public class AIChat : SingleExtensionApplication
 {
     /// <summary>
@@ -11,9 +14,13 @@ public class AIChat : SingleExtensionApplication
 
     private string inputText = "";
     private string messageHistoryOutputField = "";
+    private Vector2 inputScrollPosition;
+    private Vector2 outputScrollPosition;
 
     // This can be used later to customize the chat window
     private GUIStyle richTextStyle;
+
+    private bool shouldLoadEditorPrefs = true;
 
     // Later on, we will add a list of conversations and replace the messageHistoryOutputField with a dropdown
     // This is necessary for being able to ask about old messages
@@ -27,18 +34,24 @@ public class AIChat : SingleExtensionApplication
         /// <summary>
         /// The list of messages in the conversation.
         /// </summary>
-        public List<string> messageListCon = new List<string>();
+        public List<string> messageListConversation = new List<string>();
     }
 
     private List<string> messageHistoryList = new List<string>();
 
-    private Vector2 inputScrollPosition;
-    private Vector2 outputScrollPosition;
-
     HelpBox helpBox = HelpBox.GetInstance();
 
-    private const string InputFieldKey = "InputField";
-    private const string OutputFieldKey = "OutputFieldKey";
+    public enum EditorPrefKey
+    {
+        InputText,
+        MessageHistoryCount
+    }
+
+    private Dictionary<EditorPrefKey, string> editorPrefKeys = new Dictionary<EditorPrefKey, string>
+    {
+        { EditorPrefKey.InputText, "InputText" },
+        { EditorPrefKey.MessageHistoryCount, "MessageHistoryCount" }
+    };
 
     /// <summary>
     /// GUI callback for rendering the AI Chat extension.
@@ -47,8 +60,12 @@ public class AIChat : SingleExtensionApplication
     {
         try
         {
-            LoadEditorPrefs();
             EditorGUILayout.BeginVertical("Box");
+            if (shouldLoadEditorPrefs)
+            {
+                LoadEditorPrefs();
+                shouldLoadEditorPrefs = false;
+            }
             InitializeRichTextStyle();
             RenderInputField();
             GUILayout.Space(20);
@@ -86,33 +103,37 @@ public class AIChat : SingleExtensionApplication
         inputText = EditorGUILayout.TextArea(inputText, GUILayout.ExpandHeight(true));
 
         EditorGUILayout.EndScrollView();
-
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Clear"))
+        try
         {
-            GUIUtility.keyboardControl = 0;
-            inputText = "";
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Clear"))
+            {
+                GUIUtility.keyboardControl = 0;
+                inputText = "";
+            }
+            if (
+                GUILayout.Button("Send", GUILayout.ExpandWidth(true))
+                && !string.IsNullOrEmpty(inputText)
+            )
+            {
+                try
+                {
+                    GptInputSend(inputText);
+                }
+                catch (System.Exception ex)
+                {
+                    helpBox.UpdateHelpBoxMessageAndType(
+                        "An error occurred during AI processing: " + ex.Message,
+                        MessageType.Error
+                    );
+                    Debug.LogError("An error occurred during AI processing: " + ex.Message);
+                }
+            }
         }
-        if (
-            GUILayout.Button("Send", GUILayout.ExpandWidth(true))
-            && !string.IsNullOrEmpty(inputText)
-        )
+        finally
         {
-            try
-            {
-                GptInputSend(inputText);
-            }
-            catch (System.Exception ex)
-            {
-                helpBox.UpdateHelpBoxMessageAndType(
-                    "An error occurred during AI processing: " + ex.Message,
-                    MessageType.Error
-                );
-                Debug.LogError("An error occurred during AI processing: " + ex.Message);
-            }
+            GUILayout.EndHorizontal();
         }
-
-        GUILayout.EndHorizontal();
     }
 
     /// <summary>
@@ -128,7 +149,7 @@ public class AIChat : SingleExtensionApplication
 
         EditorGUI.BeginDisabledGroup(true);
         EditorGUILayout.TextArea(
-            messageHistoryOutputField,
+            MessageHistoryListToFormatedString(messageHistoryList),
             richTextStyle,
             GUILayout.ExpandHeight(true)
         );
@@ -139,14 +160,7 @@ public class AIChat : SingleExtensionApplication
 
         if (GUILayout.Button("Lorem Ipsum Test"))
         {
-            try
-            {
-                AddLongMessageForTest();
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogError("An error occurred during AI processing: " + ex.Message);
-            }
+            AddLongMessageForTest();
         }
         if (GUILayout.Button("Clear"))
         {
@@ -171,54 +185,63 @@ public class AIChat : SingleExtensionApplication
     /// <param name="input">The user input message.</param>
     private async void GptInputSend(string input)
     {
-        var gptResponse = await OpenAiManager.ChatToGpt(input);
-        UpdateListToGui(input, gptResponse);
         GUIUtility.keyboardControl = 0;
         inputText = "";
+        var gptResponse = await OpenAiManager.ChatToGpt(input);
+        AddRoleMessageToMessageList("User", input);
+        AddRoleMessageToMessageList("System", gptResponse);
     }
 
-    /// <summary>
-    /// Updates the message history and GUI output with the user input and AI response.
-    /// </summary>
-    /// <param name="input">The user input message.</param>
-    /// <param name="output">The AI-generated response.</param>
-    private void UpdateListToGui(string input, string output)
+    private void AddRoleMessageToMessageList(string role, string message)
     {
-        AddMessageToList("User", input, "#6DBE44");
-        AddMessageToList("System", output, "#F2A900");
-        messageHistoryOutputField = MessageHistoryToString();
+        string roleMessage = $"{role}: {message}";
+        messageHistoryList.Add(roleMessage);
     }
 
-    /// <summary>
-    /// Adds a message to the message history list with the specified sender and color.
-    /// </summary>
-    /// <param name="sender">The sender of the message.</param>
-    /// <param name="message">The content of the message.</param>
-    /// <param name="color">The color of the message.</param>
-    public void AddMessageToList(string sender, string message, string color)
+    //TODO:
+    private string MessageHistoryListToFormatedString(List<string> messageList)
     {
-        string formattedMessage = $"<color={color}>{sender}:</color> {message}";
-        messageHistoryList.Add(formattedMessage);
-    }
-
-    /// <summary>
-    /// Converts the message history list to a single string.
-    /// </summary>
-    /// <returns>The message history as a string.</returns>
-    private string MessageHistoryToString()
-    {
-        return string.Join("\n", messageHistoryList);
+        List<string> formattedMessageList = new List<string>();
+        for (int i = 0; i < messageList.Count; i++)
+        {
+            string[] messageParts = messageList[i].Split(": ");
+            if (messageParts.Length >= 2)
+            {
+                string sender = messageParts[0];
+                string content = messageParts[1];
+                string color = "#F2A900";
+                if (sender == "User")
+                {
+                    color = "#6DBE44";
+                }
+                string formattedMessage = $"<color={color}>{sender}:</color> {content}";
+                if (sender == "System")
+                {
+                    formattedMessage += "\n";
+                }
+                formattedMessageList.Add(formattedMessage);
+            }
+        }
+        if (formattedMessageList.Count > 0)
+        {
+            return string.Join("\n", formattedMessageList);
+        }
+        else
+        {
+            return "";
+        }
     }
 
     /// <summary>
     /// Loads the message history from a file.
     /// </summary>
+    //TODO: make a proper file selection dialog
     private void LoadMessageHistoryFromFile()
     {
         messageHistoryList = FileManager<List<string>>.LoadDeserializedJsonFromDefaultPath(
             "MessageHistory"
         );
-        messageHistoryOutputField = MessageHistoryToString();
+        messageHistoryOutputField = MessageHistoryListToFormatedString(messageHistoryList);
     }
 
     /// <summary>
@@ -241,33 +264,64 @@ public class AIChat : SingleExtensionApplication
     /// <summary>
     /// Adds a long test message for testing purposes.
     /// </summary>
+    /// TODO: Remove this method when not needed
     private void AddLongMessageForTest()
     {
         var lorem = "Lorem Ipsum doremi fas soll la to di \n";
-        messageHistoryOutputField += "Lorem: " + lorem + lorem + lorem + lorem;
+        messageHistoryOutputField += "\nLorem: " + lorem + lorem + lorem + lorem;
     }
 
     private void LoadEditorPrefs()
     {
-        if (EditorPrefs.HasKey(InputFieldKey))
+        string loadedInputText = "";
+        List<string> loadedMessageHistoryList = new List<string>();
+
+        foreach (var kvp in editorPrefKeys)
         {
-            inputText = EditorPrefs.GetString(InputFieldKey);
+            if (EditorPrefs.HasKey(kvp.Value))
+            {
+                switch (kvp.Key)
+                {
+                    case EditorPrefKey.InputText:
+                        loadedInputText = EditorPrefs.GetString(kvp.Value);
+                        break;
+                    //in the case of the message history, the count get loaded first
+                    case EditorPrefKey.MessageHistoryCount:
+                        //then the messages get loaded by index
+                        for (int i = 0; i < EditorPrefs.GetInt(kvp.Value); i++)
+                        {
+                            loadedMessageHistoryList.Add(
+                                EditorPrefs.GetString("MessageHistory" + i)
+                            );
+                        }
+                        break;
+                }
+            }
         }
-        if (EditorPrefs.HasKey(OutputFieldKey))
-        {
-            messageHistoryOutputField = EditorPrefs.GetString(OutputFieldKey);
-        }
+        inputText = loadedInputText;
+        messageHistoryList = loadedMessageHistoryList;
     }
 
     private void SetEditorPrefs()
     {
-        if (!string.IsNullOrEmpty(inputText))
+        foreach (var kvp in editorPrefKeys)
         {
-            EditorPrefs.SetString(InputFieldKey, inputText);
-        }
-        if (!string.IsNullOrEmpty(messageHistoryOutputField))
-        {
-            EditorPrefs.SetString(OutputFieldKey, messageHistoryOutputField);
+            switch (kvp.Key)
+            {
+                case EditorPrefKey.InputText:
+                    EditorPrefs.SetString(kvp.Value, inputText);
+                    break;
+                case EditorPrefKey.MessageHistoryCount:
+                    EditorPrefs.SetInt(kvp.Value, messageHistoryList.Count);
+                    string messageHistoryKey = "MessageHistory";
+                    int i = 0;
+                    foreach (string message in messageHistoryList)
+                    {
+                        EditorPrefs.SetString(messageHistoryKey + i, message);
+                        i++;
+                    }
+                    break;
+            }
         }
     }
 }

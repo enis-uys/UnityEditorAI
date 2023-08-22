@@ -101,6 +101,7 @@ public class AISettingsFileManager
         apiKey = settings.apiKey;
         temperature = settings.temperature.Value;
         maxTokens = settings.maxTokens.Value;
+        timeoutInSeconds = settings.timeoutInSeconds.Value;
         selectedGptModel = (GptModels)
             System.Enum.Parse(typeof(GptModels), settings.selectedGptModel);
         helpBox.UpdateHelpBoxMessageAndType("Settings successfully loaded!", MessageType.Info);

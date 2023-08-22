@@ -33,18 +33,27 @@ public class FileManager<T>
         string data
     )
     {
-        Debug.Log("Saving data to file: " + folderPath + fileNameAndType);
+        HelpBox helpBox = HelpBox.GetInstance();
+        helpBox.UpdateHelpBoxMessageAndType(
+            "Saving data to file: " + folderPath + fileNameAndType,
+            MessageType.Info
+        );
         if (!Directory.Exists(folderPath))
         {
-            Debug.Log("Directory does not exist, creating directory: " + folderPath);
+            helpBox.AppendHelpBoxMessage(
+                "Directory does not exist, creating directory: " + folderPath
+            );
             Directory.CreateDirectory(folderPath);
         }
         if (!File.Exists(folderPath + fileNameAndType))
         {
-            Debug.Log("File does not exist, creating file: " + folderPath + fileNameAndType);
+            helpBox.AppendHelpBoxMessage(
+                "File does not exist, creating file: " + folderPath + fileNameAndType
+            );
             using (StreamWriter sw = File.CreateText(folderPath + fileNameAndType)) { }
         }
         File.WriteAllText(folderPath + fileNameAndType, data);
+        helpBox.AppendHelpBoxMessage("Data saved to file: " + folderPath + fileNameAndType);
     }
 
     // TODO: Create generall functions for datatype and lead to specific functions --> next for script / cs
@@ -60,22 +69,26 @@ public class FileManager<T>
         HelpBox helpBox = HelpBox.GetInstance();
         var jsonData = JsonConvert.SerializeObject(data);
         string fileNameWithJson = fileName + ".json";
+        helpBox.UpdateHelpBoxMessageAndType(
+            "Saving data to file: " + folderPath + fileNameWithJson,
+            MessageType.Info
+        );
         if (!Directory.Exists(folderPath))
         {
-            helpBox.UpdateHelpBoxMessageAndType(
-                "Directory does not exist, creating directory at: " + folderPath,
-                MessageType.Info
+            helpBox.AppendHelpBoxMessage(
+                "Directory does not exist, creating directory at: " + folderPath
             );
-            Debug.Log("Directory does not exist, creating directory: " + folderPath);
             Directory.CreateDirectory(folderPath);
         }
         if (!File.Exists(folderPath + fileNameWithJson))
         {
-            Debug.Log("File does not exist, creating file: " + folderPath + fileNameWithJson);
+            helpBox.AppendHelpBoxMessage(
+                "File does not exist, creating file: " + folderPath + fileNameWithJson
+            );
             using (StreamWriter sw = File.CreateText(folderPath + fileNameWithJson)) { }
         }
         File.WriteAllText(folderPath + fileNameWithJson, jsonData);
-        Debug.Log("Data saved to file: " + folderPath + fileNameWithJson);
+        helpBox.AppendHelpBoxMessage("Data saved to file: " + folderPath + fileNameWithJson);
     }
 
     public static T LoadDeserializedJsonFromDefaultPath(string fileName)
@@ -88,7 +101,7 @@ public class FileManager<T>
         HelpBox helpBox = HelpBox.GetInstance();
         helpBox.UpdateHelpBoxMessageAndType(
             "Loading data from: " + folderPath + fileName + ".json",
-            MessageType.Info
+            MessageType.Warning
         );
         string fileNameWithJson = fileName + ".json";
         if (!Directory.Exists(folderPath))
@@ -102,7 +115,10 @@ public class FileManager<T>
         {
             string jsonData = File.ReadAllText(folderPath + fileNameWithJson);
             J data = JsonConvert.DeserializeObject<J>(jsonData);
-            helpBox.UpdateHelpBoxMessage("Data loaded from: " + folderPath + fileNameWithJson);
+            helpBox.AppendHelpBoxMessageAndType(
+                "Data loaded from: " + folderPath + fileNameWithJson,
+                MessageType.Info
+            );
             return data;
         }
         else
@@ -124,7 +140,12 @@ public class FileManager<T>
         Match match = Regex.Match(scriptString, pattern);
         if (match.Success)
         {
-            Debug.Log(match.Groups[1].Value);
+            HelpBox
+                .GetInstance()
+                .UpdateHelpBoxMessageAndType(
+                    "Class name extracted from script: " + match.Groups[1].Value,
+                    MessageType.Info
+                );
             return match.Groups[1].Value;
         }
         else

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: Update with Newtonsoft.Json and make sure nullables work
+
 public class OpenAiInputBuilder
 {
     public class RequestBuilder

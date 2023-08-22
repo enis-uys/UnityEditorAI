@@ -14,7 +14,7 @@ public class AIScript : SingleExtensionApplication
 {
     public override string DisplayName => "AI Script";
     private MonoScript inputScript;
-    private string inputField = "";
+    private string inputText = "";
     private Vector2 inputScrollPosition;
     private GameObject csPrefab;
 
@@ -36,9 +36,19 @@ public class AIScript : SingleExtensionApplication
     };
     private int selectedPromptKey = 0;
 
-    private const string InputScriptKey = "InputScript";
-    private const string InputFieldKey = "InputField";
-    private const string SelectedPromptKey = "SelectedPrompt";
+    public enum EditorPrefKey
+    {
+        InputScript,
+        InputText,
+        SelectedPrompt
+    }
+
+    private Dictionary<EditorPrefKey, string> editorPrefKeys = new Dictionary<EditorPrefKey, string>
+    {
+        { EditorPrefKey.InputScript, "InputScriptKey" },
+        { EditorPrefKey.InputText, "InputText" },
+        { EditorPrefKey.SelectedPrompt, "SelectedPromptKey" }
+    };
 
     public override void OnGUI()
     {
@@ -91,7 +101,7 @@ public class AIScript : SingleExtensionApplication
             inputScrollPosition,
             GUILayout.MinHeight(150)
         );
-        inputField = EditorGUILayout.TextArea(inputField, GUILayout.ExpandHeight(true));
+        inputText = EditorGUILayout.TextArea(inputText, GUILayout.ExpandHeight(true));
         EditorGUILayout.EndScrollView();
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Clear"))
@@ -99,15 +109,15 @@ public class AIScript : SingleExtensionApplication
             inputScript = null;
             csPrefab = null;
             GUIUtility.keyboardControl = 0;
-            inputField = "";
+            inputText = "";
         }
 
-        if (GUILayout.Button("Send Text", GUILayout.ExpandWidth(true)))
+        if (GUILayout.Button("Send Prompt", GUILayout.ExpandWidth(true)))
         {
-            if (string.IsNullOrEmpty(inputField))
+            if (string.IsNullOrEmpty(inputText))
             {
                 helpBox.UpdateHelpBoxMessageAndType(
-                    "Please enter a prompt in the input field.",
+                    "Please enter a prompt in the input field. It will be used to create a new script or to update an existing one.",
                     MessageType.Error
                 );
             }
@@ -115,7 +125,7 @@ public class AIScript : SingleExtensionApplication
             {
                 try
                 {
-                    ProcessInputPrompt(inputField);
+                    ProcessInputPrompt(inputText);
                 }
                 catch (System.Exception ex)
                 {
@@ -155,16 +165,18 @@ public class AIScript : SingleExtensionApplication
     {
         if (IsInputScriptSelected())
         {
-            CreateNewScriptVersion(inputField);
+            CreateNewScriptVersion(inputText);
         }
         else
         {
-            CreateNewScriptBasedOnInput(inputField);
+            CreateNewScriptBasedOnInput(inputText);
         }
     }
 
     private async void CreateNewScriptBasedOnInput(string inputPrompt)
     {
+        inputText = "";
+        GUIUtility.keyboardControl = 0;
         string gptScriptResponse = await OpenAiManager.InputToGptCreateScript(inputPrompt);
         // maybe convert this to a readable view Debug.Log(gptScriptResponse);
         //if no response is given, do nothing
@@ -181,13 +193,12 @@ public class AIScript : SingleExtensionApplication
         );
 
         // UpdateListToGui(input, gptResponse);
-        //clears the input field --> not needed now
-        // inputField = "";
-        // GUIUtility.keyboardControl = 0;
     }
 
     private async void CreateNewScriptVersion(string inputPrompt)
     {
+        inputText = "";
+        GUIUtility.keyboardControl = 0;
         if (inputScript == null)
         {
             //TODO: Remove null check and insted check if valid script --> you need to write this method anyway in the FileManager
@@ -232,32 +243,51 @@ public class AIScript : SingleExtensionApplication
 
     private void LoadEditorPrefs()
     {
-        if (EditorPrefs.HasKey(InputScriptKey))
+        foreach (var kvp in editorPrefKeys)
         {
-            string inputScriptPath = EditorPrefs.GetString(InputScriptKey);
-            inputScript = AssetDatabase.LoadAssetAtPath<MonoScript>(inputScriptPath);
-        }
-        if (EditorPrefs.HasKey(InputFieldKey))
-        {
-            inputField = EditorPrefs.GetString(InputFieldKey);
-        }
-        if (EditorPrefs.HasKey(SelectedPromptKey))
-        {
-            selectedPromptKey = EditorPrefs.GetInt(SelectedPromptKey);
+            if (EditorPrefs.HasKey(kvp.Value))
+            {
+                switch (kvp.Key)
+                {
+                    case EditorPrefKey.InputScript:
+                        string inputScriptPath = EditorPrefs.GetString(kvp.Value);
+                        inputScript = AssetDatabase.LoadAssetAtPath<MonoScript>(inputScriptPath);
+                        break;
+                    case EditorPrefKey.InputText:
+                        inputText = EditorPrefs.GetString(kvp.Value);
+                        break;
+                    case EditorPrefKey.SelectedPrompt:
+                        selectedPromptKey = EditorPrefs.GetInt(kvp.Value);
+                        break;
+                }
+            }
         }
     }
 
     private void SetEditorPrefs()
     {
-        if (inputScript != null)
+        foreach (var kvp in editorPrefKeys)
         {
-            string inputScriptPath = AssetDatabase.GetAssetPath(inputScript);
-            EditorPrefs.SetString(InputScriptKey, inputScriptPath);
+            switch (kvp.Key)
+            {
+                case EditorPrefKey.InputScript:
+                    if (inputScript != null)
+                    {
+                        string inputScriptPath = AssetDatabase.GetAssetPath(inputScript);
+                        EditorPrefs.SetString(kvp.Value, inputScriptPath);
+                    }
+                    else
+                    {
+                        EditorPrefs.SetString(kvp.Value, "");
+                    }
+                    break;
+                case EditorPrefKey.InputText:
+                    EditorPrefs.SetString(kvp.Value, inputText);
+                    break;
+                case EditorPrefKey.SelectedPrompt:
+                    EditorPrefs.SetInt(kvp.Value, selectedPromptKey);
+                    break;
+            }
         }
-        if (!string.IsNullOrEmpty(inputField))
-        {
-            EditorPrefs.SetString(InputFieldKey, inputField);
-        }
-        EditorPrefs.SetInt(SelectedPromptKey, selectedPromptKey);
     }
 }

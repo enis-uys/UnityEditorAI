@@ -34,6 +34,7 @@ public class ExtensionTabs : EditorWindow
         {
             ScriptableObject.CreateInstance<AIChat>(),
             ScriptableObject.CreateInstance<AIScript>(),
+            ScriptableObject.CreateInstance<AIObjectGenerator>(),
             ScriptableObject.CreateInstance<AISettings>()
         };
         foreach (var app in applications)

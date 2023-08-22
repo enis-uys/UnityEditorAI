@@ -1,6 +1,8 @@
 using UnityEditor;
 using UnityEngine;
 
+//TODO: Update with standard space
+
 public class AISettings : SingleExtensionApplication
 {
     public override string DisplayName => "AI Settings";
