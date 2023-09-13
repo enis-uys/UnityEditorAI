@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using System;
 using System.IO;
 using System.Collections.Generic;
 
@@ -29,12 +28,12 @@ public class AISettingsFileManager
 
     private string apiKey;
     private string outputFolderPath = "Assets/UnityEditorAI/UserFiles/";
-    private string outputSettingsFileName = "settings";
+    private string outputSettingsFileName = "settings.json";
     private float temperature;
     private int maxTokens;
     private GptModels selectedGptModel = GptModels.Gpt35Turbo;
     private int timeoutInSeconds;
-    HelpBox helpBox = HelpBox.GetInstance();
+    public HelpBox helpBox = HelpBox.GetInstance();
 
     public string ApiKey
     {
@@ -74,20 +73,24 @@ public class AISettingsFileManager
 
     public void SaveSettingsInJson()
     {
-        AISettingsSerializable settings = new AISettingsSerializable();
-        settings.apiKey = this.apiKey;
-        settings.outputFolderPath = this.outputFolderPath;
-        settings.outputSettingsFileName = this.outputSettingsFileName;
-        settings.temperature = this.temperature;
-        settings.maxTokens = this.maxTokens;
-        settings.timeoutInSeconds = this.timeoutInSeconds;
-        settings.selectedGptModel = this.selectedGptModel.ToString();
+        AISettingsSerializable settings =
+            new()
+            {
+                apiKey = this.apiKey,
+                outputFolderPath = this.outputFolderPath,
+                outputSettingsFileName = this.outputSettingsFileName,
+                temperature = this.temperature,
+                maxTokens = this.maxTokens,
+                timeoutInSeconds = this.timeoutInSeconds,
+                selectedGptModel = this.selectedGptModel.ToString()
+            };
+
         FileManager<AISettingsSerializable>.SaveToJsonFileWithPath(
             settings,
             outputFolderPath,
             outputSettingsFileName
         );
-        helpBox.UpdateHelpBoxMessageAndType("Settings successfully saved!", MessageType.Info);
+        helpBox.UpdateMessageAndType("Settings successfully saved!", MessageType.Info);
     }
 
     public void LoadCustomSettings()
@@ -95,7 +98,7 @@ public class AISettingsFileManager
         AISettingsSerializable settings = LoadAndConvertSettingsFromFile();
         if (settings == null)
         {
-            helpBox.UpdateHelpBoxMessageAndType("No settings file found!", MessageType.Error);
+            helpBox.UpdateMessageAndType("No settings file found!", MessageType.Error);
             return;
         }
         apiKey = settings.apiKey;
@@ -104,7 +107,7 @@ public class AISettingsFileManager
         timeoutInSeconds = settings.timeoutInSeconds.Value;
         selectedGptModel = (GptModels)
             System.Enum.Parse(typeof(GptModels), settings.selectedGptModel);
-        helpBox.UpdateHelpBoxMessageAndType("Settings successfully loaded!", MessageType.Info);
+        helpBox.UpdateMessageAndType("Settings successfully loaded!", MessageType.Info);
     }
 
     public void LoadSettingsFromFile()
@@ -115,19 +118,18 @@ public class AISettingsFileManager
             try
             {
                 string json = File.ReadAllText(path);
-                Debug.Log(json);
-                //LoadAndConvertSettingsFromFile(json);
+                //TODO: LoadAndConvertSettingsFromFile(json);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                helpBox.UpdateHelpBoxMessageAndType(
+                helpBox.UpdateMessageAndType(
                     "Error loading settings from file: " + ex.Message,
                     MessageType.Error
                 );
                 Debug.LogError("Error loading settings from file: " + ex.Message);
             }
         }
-        helpBox.UpdateHelpBoxMessageAndType("Function!", MessageType.Info);
+        helpBox.UpdateMessageAndType("Function!", MessageType.Info);
     }
 
     public AISettingsSerializable LoadAndConvertSettingsFromFile()

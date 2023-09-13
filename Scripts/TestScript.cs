@@ -13,6 +13,11 @@ public class TestScript : MonoBehaviour
     private bool isMoving = false;
 
     // Some debug logs (may clutter the console)
+    private void Start()
+    {
+        Debug.Log("Start function called!");
+    }
+
     private void Update()
     {
         if (isMoving)

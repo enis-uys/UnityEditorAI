@@ -1,13 +1,10 @@
 using UnityEditor;
 using UnityEngine;
 
-//TODO: Update with standard space
-
 public class AISettings : SingleExtensionApplication
 {
     public override string DisplayName => "AI Settings";
     private AISettingsFileManager settingsFM = new AISettingsFileManager();
-    HelpBox helpBox = HelpBox.GetInstance();
 
     private bool hasInit = false;
 
@@ -16,7 +13,6 @@ public class AISettings : SingleExtensionApplication
         if (!hasInit)
         {
             settingsFM.LoadCustomSettings();
-            var helpBox = HelpBox.GetInstance();
             hasInit = true;
         }
     }
@@ -33,14 +29,14 @@ public class AISettings : SingleExtensionApplication
         {
             settingsFM.ApiKey = EditorGUILayout.TextField("OpenAI API Key", settingsFM.ApiKey);
 
-            EditorGUILayout.Space();
+            EditorGUILayout.Space(defaultSpace);
             GUILayout.Label("Model", EditorStyles.boldLabel);
             // Get the corres   nding string value from the dictionary//
 
             settingsFM.SelectedGptModel = (AISettingsFileManager.GptModels)
                 EditorGUILayout.EnumPopup("Select an option:", settingsFM.SelectedGptModel);
 
-            EditorGUILayout.Space();
+            EditorGUILayout.Space(defaultSpace);
             //we create a slider for the temperature now
             GUILayout.Label(
                 new GUIContent(
@@ -51,7 +47,7 @@ public class AISettings : SingleExtensionApplication
             );
 
             settingsFM.Temperature = EditorGUILayout.Slider(settingsFM.Temperature, 0.0f, 1.0f);
-            EditorGUILayout.Space();
+            EditorGUILayout.Space(defaultSpace);
 
             GUILayout.Label(
                 new GUIContent(
@@ -63,7 +59,7 @@ public class AISettings : SingleExtensionApplication
             settingsFM.MaxTokens = EditorGUILayout.IntField(settingsFM.MaxTokens);
             // Clamp value between 0 and 4096
             settingsFM.MaxTokens = EditorGUILayout.IntSlider(settingsFM.MaxTokens, 0, 4096);
-            EditorGUILayout.Space();
+            EditorGUILayout.Space(defaultSpace);
             GUILayout.Label(
                 new GUIContent(
                     "Timeout in Seconds",
@@ -76,7 +72,7 @@ public class AISettings : SingleExtensionApplication
                 5,
                 60
             );
-            EditorGUILayout.Space();
+            EditorGUILayout.Space(defaultSpace);
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Test API"))
             {
@@ -96,8 +92,8 @@ public class AISettings : SingleExtensionApplication
                 settingsFM.SaveSettingsInJson();
             }
             GUILayout.EndHorizontal();
-            EditorGUILayout.Space();
-            EditorGUILayout.HelpBox(helpBox.HelpBoxMessage, helpBox.HelpBoxMessageType);
+            EditorGUILayout.Space(defaultSpace);
+            EditorGUILayout.HelpBox(helpBox.HBMessage, helpBox.HBMessageType);
         }
         finally
         {
@@ -119,11 +115,11 @@ public class AISettings : SingleExtensionApplication
 
         if (isValidApiKey && !isGpt4OrDavinci)
         {
-            helpBox.UpdateHelpBoxMessageAndType("API Key is valid!", MessageType.Info);
+            helpBox.UpdateMessageAndType("API Key is valid!", MessageType.Info);
         }
         else
         {
-            helpBox.UpdateHelpBoxMessageAndType(
+            helpBox.UpdateMessageAndType(
                 "API Key is not valid! Or you have used gpt-4 or davinci. Those are work in progress!",
                 MessageType.Error
             );

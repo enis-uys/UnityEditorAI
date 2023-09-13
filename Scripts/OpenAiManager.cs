@@ -6,8 +6,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
-//TODO: reference to the dll
-//https://github.com/Cysharp/UniTask
+// Adapted from UniTask library by Cysharp
+// GitHub Repository: https://github.com/Cysharp/UniTask
+// Used for asynchronous programming.
 using Cysharp.Threading.Tasks;
 
 #if UNITY_EDITOR
@@ -84,12 +85,12 @@ public class OpenAiManager
     {
         AISettingsSerializable settings = settingsFM.LoadAndConvertSettingsFromFile();
         return await SendMessageToGpt(
-            settingsFM.LoadAPIKeyFromFile(),
+            settings.apiKey,
             requestMessage,
-            settingsFM.LoadSelectedGptModelAsStringFromFile(),
-            settingsFM.LoadTemperatureFromFile(),
-            settingsFM.LoadMaxTokensFromFile(),
-            settingsFM.LoadTimeoutInSecondsFromFile()
+            settings.selectedGptModel,
+            settings.temperature.Value,
+            settings.maxTokens.Value,
+            settings.timeoutInSeconds.Value
         );
     }
 
@@ -164,7 +165,7 @@ public class OpenAiManager
         {
             HelpBox
                 .GetInstance()
-                .UpdateHelpBoxMessageAndType(
+                .UpdateMessageAndType(
                     "Error while sending message to GPT: "
                         + e.Message
                         + "\nSet a higher timeout in the settings.",
@@ -202,7 +203,7 @@ public class OpenAiManager
                 {
                     HelpBox
                         .GetInstance()
-                        .UpdateHelpBoxMessageAndType("Error: " + post.error, MessageType.Error);
+                        .UpdateMessageAndType("Error: " + post.error, MessageType.Error);
                     return null;
                 }
 
@@ -215,7 +216,7 @@ public class OpenAiManager
         {
             HelpBox
                 .GetInstance()
-                .UpdateHelpBoxMessageAndType(
+                .UpdateMessageAndType(
                     "Error while sending message to GPT: " + e.Message,
                     MessageType.Error
                 );

@@ -40,7 +40,7 @@ public class OpenAiStandardPrompts
                     //This is an empty class without content.
                 }`'                
         "
-            + EndNote()
+            + ScriptEndNote()
             + inputPrompt;
     }
 
@@ -118,13 +118,13 @@ public class OpenAiStandardPrompts
                     }
                 }`'
         "
-            + EndNote()
+            + ScriptEndNote()
             + inputPrompt
             + "\n"
             + inputScript;
     }
 
-    private static string EndNote()
+    private static string ScriptEndNote()
     {
         return @" Note:         
         Only respond with the script part inside [OUTPUT]`script`. 

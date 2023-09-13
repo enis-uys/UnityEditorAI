@@ -1,10 +1,8 @@
 using UnityEditor;
 using UnityEngine;
 
-using System;
 using System.Collections.Generic;
 
-//TODO: Update with standard space
 public class AIChat : SingleExtensionApplication
 {
     /// <summary>
@@ -39,8 +37,6 @@ public class AIChat : SingleExtensionApplication
 
     private List<string> messageHistoryList = new List<string>();
 
-    HelpBox helpBox = HelpBox.GetInstance();
-
     public enum EditorPrefKey
     {
         InputText,
@@ -68,8 +64,11 @@ public class AIChat : SingleExtensionApplication
             }
             InitializeRichTextStyle();
             RenderInputField();
-            GUILayout.Space(20);
+            GUILayout.Space(defaultSpace);
             RenderOutputField();
+            GUILayout.Space(defaultSpace);
+            EditorGUILayout.HelpBox(helpBox.HBMessage, helpBox.HBMessageType);
+            helpBox.RenderProgressBar();
             SetEditorPrefs();
         }
         finally
@@ -85,8 +84,7 @@ public class AIChat : SingleExtensionApplication
     {
         if (richTextStyle == null)
         {
-            richTextStyle = new GUIStyle(GUI.skin.textArea);
-            richTextStyle.richText = true;
+            richTextStyle = new GUIStyle(GUI.skin.textArea) { richText = true };
         }
     }
 
@@ -122,10 +120,11 @@ public class AIChat : SingleExtensionApplication
                 }
                 catch (System.Exception ex)
                 {
-                    helpBox.UpdateHelpBoxMessageAndType(
+                    helpBox.UpdateMessageAndType(
                         "An error occurred during AI processing: " + ex.Message,
                         MessageType.Error
                     );
+                    helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
                     Debug.LogError("An error occurred during AI processing: " + ex.Message);
                 }
             }
@@ -176,7 +175,6 @@ public class AIChat : SingleExtensionApplication
         }
 
         GUILayout.EndHorizontal();
-        EditorGUILayout.HelpBox(helpBox.HelpBoxMessage, helpBox.HelpBoxMessageType);
     }
 
     /// <summary>
@@ -187,9 +185,13 @@ public class AIChat : SingleExtensionApplication
     {
         GUIUtility.keyboardControl = 0;
         inputText = "";
+        helpBox.SetProgressBarProgress(0.2f);
+
         var gptResponse = await OpenAiManager.ChatToGpt(input);
+
         AddRoleMessageToMessageList("User", input);
         AddRoleMessageToMessageList("System", gptResponse);
+        helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
     }
 
     private void AddRoleMessageToMessageList(string role, string message)
@@ -198,7 +200,6 @@ public class AIChat : SingleExtensionApplication
         messageHistoryList.Add(roleMessage);
     }
 
-    //TODO:
     private string MessageHistoryListToFormatedString(List<string> messageList)
     {
         List<string> formattedMessageList = new List<string>();
@@ -232,16 +233,42 @@ public class AIChat : SingleExtensionApplication
         }
     }
 
+    public static bool IsValidMessageHistory(List<string> messageList)
+    {
+        // Check if 'data' is a list of strings in the expected format
+
+        foreach (string message in messageList)
+        {
+            // Check if each message follows the expected format
+            if (!ScriptUtil.IsValidMessageFormat(message))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /// <summary>
     /// Loads the message history from a file.
     /// </summary>
-    //TODO: make a proper file selection dialog
     private void LoadMessageHistoryFromFile()
     {
-        messageHistoryList = FileManager<List<string>>.LoadDeserializedJsonFromDefaultPath(
-            "MessageHistory"
+        List<string> loadedHistory = FileManager<List<string>>.LoadDeserializedJsonPanel(
+            "Load the message history from a file"
         );
-        messageHistoryOutputField = MessageHistoryListToFormatedString(messageHistoryList);
+
+        if (loadedHistory != null && IsValidMessageHistory(loadedHistory))
+        {
+            messageHistoryList = loadedHistory;
+            messageHistoryOutputField = MessageHistoryListToFormatedString(messageHistoryList);
+        }
+        else
+        {
+            helpBox.UpdateMessageAndType(
+                "No right message history file selected.",
+                MessageType.Warning
+            );
+        }
     }
 
     /// <summary>
@@ -249,7 +276,7 @@ public class AIChat : SingleExtensionApplication
     /// </summary>
     private void SaveMessageHistoryToFile()
     {
-        FileManager<List<string>>.SaveJsonToDefaultPath(messageHistoryList, "MessageHistory");
+        FileManager<List<string>>.SaveJsonToDefaultPath(messageHistoryList, "MessageHistory.json");
     }
 
     /// <summary>

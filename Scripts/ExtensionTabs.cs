@@ -10,6 +10,7 @@ public class ExtensionTabs : EditorWindow
     private static string[] displayNames => applications.Select(a => a.DisplayName).ToArray();
     private int currentApplication;
     private bool hasInit = false;
+    private Vector2 scrollPosition;
 
     [MenuItem("Window/AI Tabs")]
     public static void ShowWindow()
@@ -22,6 +23,7 @@ public class ExtensionTabs : EditorWindow
         if (!hasInit)
         {
             Initialize();
+            hasInit = true;
         }
     }
 
@@ -45,22 +47,30 @@ public class ExtensionTabs : EditorWindow
 
     private void OnGUI()
     {
-        Initialize();
-        EditorGUILayout.LabelField("Choose a tool", EditorStyles.boldLabel);
-        EditorGUILayout.Space();
-        var prevApplication = currentApplication;
-
-        currentApplication = GUILayout.Toolbar(currentApplication, displayNames);
-        if (currentApplication != prevApplication)
+        try
         {
-            GUIUtility.keyboardControl = 0;
-            applications[currentApplication].Reload();
+            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+            Initialize();
+            EditorGUILayout.LabelField("Choose a tool", EditorStyles.boldLabel);
+            EditorGUILayout.Space();
+            var prevApplication = currentApplication;
+
+            currentApplication = GUILayout.Toolbar(currentApplication, displayNames);
+            if (currentApplication != prevApplication)
+            {
+                GUIUtility.keyboardControl = 0;
+                applications[currentApplication].Reload();
+            }
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField(
+                applications[currentApplication].DisplayName,
+                EditorStyles.boldLabel
+            );
+            applications[currentApplication].OnGUI();
         }
-        EditorGUILayout.Space();
-        EditorGUILayout.LabelField(
-            applications[currentApplication].DisplayName,
-            EditorStyles.boldLabel
-        );
-        applications[currentApplication].OnGUI();
+        finally
+        {
+            EditorGUILayout.EndScrollView();
+        }
     }
 }

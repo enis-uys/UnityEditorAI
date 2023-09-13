@@ -6,10 +6,6 @@ using System.Collections.Generic;
 // for ToArray()
 using System.Linq;
 
-//TODO: reference to the dll
-//https://github.com/Cysharp/UniTask
-using Cysharp.Threading.Tasks;
-
 public class AIScript : SingleExtensionApplication
 {
     public override string DisplayName => "AI Script";
@@ -18,11 +14,8 @@ public class AIScript : SingleExtensionApplication
     private Vector2 inputScrollPosition;
     private GameObject csPrefab;
 
-    HelpBox helpBox = HelpBox.GetInstance();
-
     //TODO: Implement system that updates existing script and asks for confirmation
     //private bool shouldUpdateExistingScript = false;
-    private const int standardSpace = 10;
 
     private Dictionary<int, string> prompts = new Dictionary<int, string>
     {
@@ -64,21 +57,21 @@ public class AIScript : SingleExtensionApplication
                     true,
                     GUILayout.Width(300)
                 );
-            GUILayout.Space(standardSpace);
+            GUILayout.Space(defaultSpace);
 
             RenderPopupField();
-            GUILayout.Space(standardSpace);
+            GUILayout.Space(defaultSpace);
 
             RenderInputField();
-            GUILayout.Space(standardSpace);
+            GUILayout.Space(defaultSpace);
 
             GUILayout.Label(
                 "Those are placeholders. Later you can put in files that need to be changed.",
                 EditorStyles.boldLabel
             );
             csPrefab = (GameObject)EditorGUILayout.ObjectField(csPrefab, typeof(GameObject), true);
-            GUILayout.Space(standardSpace);
-            EditorGUILayout.HelpBox(helpBox.HelpBoxMessage, helpBox.HelpBoxMessageType);
+            GUILayout.Space(defaultSpace);
+            EditorGUILayout.HelpBox(helpBox.HBMessage, helpBox.HBMessageType);
             SetEditorPrefs();
         }
         finally
@@ -116,7 +109,7 @@ public class AIScript : SingleExtensionApplication
         {
             if (string.IsNullOrEmpty(inputText))
             {
-                helpBox.UpdateHelpBoxMessageAndType(
+                helpBox.UpdateMessageAndType(
                     "Please enter a prompt in the input field. It will be used to create a new script or to update an existing one.",
                     MessageType.Error
                 );
@@ -130,7 +123,7 @@ public class AIScript : SingleExtensionApplication
                 catch (System.Exception ex)
                 {
                     Debug.LogError("An error occurred: " + ex.Message);
-                    helpBox.UpdateHelpBoxMessageAndType(
+                    helpBox.UpdateMessageAndType(
                         "An error occurred while processing the input.",
                         MessageType.Error
                     );
@@ -178,21 +171,18 @@ public class AIScript : SingleExtensionApplication
         inputText = "";
         GUIUtility.keyboardControl = 0;
         string gptScriptResponse = await OpenAiManager.InputToGptCreateScript(inputPrompt);
-        // maybe convert this to a readable view Debug.Log(gptScriptResponse);
+        //TODO: maybe convert this to a readable view Debug.Log(gptScriptResponse);
         //if no response is given, do nothing
         if (string.IsNullOrEmpty(gptScriptResponse))
         {
             return;
         }
-        string gptScriptClassName = FileManager<string>.ExtractClassNameFromScript(
-            gptScriptResponse
-        );
+        string cleanedScriptResponse = ScriptUtil.CleanScript(gptScriptResponse);
+        string gptScriptClassName = ScriptUtil.ExtractClassNameFromScript(cleanedScriptResponse);
         FileManager<string>.SaveStringToFileInGeneratedPath(
-            gptScriptResponse,
+            cleanedScriptResponse,
             gptScriptClassName + ".cs"
         );
-
-        // UpdateListToGui(input, gptResponse);
     }
 
     private async void CreateNewScriptVersion(string inputPrompt)
@@ -202,12 +192,12 @@ public class AIScript : SingleExtensionApplication
         if (inputScript == null)
         {
             //TODO: Remove null check and insted check if valid script --> you need to write this method anyway in the FileManager
-            helpBox.UpdateHelpBoxMessageAndType("Please select a valid script.", MessageType.Error);
+            helpBox.UpdateMessageAndType("Please select a valid script.", MessageType.Error);
             return;
         }
         // Read the content of the MonoScript asset
         string scriptContent = inputScript.ToString();
-        helpBox.UpdateHelpBoxMessageAndType(
+        helpBox.UpdateMessageAndType(
             inputScript.name + " got read and sent to GPT.",
             MessageType.Info
         );
@@ -222,11 +212,10 @@ public class AIScript : SingleExtensionApplication
         {
             return;
         }
-        string gptScriptClassName = FileManager<string>.ExtractClassNameFromScript(
-            gptScriptResponse
-        );
+        string cleanedScriptResponse = ScriptUtil.CleanScript(gptScriptResponse);
+        string gptScriptClassName = ScriptUtil.ExtractClassNameFromScript(cleanedScriptResponse);
         FileManager<string>.SaveStringToFileInGeneratedPath(
-            gptScriptResponse,
+            cleanedScriptResponse,
             gptScriptClassName + ".cs"
         );
     }
