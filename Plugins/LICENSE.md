@@ -1,4 +1,4 @@
-For Newtonsoft.json:
+For Newtonsoft.JSON:
 
 The MIT License (MIT)
 

@@ -9,7 +9,8 @@ public class ScriptUtil
     {
         if (string.IsNullOrEmpty(inputString))
         {
-            Debug.Log("string empty");
+            string helpBoxMessage = "Input string is null or empty";
+            HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Warning);
             return inputString;
         }
         // Step 1: Remove text before and after backticks
@@ -46,12 +47,8 @@ public class ScriptUtil
         if (match.Success)
         {
             string className = match.Groups[1].Value;
-            HelpBox
-                .GetInstance()
-                .UpdateMessageAndType(
-                    "Class name extracted from script: " + className,
-                    MessageType.Info
-                );
+            string helpBoxMessage = "Class name extracted from script: " + className;
+            HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Info);
             return className;
         }
         else
@@ -63,5 +60,42 @@ public class ScriptUtil
     public static bool IsValidMessageFormat(string message)
     {
         return Regex.IsMatch(message, "^(User|System): .+$");
+    }
+
+    public static bool IsValidScript(string scriptString)
+    {
+        // Clean the script string to remove unwanted characters
+        string cleanedScript = CleanScript(scriptString);
+
+        // Extract the class name from the cleaned script
+        string className = ExtractClassNameFromScript(cleanedScript);
+
+        if (string.IsNullOrEmpty(cleanedScript))
+        {
+            string helpBoxMessage = "Script is null or empty";
+            HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Error);
+            // Script is null or empty
+            return false;
+        }
+        else if (string.IsNullOrEmpty(className))
+        {
+            string helpBoxMessage = "Class name is null or empty";
+            HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Error);
+            // Class name is null or empty
+            return false;
+        }
+        // Check if the extracted class name is valid
+        else if (className == "ClassNameNotFound")
+        {
+            string helpBoxMessage = "Class name not found in the script";
+            HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Error);
+            // Class name not found in the script
+            return false;
+        }
+        else
+        {
+            // Script is valid
+            return true;
+        }
     }
 }

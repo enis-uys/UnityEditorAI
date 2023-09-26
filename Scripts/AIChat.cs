@@ -16,9 +16,8 @@ public class AIChat : SingleExtensionApplication
     private Vector2 outputScrollPosition;
 
     // This can be used later to customize the chat window
-    private GUIStyle richTextStyle;
 
-    private bool shouldLoadEditorPrefs = true;
+    public override bool ShouldLoadEditorPrefs { get; set; } = true;
 
     // Later on, we will add a list of conversations and replace the messageHistoryOutputField with a dropdown
     // This is necessary for being able to ask about old messages
@@ -32,22 +31,10 @@ public class AIChat : SingleExtensionApplication
         /// <summary>
         /// The list of messages in the conversation.
         /// </summary>
-        public List<string> messageListConversation = new List<string>();
+        public List<string> messageListConversation = new();
     }
 
-    private List<string> messageHistoryList = new List<string>();
-
-    public enum EditorPrefKey
-    {
-        InputText,
-        MessageHistoryCount
-    }
-
-    private Dictionary<EditorPrefKey, string> editorPrefKeys = new Dictionary<EditorPrefKey, string>
-    {
-        { EditorPrefKey.InputText, "InputText" },
-        { EditorPrefKey.MessageHistoryCount, "MessageHistoryCount" }
-    };
+    private List<string> messageHistoryList = new();
 
     /// <summary>
     /// GUI callback for rendering the AI Chat extension.
@@ -57,34 +44,22 @@ public class AIChat : SingleExtensionApplication
         try
         {
             EditorGUILayout.BeginVertical("Box");
-            if (shouldLoadEditorPrefs)
+            if (ShouldLoadEditorPrefs)
             {
                 LoadEditorPrefs();
-                shouldLoadEditorPrefs = false;
+                ShouldLoadEditorPrefs = false;
             }
             InitializeRichTextStyle();
             RenderInputField();
-            GUILayout.Space(defaultSpace);
+            AddDefaultSpace();
             RenderOutputField();
-            GUILayout.Space(defaultSpace);
-            EditorGUILayout.HelpBox(helpBox.HBMessage, helpBox.HBMessageType);
-            helpBox.RenderProgressBar();
+            AddDefaultSpace();
+            RenderHelpBox();
             SetEditorPrefs();
         }
         finally
         {
             EditorGUILayout.EndVertical();
-        }
-    }
-
-    /// <summary>
-    /// Initializes the rich text style for the output field.
-    /// </summary>
-    private void InitializeRichTextStyle()
-    {
-        if (richTextStyle == null)
-        {
-            richTextStyle = new GUIStyle(GUI.skin.textArea) { richText = true };
         }
     }
 
@@ -106,7 +81,7 @@ public class AIChat : SingleExtensionApplication
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Clear"))
             {
-                GUIUtility.keyboardControl = 0;
+                ResetKeyboardControl();
                 inputText = "";
             }
             if (
@@ -120,12 +95,10 @@ public class AIChat : SingleExtensionApplication
                 }
                 catch (System.Exception ex)
                 {
-                    helpBox.UpdateMessageAndType(
-                        "An error occurred during AI processing: " + ex.Message,
-                        MessageType.Error
-                    );
+                    string helpBoxMessage =
+                        "An error occurred while processing the input." + ex.Message;
+                    helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
                     helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
-                    Debug.LogError("An error occurred during AI processing: " + ex.Message);
                 }
             }
         }
@@ -146,21 +119,19 @@ public class AIChat : SingleExtensionApplication
             GUILayout.ExpandHeight(true)
         );
 
-        EditorGUI.BeginDisabledGroup(true);
-        EditorGUILayout.TextArea(
-            MessageHistoryListToFormatedString(messageHistoryList),
-            richTextStyle,
-            GUILayout.ExpandHeight(true)
-        );
-        EditorGUI.EndDisabledGroup();
+        using (new EditorGUI.DisabledScope(true))
+        {
+            EditorGUILayout.TextArea(
+                MessageHistoryListToFormatedString(messageHistoryList),
+                richTextStyle,
+                GUILayout.ExpandHeight(true)
+            );
+        }
+
         EditorGUILayout.EndScrollView();
 
         GUILayout.BeginHorizontal();
 
-        if (GUILayout.Button("Lorem Ipsum Test"))
-        {
-            AddLongMessageForTest();
-        }
         if (GUILayout.Button("Clear"))
         {
             ClearMessageHistory();
@@ -183,14 +154,14 @@ public class AIChat : SingleExtensionApplication
     /// <param name="input">The user input message.</param>
     private async void GptInputSend(string input)
     {
-        GUIUtility.keyboardControl = 0;
+        ResetKeyboardControl();
         inputText = "";
         helpBox.SetProgressBarProgress(0.2f);
 
-        var gptResponse = await OpenAiManager.ChatToGpt(input);
-
+        var gptResponse = await OpenAiApiManager.ChatToGpt(input);
         AddRoleMessageToMessageList("User", input);
         AddRoleMessageToMessageList("System", gptResponse);
+        helpBox.UpdateMessage("Message sent to GPT", MessageType.Info);
         helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
     }
 
@@ -202,7 +173,7 @@ public class AIChat : SingleExtensionApplication
 
     private string MessageHistoryListToFormatedString(List<string> messageList)
     {
-        List<string> formattedMessageList = new List<string>();
+        List<string> formattedMessageList = new();
         for (int i = 0; i < messageList.Count; i++)
         {
             string[] messageParts = messageList[i].Split(": ");
@@ -264,10 +235,8 @@ public class AIChat : SingleExtensionApplication
         }
         else
         {
-            helpBox.UpdateMessageAndType(
-                "No right message history file selected.",
-                MessageType.Warning
-            );
+            string helpBoxMessage = "The loaded message history is not valid.";
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Warning);
         }
     }
 
@@ -288,20 +257,23 @@ public class AIChat : SingleExtensionApplication
         messageHistoryList.Clear();
     }
 
-    /// <summary>
-    /// Adds a long test message for testing purposes.
-    /// </summary>
-    /// TODO: Remove this method when not needed
-    private void AddLongMessageForTest()
+    public enum EditorPrefKey
     {
-        var lorem = "Lorem Ipsum doremi fas soll la to di \n";
-        messageHistoryOutputField += "\nLorem: " + lorem + lorem + lorem + lorem;
+        InputText,
+        MessageHistoryCount
     }
+
+    private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
+        new()
+        {
+            { EditorPrefKey.InputText, "InputText" },
+            { EditorPrefKey.MessageHistoryCount, "MessageHistoryCount" }
+        };
 
     private void LoadEditorPrefs()
     {
         string loadedInputText = "";
-        List<string> loadedMessageHistoryList = new List<string>();
+        List<string> loadedMessageHistoryList = new();
 
         foreach (var kvp in editorPrefKeys)
         {

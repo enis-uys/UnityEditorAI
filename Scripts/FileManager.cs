@@ -1,149 +1,143 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
 
-//permissive open-source license (MIT License) --> https://opensource.org/licenses/MIT
-//TODO: Add the dll to the project but include the proper licence and attribution
-// --> include in code references
+/// <Title> Newtonsoft.JSON GitHub Repository </Title>
+/// <Author> James Newton-King (JamesNK) </Author>
+/// <Release Date> 08.03.2023 </Release Date>
+/// <Access Date> 10.09.2023 </Access Date>
+/// <Code version> 13.0.3 </Code version>
+/// <Availability> https://github.com/JamesNK/Newtonsoft.Json </Availability>
+/// <Usecase> JSON Serialization </Usecase>
+/// <License> Open-Source MIT License https://opensource.org/licenses/MIT </License>
+/// <Description>
+///Newtonsoft.JSON is a popular .NET library for working with JSON data.
+///It provides powerful JSON serialization and deserialization capabilities.
+/// </Description>
 using Newtonsoft.Json;
-
-// for class name extraction
-using System.Text.RegularExpressions;
 
 public class FileManager<T>
 {
-    //TODO: Update this with a Path Manager that reads file path from config / settings
-
-    private static string defaultPath = "Assets/UnityEditorAI/UserFiles/";
-    private static string defaultGeneratedPath = "Assets/UnityEditorAI/Generated/";
-
-    public static void SaveStringToFileInDefaultPath(string data, string fileNameAndType)
-    {
-        SaveStringToFileWithPath(defaultPath, fileNameAndType, data);
-    }
-
-    public static void SaveStringToFileInGeneratedPath(string data, string fileNameAndType)
-    {
-        SaveStringToFileWithPath(defaultGeneratedPath, fileNameAndType, data);
-    }
-
-    public static void SaveStringToFileWithPath(
-        string folderPath,
-        string fileNameAndType,
-        string data
-    )
-    {
-        HelpBox helpBox = HelpBox.GetInstance();
-        helpBox.UpdateMessageAndType(
-            "Saving data to file: " + folderPath + fileNameAndType,
-            MessageType.Info
-        );
-        if (!Directory.Exists(folderPath))
-        {
-            helpBox.AppendMessage("Directory does not exist, creating directory: " + folderPath);
-            Directory.CreateDirectory(folderPath);
-        }
-        if (!File.Exists(folderPath + fileNameAndType))
-        {
-            helpBox.AppendMessage(
-                "File does not exist, creating file: " + folderPath + fileNameAndType
-            );
-            using (StreamWriter sw = File.CreateText(folderPath + fileNameAndType)) { }
-        }
-        File.WriteAllText(folderPath + fileNameAndType, data);
-        helpBox.AppendMessage("Data saved to file: " + folderPath + fileNameAndType);
-    }
+    public static AISettingsFileManager settingsFM = AISettingsFileManager.GetInstance();
 
     // TODO: Create general functions for datatype and lead to specific functions --> next for script / cs
     public static void SaveJsonToDefaultPath(T data, string fileName)
     {
-        SaveToJsonFileWithPath(data, defaultPath, fileName);
+        string path = settingsFM.UserFilesFolderPath + fileName;
+        SaveToJsonFileWithPath(data, path);
     }
 
-    // TODO: Try Catch
-
-    public static void SaveToJsonFileWithPath(T data, string folderPath, string fileName)
+    public static bool SaveToJsonFileWithPath(T data, string filePath)
     {
         HelpBox helpBox = HelpBox.GetInstance();
-        var jsonData = JsonConvert.SerializeObject(data);
-        helpBox.UpdateMessageAndType(
-            "Saving data to file: " + folderPath + fileName,
-            MessageType.Info
-        );
-        if (!Directory.Exists(folderPath))
-        {
-            helpBox.AppendMessage("Directory does not exist, creating directory at: " + folderPath);
-            Directory.CreateDirectory(folderPath);
-        }
-        if (!File.Exists(folderPath + fileName))
-        {
-            helpBox.AppendMessage("File does not exist, creating file: " + folderPath + fileName);
-            using (StreamWriter sw = File.CreateText(folderPath + fileName)) { }
-        }
-        File.WriteAllText(folderPath + fileName, jsonData);
-        helpBox.AppendMessage("Data saved to file: " + folderPath + fileName);
-    }
+        string helpBoxMessage = "Saving data to file: " + filePath;
+        MessageType messageType = MessageType.Info;
 
-    public static T LoadDeserializedJsonFromDefaultPath(string fileName)
-    {
-        return LoadDeserializedJsonFromPath<T>(defaultPath, fileName);
-    }
-
-    public static T LoadDeserializedJsonPanel(string screenTitle)
-    {
+        var jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
+        helpBox.UpdateMessage(helpBoxMessage, messageType);
         try
         {
-            HelpBox helpBox = HelpBox.GetInstance();
-            string filePath = EditorUtility.OpenFilePanel(screenTitle, defaultPath, "json");
+            string folderPath = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(folderPath))
+            {
+                helpBoxMessage = "Directory does not exist, creating directory at: " + folderPath;
+                helpBox.UpdateMessage(helpBoxMessage, messageType, true);
+                Directory.CreateDirectory(folderPath);
+            }
+            if (!File.Exists(filePath))
+            {
+                helpBoxMessage = "File does not exist, creating file at: " + filePath;
+                messageType = MessageType.Info;
+                helpBox.UpdateMessage(helpBoxMessage, messageType, true);
+                using StreamWriter sw = File.CreateText(filePath);
+            }
+            File.WriteAllText(filePath, jsonData);
+            helpBoxMessage = "Data saved to file: " + filePath;
+            helpBox.UpdateMessage(helpBoxMessage, messageType, true);
+            return true;
+        }
+        catch (System.Exception ex)
+        {
+            helpBoxMessage = "An error occurred: " + ex.Message;
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            return false;
+        }
+    }
+
+    public static T LoadDeserializedJsonPanel(string screenTitle = "Load Json File")
+    {
+        HelpBox helpBox = HelpBox.GetInstance();
+        string helpBoxMessage;
+        try
+        {
+            helpBoxMessage = "Loading data from file panel";
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
+            string filePath = EditorUtility.OpenFilePanel(
+                screenTitle,
+                settingsFM.UserFilesFolderPath,
+                "json"
+            );
             if (!string.IsNullOrEmpty(filePath) && filePath.ToLower().EndsWith(".json"))
             {
                 string fileName = Path.GetFileName(filePath);
                 string directoryPath = Path.GetDirectoryName(filePath) + "\\";
-                return LoadDeserializedJsonFromPath<T>(directoryPath, fileName);
+                return LoadDeserializedJsonFromPath(directoryPath, fileName);
             }
             else if (!string.IsNullOrEmpty(filePath))
             {
-                helpBox.AppendMessageAndType("File not found: " + filePath, MessageType.Error);
-                Debug.LogError("File not found: " + filePath);
+                helpBoxMessage = "File not found or not a json file: " + filePath;
+                helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, true, true);
             }
         }
         catch (System.Exception ex)
         {
-            HelpBox
-                .GetInstance()
-                .UpdateMessageAndType("An error occurred: " + ex.Message, MessageType.Error);
-            Debug.LogError("An error occurred: " + ex.Message);
+            helpBoxMessage = "An error occurred: " + ex.Message;
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, true, true);
         }
         return default;
     }
 
-    public static J LoadDeserializedJsonFromPath<J>(string folderPath, string fileName)
+    public static T LoadDeserializedJsonFromPath(string folderPath, string fileName)
+    {
+        string path = folderPath + fileName;
+        return LoadDeserializedJsonFromPath(path);
+    }
+
+    public static T LoadDeserializedJsonFromPath(string filePath)
     {
         HelpBox helpBox = HelpBox.GetInstance();
-        helpBox.UpdateMessageAndType(
-            "Loading data from: " + folderPath + fileName,
-            MessageType.Warning
-        );
-        if (!Directory.Exists(folderPath))
+        string helpBoxMessage = "Loading data from: " + filePath;
+        helpBox.UpdateMessage(helpBoxMessage, MessageType.Warning);
+        try
         {
-            helpBox.AppendMessage("Directory does not exist, creating directory at: " + folderPath);
-            Directory.CreateDirectory(folderPath);
+            string folderPath = Path.GetDirectoryName(filePath);
+            string fileName = Path.GetFileName(filePath);
+
+            if (!Directory.Exists(folderPath))
+            {
+                helpBoxMessage = "Directory does not exist, creating directory at: " + folderPath;
+                helpBox.UpdateMessage(helpBoxMessage, null, true);
+                Directory.CreateDirectory(folderPath);
+            }
+            if (File.Exists(filePath))
+            {
+                string jsonData = File.ReadAllText(filePath);
+                T data = JsonConvert.DeserializeObject<T>(jsonData);
+                helpBoxMessage = "Data loaded from: " + filePath;
+                helpBox.UpdateMessage(helpBoxMessage, MessageType.Info, true);
+                return data;
+            }
+            else
+            {
+                helpBoxMessage = "File not found: " + filePath;
+                helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, true, true);
+                return default;
+            }
         }
-        if (File.Exists(folderPath + fileName))
+        catch (System.Exception ex)
         {
-            string jsonData = File.ReadAllText(folderPath + fileName);
-            J data = JsonConvert.DeserializeObject<J>(jsonData);
-            helpBox.AppendMessage("Data loaded from: " + folderPath + fileName);
-            return data;
-        }
-        else
-        {
-            helpBox.AppendMessageAndType(
-                "File not found: " + folderPath + fileName,
-                MessageType.Error
-            );
-            Debug.LogError("File not found: " + folderPath + fileName);
+            helpBoxMessage = "An error occurred: " + ex.Message;
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, true, true);
             return default;
         }
     }

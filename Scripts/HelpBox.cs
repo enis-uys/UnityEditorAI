@@ -2,18 +2,14 @@ using UnityEditor;
 using UnityEngine;
 using System;
 using System.Threading.Tasks;
+using LeastSquares;
 
 public class HelpBox
 {
     private static HelpBox instance;
 
-    private MessageType hbMessageType;
-
-    private string hbMessage;
-
     private DateTime lastFunctionCallTime;
-    private int timerThresholdInMilliseconds = 600;
-    private bool shouldDebugLog = false;
+    private readonly int timerThresholdInMilliseconds = 600;
     private float pogressBarProgress = 0f;
     private float intendedProgress = 1f;
     private bool isProgressBarActive = false;
@@ -21,34 +17,15 @@ public class HelpBox
 
     public static HelpBox GetInstance()
     {
-        if (instance == null)
-        {
-            instance = new HelpBox();
-        }
+        instance ??= new HelpBox();
         return instance;
     }
 
-    public MessageType HBMessageType
-    {
-        get => hbMessageType;
-        set => hbMessageType = value;
-    }
+    public MessageType HBMessageType { get; set; }
 
-    public string HBMessage
-    {
-        get => hbMessage;
-        set => hbMessage = value;
-    }
-    public bool ShouldDebugLog
-    {
-        get => shouldDebugLog;
-        set => shouldDebugLog = value;
-    }
-    public float IntendedProgress
-    {
-        get => intendedProgress;
-        set => intendedProgress = value;
-    }
+    public string HBMessage { get; set; }
+
+    public float IntendedProgress { get; set; }
 
     public int ProgressBarDelayInMilliseconds => progressBarDelayInMilliseconds;
 
@@ -80,56 +57,37 @@ public class HelpBox
         );
     }
 
-    public void UpdateMessage(string message)
-    {
-        UpdateMessageInternal(message, null);
-    }
-
-    public void UpdateMessageAndType(string message, MessageType messageType)
-    {
-        UpdateMessageInternal(message, messageType);
-    }
-
-    private void UpdateMessageInternal(string message, MessageType? messageType)
+    public void UpdateMessage(
+        string message,
+        MessageType? UpdateMessageType,
+        bool shouldAppend = false,
+        bool debugMessage = false
+    )
     {
         int timerDelayInMilliseconds = TimerDelayInMilliseconds();
+        if (UpdateMessageType.HasValue && UpdateMessageType.Value == MessageType.Error)
+        {
+            timerDelayInMilliseconds = 0;
+        }
 
         Task.Delay(timerDelayInMilliseconds)
             .ContinueWith(_ =>
             {
-                HBMessage = message;
-                if (messageType.HasValue)
+                if (UpdateMessageType.HasValue)
                 {
-                    HBMessageType = messageType.Value;
+                    HBMessageType = UpdateMessageType.Value;
                 }
-                DebugMessageIfShould();
-                UpdateLastFunctionCalltime();
-            });
-    }
+                DebugMessageIfShould(debugMessage, message, UpdateMessageType ?? HBMessageType);
 
-    public void AppendMessage(string message)
-    {
-        int timerDelayInMilliseconds = TimerDelayInMilliseconds();
+                if (shouldAppend)
+                {
+                    HBMessage += "\n" + message;
+                }
+                else
+                {
+                    HBMessage = message;
+                }
 
-        Task.Delay(timerDelayInMilliseconds)
-            .ContinueWith(_ =>
-            {
-                HBMessage += "\n" + message;
-                DebugMessageIfShould();
-                UpdateLastFunctionCalltime();
-            });
-    }
-
-    public void AppendMessageAndType(string message, MessageType messageType)
-    {
-        int timerDelayInMilliseconds = TimerDelayInMilliseconds();
-
-        Task.Delay(timerDelayInMilliseconds)
-            .ContinueWith(_ =>
-            {
-                HBMessage += "\n" + message;
-                HBMessageType = messageType;
-                DebugMessageIfShould();
                 UpdateLastFunctionCalltime();
             });
     }
@@ -201,11 +159,26 @@ public class HelpBox
         }
     }
 
-    public void DebugMessageIfShould()
+    public void DebugMessageIfShould(
+        bool shouldDebugLog,
+        string customMessage,
+        MessageType messageTypeToLog
+    )
     {
-        if (ShouldDebugLog)
+        if (shouldDebugLog)
         {
-            Debug.Log(HBMessage);
+            if (messageTypeToLog == MessageType.Error)
+            {
+                Debug.LogError(customMessage);
+            }
+            else if (messageTypeToLog == MessageType.Warning)
+            {
+                Debug.LogWarning(customMessage);
+            }
+            else
+            {
+                Debug.Log(customMessage);
+            }
         }
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-
 public class OpenAiStandardPrompts
 {
     public static string CreateNewScriptWithPrompt(string inputPrompt)
@@ -124,7 +122,7 @@ public class OpenAiStandardPrompts
             + inputScript;
     }
 
-    private static string ScriptEndNote()
+    public static string ScriptEndNote()
     {
         return @" Note:         
         Only respond with the script part inside [OUTPUT]`script`. 

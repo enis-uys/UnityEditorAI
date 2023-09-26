@@ -2,17 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO: Update with Newtonsoft.Json and make sure nullables work
+/// <Title> Newtonsoft.JSON GitHub Repository </Title>
+/// <Author> James Newton-King (JamesNK) </Author>
+/// <Release Date> 08.03.2023 </Release Date>
+/// <Access Date> 10.09.2023 </Access Date>
+/// <Code version> 13.0.3 </Code version>
+/// <Availability> https://github.com/JamesNK/Newtonsoft.Json </Availability>
+/// <Usecase> JSON Serialization </Usecase>
+/// <License> Open-Source MIT License https://opensource.org/licenses/MIT </License>
+/// <Description>
+///Newtonsoft.JSON is a popular .NET library for working with JSON data.
+///It provides powerful JSON serialization and deserialization capabilities.
+/// </Description>
+using Newtonsoft.Json;
 
 public class OpenAiInputBuilder
 {
     public class RequestBuilder
     {
         private string model;
-        private List<RequestMessage> messages = new List<RequestMessage>();
+        private List<RequestMessage> messages = new();
 
-        private float temperature;
-        public int maxTokens;
+        private float? temperature;
 
         public RequestBuilder WithModel(string model)
         {
@@ -20,15 +31,9 @@ public class OpenAiInputBuilder
             return this;
         }
 
-        public RequestBuilder WithTemperature(float temperature)
+        public RequestBuilder WithTemperature(float? temperature)
         {
             this.temperature = temperature;
-            return this;
-        }
-
-        public RequestBuilder WithMaxTokens(int maxTokens)
-        {
-            this.maxTokens = maxTokens;
             return this;
         }
 
@@ -44,10 +49,10 @@ public class OpenAiInputBuilder
             {
                 model = model,
                 messages = messages.ToArray(),
-                temperature = temperature,
-                max_tokens = maxTokens
+                temperature = temperature ?? 1f,
             };
-            return JsonUtility.ToJson(req);
+
+            return JsonConvert.SerializeObject(req, Formatting.Indented);
         }
     }
 
@@ -72,7 +77,6 @@ public class OpenAiInputBuilder
         public RequestMessage[] messages;
 
         public float temperature;
-        public int max_tokens;
     }
 
     [System.Serializable]

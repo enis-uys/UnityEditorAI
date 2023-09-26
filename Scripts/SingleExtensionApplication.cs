@@ -6,8 +6,10 @@ public abstract class SingleExtensionApplication : ScriptableObject
 {
     private EditorWindow window;
     public abstract string DisplayName { get; }
-    protected HelpBox helpBox = HelpBox.GetInstance();
+    protected static HelpBox helpBox = HelpBox.GetInstance();
     protected int defaultSpace = 10;
+    public abstract bool ShouldLoadEditorPrefs { get; set; }
+    private protected GUIStyle richTextStyle;
 
     public void Initialize(EditorWindow window)
     {
@@ -33,16 +35,37 @@ public abstract class SingleExtensionApplication : ScriptableObject
         window.Show();
     }
 
+    protected void InitializeRichTextStyle()
+    {
+        richTextStyle ??= new GUIStyle(GUI.skin.textArea) { richText = true };
+    }
+
     public HelpBox GetHelpBox()
     {
         return helpBox;
     }
 
-    public void ShowProgressBar(float progress)
+    protected void RenderHelpBox()
+    {
+        EditorGUILayout.HelpBox(helpBox.HBMessage, helpBox.HBMessageType);
+        helpBox.RenderProgressBar();
+    }
+
+    protected void ShowProgressBar(float progress)
     {
         helpBox.UpdateIntendedProgress(progress);
         EditorApplication.update += helpBox.UpdateProgressBar;
         Repaint();
+    }
+
+    protected void AddDefaultSpace()
+    {
+        GUILayout.Space(defaultSpace);
+    }
+
+    protected void ResetKeyboardControl()
+    {
+        GUIUtility.keyboardControl = 0;
     }
 
     public void Close()

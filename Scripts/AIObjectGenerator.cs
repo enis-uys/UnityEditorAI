@@ -15,10 +15,10 @@ public class AIObjectGenerator : SingleExtensionApplication
         InputText
     }
 
-    private Dictionary<EditorPrefKey, string> editorPrefKeys = new Dictionary<EditorPrefKey, string>
-    {
-        { EditorPrefKey.InputText, "InputText" }
-    };
+    public override bool ShouldLoadEditorPrefs { get; set; } = false;
+
+    private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
+        new() { { EditorPrefKey.InputText, "InputText" } };
 
     public override void OnGUI()
     {
@@ -26,12 +26,10 @@ public class AIObjectGenerator : SingleExtensionApplication
         {
             EditorGUILayout.BeginVertical("Box");
             RenderInputField();
-            GUILayout.Space(defaultSpace);
+            AddDefaultSpace();
             csPrefab = (GameObject)EditorGUILayout.ObjectField(csPrefab, typeof(GameObject), true);
-            GUILayout.Space(defaultSpace);
-            EditorGUILayout.HelpBox(helpBox.HBMessage, helpBox.HBMessageType);
-            helpBox.RenderProgressBar();
-            GUILayout.Space(defaultSpace);
+            AddDefaultSpace();
+            RenderHelpBox();
         }
         finally
         {
@@ -59,17 +57,15 @@ public class AIObjectGenerator : SingleExtensionApplication
         if (GUILayout.Button("Clear"))
         {
             csPrefab = null;
-            GUIUtility.keyboardControl = 0;
+            ResetKeyboardControl();
             inputText = "";
         }
         if (GUILayout.Button("Send Text"))
         {
             if (string.IsNullOrEmpty(inputText))
             {
-                helpBox.UpdateMessageAndType(
-                    "Please enter a prompt in the input field.",
-                    MessageType.Error
-                );
+                string helpBoxMessage = "Please enter a prompt in the input field.";
+                helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
             }
             else
             {
@@ -79,11 +75,9 @@ public class AIObjectGenerator : SingleExtensionApplication
                 }
                 catch (System.Exception ex)
                 {
-                    Debug.LogError("An error occurred: " + ex.Message);
-                    helpBox.UpdateMessageAndType(
-                        "An error occurred while processing the input.",
-                        MessageType.Error
-                    );
+                    string helpBoxMessage =
+                        "An error occurred while processing the input." + ex.Message;
+                    helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
                 }
             }
         }
@@ -96,8 +90,9 @@ public class AIObjectGenerator : SingleExtensionApplication
 
     private async void ProcessInputPrompt(string inputPrompt)
     {
-        helpBox.UpdateMessageAndType("Processing...", MessageType.Info);
-        string gptScriptResponse = await OpenAiManager.InputToGptCreateScript(inputPrompt);
+        string helpBoxMessage = "Processing...";
+        helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
+        string gptScriptResponse = await OpenAiApiManager.InputToGptCreateScript(inputPrompt);
         if (string.IsNullOrEmpty(gptScriptResponse))
         {
             return;

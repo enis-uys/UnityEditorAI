@@ -1,5 +1,4 @@
 using UnityEditor;
-using UnityEditor.EditorTools;
 using UnityEngine;
 
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Linq;
 public class ExtensionTabs : EditorWindow
 {
     private static SingleExtensionApplication[] applications;
-    private static string[] displayNames => applications.Select(a => a.DisplayName).ToArray();
+    private static string[] DisplayNames => applications.Select(a => a.DisplayName).ToArray();
     private int currentApplication;
     private bool hasInit = false;
     private Vector2 scrollPosition;
@@ -34,10 +33,11 @@ public class ExtensionTabs : EditorWindow
 
         applications = new SingleExtensionApplication[]
         {
-            ScriptableObject.CreateInstance<AIChat>(),
-            ScriptableObject.CreateInstance<AIScript>(),
-            ScriptableObject.CreateInstance<AIObjectGenerator>(),
-            ScriptableObject.CreateInstance<AISettings>()
+            CreateInstance<AIChat>(),
+            CreateInstance<AIScript>(),
+            CreateInstance<AIObjectGenerator>(),
+            CreateInstance<PromptManager>(),
+            CreateInstance<AISettings>()
         };
         foreach (var app in applications)
         {
@@ -55,7 +55,7 @@ public class ExtensionTabs : EditorWindow
             EditorGUILayout.Space();
             var prevApplication = currentApplication;
 
-            currentApplication = GUILayout.Toolbar(currentApplication, displayNames);
+            currentApplication = GUILayout.Toolbar(currentApplication, DisplayNames);
             if (currentApplication != prevApplication)
             {
                 GUIUtility.keyboardControl = 0;
