@@ -51,6 +51,7 @@ public class AISettingsFileManager
     public string UserFilesFolderPath { get; set; }
     public string SettingsFileName { get; set; }
     public string GeneratedFilesFolderPath { get; set; }
+    public int LastMessagesToSend { get; set; }
     public float Temperature { get; set; }
     public int TimeoutInSeconds { get; set; }
     public GptModels SelectedGptModel { get; set; }
@@ -85,6 +86,7 @@ public class AISettingsFileManager
             currentProjectPath
         );
         SettingsFileName = settings.settingsFileName;
+        LastMessagesToSend = settings.lastMessagesToSend ?? 2;
         Temperature = settings.temperature ?? 1f;
         TimeoutInSeconds = settings.timeoutInSeconds ?? 20;
         SelectedGptModel = ParseGptModel(settings.selectedGptModel);
@@ -135,6 +137,7 @@ public class AISettingsFileManager
                 userFilesFolderPath = defaultUserFilesFolderPath,
                 generatedFilesFolderPath = defaultGeneratedFilesFolderPath,
                 settingsFileName = defaultSettingsFileName,
+                lastMessagesToSend = 2,
                 temperature = 1f,
                 timeoutInSeconds = 20,
                 selectedGptModel = gptModelDictionary[GptModels.Default]
@@ -182,6 +185,7 @@ public class AISettingsFileManager
         AISettingsSerializable settings =
             FileManager<AISettingsSerializable>.LoadDeserializedJsonFromPath(path);
         //check if setting is defined otherwise set default value
+        settings.lastMessagesToSend ??= 2;
         settings.temperature ??= 1f;
         settings.timeoutInSeconds ??= 20;
         // Check if selectedGptModel is valid, otherwise set default value
@@ -229,11 +233,12 @@ public class AISettingsFileManager
                 userFilesFolderPath = UserFilesFolderPath,
                 settingsFileName = SettingsFileName,
                 generatedFilesFolderPath = GeneratedFilesFolderPath,
+                lastMessagesToSend = LastMessagesToSend,
                 temperature = Temperature,
                 timeoutInSeconds = TimeoutInSeconds,
                 selectedGptModel = SelectedGptModel.ToString()
             };
-        FileManager<AISettingsSerializable>.SaveToJsonFileWithPath(settings, path);
+        FileManager<AISettingsSerializable>.SaveToFileWithPath(settings, path);
         helpBoxMessage = "Settings saved to file: " + path;
         helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
     }
@@ -247,6 +252,7 @@ public class AISettingsSerializable
     public string userFilesFolderPath;
     public string settingsFileName;
     public string generatedFilesFolderPath;
+    public int? lastMessagesToSend;
     public float? temperature;
     public int? timeoutInSeconds;
     public string selectedGptModel;

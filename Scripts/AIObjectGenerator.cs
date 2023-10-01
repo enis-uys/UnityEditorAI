@@ -2,6 +2,10 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 
+//TODO: For Reflection of Flags
+using System.Reflection;
+using System.IO;
+
 public class AIObjectGenerator : SingleExtensionApplication
 {
     public override string DisplayName => "AI Object Generator";
@@ -9,6 +13,7 @@ public class AIObjectGenerator : SingleExtensionApplication
     private string inputText = "";
     private Vector2 inputScrollPosition;
     private GameObject csPrefab;
+    private const string DoTaskTemp = "DoTaskTemp";
 
     public enum EditorPrefKey
     {
@@ -16,9 +21,6 @@ public class AIObjectGenerator : SingleExtensionApplication
     }
 
     public override bool ShouldLoadEditorPrefs { get; set; } = false;
-
-    private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
-        new() { { EditorPrefKey.InputText, "InputText" } };
 
     public override void OnGUI()
     {
@@ -41,7 +43,7 @@ public class AIObjectGenerator : SingleExtensionApplication
     {
         GUILayout.Label(
             new GUIContent(
-                "Describe your prompt.",
+                "Describe your prompt to create a new Object. Afterwards you have to trigger the new Object Generation Script.",
                 "Describe what needs to be changed/added to the Object or explain what the Object should do."
             ),
             EditorStyles.boldLabel
@@ -60,18 +62,50 @@ public class AIObjectGenerator : SingleExtensionApplication
             ResetKeyboardControl();
             inputText = "";
         }
-        if (GUILayout.Button("Send Text"))
+        if (GUILayout.Button("Progress Test"))
+        {
+            ShowProgressBar(0.5f);
+        }
+        string generatePath =
+            FileManager<string>.settingsFM.GeneratedFilesFolderPath + DoTaskTemp + ".cs";
+        bool TempFileExists = File.Exists(generatePath);
+
+        using (new EditorGUI.DisabledScope(!TempFileExists))
+        {
+            if (GUILayout.Button("Trigger Object Generation Script"))
+            {
+                //This part is adapted from Kenjiro AICommand (AICommandWindow.cs)
+                // <Availability> https://github.com/keijiro/AICommand/ </Availability>
+                // View LICENSE.md to see the license and information.
+
+                if (!TempFileExists)
+                {
+                    helpBox.UpdateMessage(
+                        "DoTaskTemp file does not exist.",
+                        MessageType.Error,
+                        false,
+                        false
+                    );
+                    return;
+                }
+                EditorApplication.ExecuteMenuItem("Edit/Do Task");
+                AssetDatabase.DeleteAsset(generatePath);
+                AssetDatabase.Refresh();
+                //End of adapted part from Kenjiro AICommand.
+            }
+        }
+        if (GUILayout.Button("Send Input"))
         {
             if (string.IsNullOrEmpty(inputText))
             {
                 string helpBoxMessage = "Please enter a prompt in the input field.";
-                helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+                helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, false);
             }
             else
             {
                 try
                 {
-                    ProcessInputPrompt(inputText);
+                    ProcessInputPromptForGenerate(inputText);
                 }
                 catch (System.Exception ex)
                 {
@@ -81,23 +115,40 @@ public class AIObjectGenerator : SingleExtensionApplication
                 }
             }
         }
-        if (GUILayout.Button("Progress Test"))
-        {
-            ShowProgressBar(0.5f);
-        }
+
         GUILayout.EndHorizontal();
     }
 
-    private async void ProcessInputPrompt(string inputPrompt)
+    // This part is partly adapted from Kenjiro AICommand (AICommandWindow.cs)
+    // <Availability> https://github.com/keijiro/AICommand/ </Availability>
+    // View LICENSE.md to see the license and information.
+
+    private async void ProcessInputPromptForGenerate(string inputPrompt)
     {
-        string helpBoxMessage = "Processing...";
-        helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
-        string gptScriptResponse = await OpenAiApiManager.InputToGptCreateScript(inputPrompt);
+        var messageListBuilder = new MessageListBuilder()
+            .AddMessage(OpenAiStandardPrompts.ObjectGenerationPrompt, "system")
+            .AddMessage(inputPrompt);
+
+        string gptScriptResponse = await OpenAiApiManager.RequestToGpt(messageListBuilder);
+
         if (string.IsNullOrEmpty(gptScriptResponse))
         {
+            helpBox.UpdateMessage("No response from OpenAI API.", MessageType.Error, false, true);
             return;
         }
+        // Define the path where the generated script will be saved.
+        string generatePath =
+            FileManager<string>.settingsFM.GeneratedFilesFolderPath + DoTaskTemp + ".cs";
+        FileManager<string>.CreateScriptAssetWithReflection(generatePath, gptScriptResponse);
+        // Refresh the AssetDatabase to reflect the newly created asset.
+        AssetDatabase.Refresh();
     }
+
+    // End of adapted part from Kenjiro AICommand.
+
+
+    private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
+        new() { { EditorPrefKey.InputText, "InputText" } };
 
     private void LoadEditorPrefs()
     {

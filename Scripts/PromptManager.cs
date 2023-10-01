@@ -28,14 +28,12 @@ public class PromptManager : SingleExtensionApplication
     private List<(string Title, string Content)> defaultPromptList =
         new()
         {
-            ("Script End Note", OpenAiStandardPrompts.ScriptEndNote()),
-            (
-                "Create New Script With Prompt",
-                OpenAiStandardPrompts.CreateNewScriptWithPrompt("Input Prompt")
-            ),
+            ("Script End Note", OpenAiStandardPrompts.ScriptEndNote),
+            ("Create New Script With Prompt", OpenAiStandardPrompts.CreateNewScriptWithPrompt),
+            ("Create New Object With Prompt", OpenAiStandardPrompts.ObjectGenerationPrompt),
             (
                 "Update Existing Script With Prompt",
-                OpenAiStandardPrompts.UpdateExistingScriptWithPrompt("Input Prompt", "Input Script")
+                OpenAiStandardPrompts.UpdateExistingScriptWithPrompt
             )
         };
 
@@ -116,7 +114,7 @@ public class PromptManager : SingleExtensionApplication
                         ResetKeyboardControl();
                         var updatedItem = (CustomPromptList[i].Title, currentPromptTexts[i]);
                         CustomPromptList[i] = updatedItem;
-                        SavePromptListInJson(); //
+                        SavePromptListInJson();
                         ResetCurrentPromptTexts();
                     }
                 }
@@ -195,7 +193,7 @@ public class PromptManager : SingleExtensionApplication
 
     private void SavePromptListInJson()
     {
-        FileManager<List<(string, string)>>.SaveJsonToDefaultPath(
+        FileManager<List<(string, string)>>.SaveFileToDefaultPath(
             CustomPromptList,
             "promptList.json"
         );

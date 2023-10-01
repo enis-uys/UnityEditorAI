@@ -1,11 +1,10 @@
 public class OpenAiStandardPrompts
 {
-    public static string CreateNewScriptWithPrompt(string inputPrompt)
-    {
+    public const string CreateNewScriptWithPrompt =
         // @"Create a C# script that rotates a GameObject over time.";
         // use verbatim string for easier editing
         //TODO: Watch the gpt course again for better output formatting []<>, etc.
-        return @"
+        @"
         Your expertise in AI enables you to generate custom Unity C# scripts that fulfills the user's specific requirements.
         Upon receiving the user's input with the description, 
         your script generation process should carefully considering the user's request and ensuring it fulfills their all requirements.
@@ -37,16 +36,12 @@ public class OpenAiStandardPrompts
                 {
                     //This is an empty class without content.
                 }`'                
-        "
-            + ScriptEndNote()
-            + inputPrompt;
-    }
+        ";
 
-    public static string UpdateExistingScriptWithPrompt(string inputPrompt, string inputScript)
-    {
-        // Not implemented yet
-        //TODO: implement this
-        return @"
+    public const string UpdateExistingScriptWithPrompt
+    //TODO: implement this
+    =
+        @"
         Your expertise in AI enables you to update Unity C# scripts to fulfills the user's specific requirements.
         Upon receiving the user's input with the description, and the source code of the script, 
         your script generation process should carefully considering the user's request and ensuring the new script fulfills their all requirements.
@@ -115,16 +110,26 @@ public class OpenAiStandardPrompts
                     {
                     }
                 }`'
-        "
-            + ScriptEndNote()
-            + inputPrompt
-            + "\n"
-            + inputScript;
-    }
+        ";
 
-    public static string ScriptEndNote()
-    {
-        return @" Note:         
+    //This part is adapted from Kenjiro AICommand (AICommandWindow.cs)
+    // <Availability> https://github.com/keijiro/AICommand/ </Availability>
+    // View LICENSE.md to see the license and information.
+    public const string ObjectGenerationPrompt =
+        @"Write a Unity Editor script.
+        It provides its functionality as a menu item placed Edit > Do Task
+        It doesn’t provide any editor window. It immediately does the task when the menu item is invoked.
+        Don’t use GameObject.FindGameObjectsWithTag.
+        Do not forget to add the library to the script.
+        There is no selected object. Find game objects manually.
+        I only need the script body. Don’t add any explanation.
+        The task is described as follows:
+      ";
+
+    //End of adapted part from Kenjiro AICommand.
+
+    public const string ScriptEndNote =
+        @" Note:         
         Only respond with the script part inside [OUTPUT]`script`. 
         Make sure to not include unnecessary symbols because your output will be transformed to a C# class.
         Do not include the [OUTPUT] and symbols like '`. 
@@ -135,5 +140,4 @@ public class OpenAiStandardPrompts
 
         This is the `prompt`and/or the `script` you should use for the task:
         ";
-    }
 }

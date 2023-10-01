@@ -1,28 +1,19 @@
-// for List<>
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-/// <Title> Newtonsoft.JSON GitHub Repository </Title>
-/// <Author> James Newton-King (JamesNK) </Author>
-/// <Release Date> 08.03.2023 </Release Date>
-/// <Access Date> 10.09.2023 </Access Date>
-/// <Code version> 13.0.3 </Code version>
-/// <Availability> https://github.com/JamesNK/Newtonsoft.Json </Availability>
-/// <Usecase> JSON Serialization </Usecase>
-/// <License> Open-Source MIT License https://opensource.org/licenses/MIT </License>
-/// <Description>
-///Newtonsoft.JSON is a popular .NET library for working with JSON data.
-///It provides powerful JSON serialization and deserialization capabilities.
-/// </Description>
-using Newtonsoft.Json;
+using UnityEngine;
 
 public class OpenAiInputBuilder
 {
+    public static MessageListBuilder CreateMessageList()
+    {
+        return new MessageListBuilder();
+    }
+
     public class RequestBuilder
     {
         private string model;
-        private List<RequestMessage> messages = new();
-
+        private MessageListBuilder messageListBuilder = new();
         private float? temperature;
 
         public RequestBuilder WithModel(string model)
@@ -37,9 +28,9 @@ public class OpenAiInputBuilder
             return this;
         }
 
-        public RequestBuilder AddMessage(string role, string content)
+        public RequestBuilder WithMessageListBuilder(MessageListBuilder messageListBuilder)
         {
-            messages.Add(new RequestMessage { role = role, content = content });
+            this.messageListBuilder = messageListBuilder;
             return this;
         }
 
@@ -48,35 +39,28 @@ public class OpenAiInputBuilder
             var req = new Request
             {
                 model = model,
-                messages = messages.ToArray(),
-                temperature = temperature ?? 1f,
+                messages = messageListBuilder.Build(),
+                temperature = temperature.Value,
             };
-
-            return JsonConvert.SerializeObject(req, Formatting.Indented);
+            return FileManager<Request>.SerializeDataToJson(req);
         }
-    }
-
-    [System.Serializable]
-    public struct Response
-    {
-        public string id;
-        public ResponseChoice[] choices;
-    }
-
-    [System.Serializable]
-    public class RequestMessage
-    {
-        public string role;
-        public string content;
     }
 
     [System.Serializable]
     public class Request
     {
         public string model;
-        public RequestMessage[] messages;
+        public List<MessageListBuilder.RequestMessage> messages;
 
         public float temperature;
+    }
+
+    //TODO: Explain? why ResponseChoice ...
+    [System.Serializable]
+    public struct Response
+    {
+        public string id;
+        public ResponseChoice[] choices;
     }
 
     [System.Serializable]

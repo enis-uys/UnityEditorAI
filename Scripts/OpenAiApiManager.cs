@@ -31,37 +31,15 @@ public class OpenAiApiManager
         AISettingsFileManager.GptModels.Default
     ];
 
-    public static async UniTask<string> TestConnection()
+    public static async UniTask<string> RequestToGpt(string requestMessage)
     {
         try
         {
-            return await SendMessageToGpt(
+            MessageListBuilder messageListBuilder = new();
+            messageListBuilder.AddMessage(requestMessage, "user");
+            return await SendMessagesToGpt(
                 settingsFM.ApiKey,
-                "Hello World!",
-                settingsFM.gptModelDictionary[AISettingsFileManager.GptModels.Default],
-                settingsFM.Temperature,
-                settingsFM.TimeoutInSeconds
-            );
-        }
-        catch (Exception e)
-        {
-            ErrorMessage(e);
-            Debug.LogError("Error while testing connection: " + e.Message);
-
-            return null;
-        }
-        //TODO: some settings helpBox logic here later
-    }
-
-    public static async UniTask<string> InputToGptCreateScript(string inputPrompt)
-    {
-        try
-        {
-            string gptInput = OpenAiStandardPrompts.CreateNewScriptWithPrompt(inputPrompt);
-
-            return await SendMessageToGpt(
-                settingsFM.ApiKey,
-                gptInput,
+                messageListBuilder,
                 settingsFM.gptModelDictionary[AISettingsFileManager.GptModels.Default],
                 settingsFM.Temperature,
                 settingsFM.TimeoutInSeconds
@@ -74,20 +52,13 @@ public class OpenAiApiManager
         }
     }
 
-    public static async UniTask<string> InputScriptToGptCreateScript(
-        string inputPrompt,
-        string inputScriptString
-    )
+    public static async UniTask<string> RequestToGpt(MessageListBuilder messageListBuilder)
     {
         try
         {
-            string gptInput = OpenAiStandardPrompts.UpdateExistingScriptWithPrompt(
-                inputPrompt,
-                inputScriptString
-            );
-            return await SendMessageToGpt(
+            return await SendMessagesToGpt(
                 settingsFM.ApiKey,
-                gptInput,
+                messageListBuilder,
                 settingsFM.gptModelDictionary[AISettingsFileManager.GptModels.Default],
                 settingsFM.Temperature,
                 settingsFM.TimeoutInSeconds
@@ -100,33 +71,25 @@ public class OpenAiApiManager
         }
     }
 
-    public static async UniTask<string> ChatToGpt(string requestMessage)
-    {
-        try
-        {
-            return await SendMessageToGpt(
-                settingsFM.ApiKey,
-                requestMessage,
-                settingsFM.gptModelDictionary[AISettingsFileManager.GptModels.Default],
-                settingsFM.Temperature,
-                settingsFM.TimeoutInSeconds
-            );
-        }
-        catch (Exception e)
-        {
-            ErrorMessage(e);
-            return null;
-        }
-    }
+    //Parts of this method are inspired from AICommand
+    ///<Title> AICommand GitHub Repository </Title>
+    /// <Author> Keijiro Takahashi (keijiro) </Author>
+    /// <Release Date> 20.03.2023 </Release Date>
+    /// <Access Date> 10.09.2023 </Access Date>
+    /// <Code version> N/A </Code version>
+    /// <Availability> https://github.com/keijiro/AICommand/ </Availability>
+    /// <Usecase> Proof-of-Concept Integration of ChatGPT into Unity Editor </Usecase>
+    /// <License> Unlicense (Public Domain) </License>
+    /// <Description>
+    /// AICommand is a proof-of-concept integration of ChatGPT into Unity Editor. It allows controlling the Editor using natural language prompts.
+    /// </Description>
 
-    //parts of this method are from github AICommand
-    //https://github.com/keijiro/AICommand
-    //used an optional parameter for the model
-    //TODO: add more parameters (top_p, frequency_penalty, presence_penalty,
+    //TODO: explain why not more parameters in the bachelor add more parameters (top_p, frequency_penalty, presence_penalty,
     //stop, n, logprobs, echo, stream, best_of, logit_bias, return_prompt, return_metadata, return_sequences, expand, **kwargs)
-    public static async UniTask<string> SendMessageToGpt(
+
+    public static async UniTask<string> SendMessagesToGpt(
         string apiKey,
-        string requestMessage,
+        MessageListBuilder messageListBuilder,
         string gptModel,
         float? temperature,
         int timeoutInSeconds
@@ -135,8 +98,7 @@ public class OpenAiApiManager
         try
         {
             gptModel = CheckGptModel(gptModel);
-
-            var requestBody = BuildOpenApiRequest(gptModel, requestMessage, temperature);
+            var requestBody = BuildOpenApiRequest(gptModel, messageListBuilder, temperature);
 
             string jsonResponse = await SendGptApiRequestAsync(
                 apiKey,
@@ -153,6 +115,20 @@ public class OpenAiApiManager
             ErrorMessage(e);
             return null;
         }
+    }
+
+    private static string BuildOpenApiRequest(
+        string gptModel,
+        MessageListBuilder messageListBuilder,
+        float? temperature
+    )
+    {
+        var requestBody = new OpenAiInputBuilder.RequestBuilder()
+            .WithModel(gptModel)
+            .WithMessageListBuilder(messageListBuilder)
+            .WithTemperature(temperature)
+            .Build();
+        return requestBody;
     }
 
     private static async UniTask<string> SendGptApiRequestAsync(
@@ -201,22 +177,6 @@ public class OpenAiApiManager
     {
         string helpBoxMessage = e.Message + "\nTry to set a higher timeout in the settings.";
         HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
-    }
-
-    private static string BuildOpenApiRequest(
-        string gptModel,
-        string requestMessage,
-        float? temperature
-    )
-    {
-        //you have to change the endpoints depending on the model used
-        // remove the options like temperature if not set
-        var requestBody = new OpenAiInputBuilder.RequestBuilder()
-            .WithModel(gptModel)
-            .AddMessage("user", requestMessage)
-            .WithTemperature(temperature)
-            .Build();
-        return requestBody;
     }
 
     private static string CheckGptModel(string gptModel)

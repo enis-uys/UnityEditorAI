@@ -92,6 +92,16 @@ public class HelpBox
             });
     }
 
+    public void RemoveMessage(int milliSeconds)
+    {
+        Task.Delay(milliSeconds)
+            .ContinueWith(_ =>
+            {
+                HBMessage = "";
+                HBMessageType = MessageType.None;
+            });
+    }
+
     public void SetProgressBarProgress(float progress)
     {
         pogressBarProgress = progress;

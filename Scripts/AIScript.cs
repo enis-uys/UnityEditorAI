@@ -31,21 +31,6 @@ public class AIScript : SingleExtensionApplication
         };
     private int selectedPromptKey = 0;
 
-    public enum EditorPrefKey
-    {
-        InputScript,
-        InputText,
-        SelectedPrompt
-    }
-
-    private Dictionary<EditorPrefKey, string> editorPrefKeys =
-        new()
-        {
-            { EditorPrefKey.InputScript, "InputScriptKey" },
-            { EditorPrefKey.InputText, "InputText" },
-            { EditorPrefKey.SelectedPrompt, "SelectedPromptKey" }
-        };
-
     public override void OnGUI()
     {
         try
@@ -155,17 +140,21 @@ public class AIScript : SingleExtensionApplication
 
         if (GUILayout.Button("Execute Selected Prompt"))
         {
-            string prompt = prompts[selectedPromptKey];
-            ProcessInputPrompt(prompt);
+            string selectedPrompt = prompts[selectedPromptKey];
+            Debug.Log(selectedPrompt);
+            ProcessInputPrompt(selectedPrompt);
         }
 
         GUILayout.EndHorizontal();
     }
 
+    //TODO: Implement system that includes the selected prompt
+    //TODO: Implement checkbox under the input field that allows to select if the prompt should be included
     private void ProcessInputPrompt(string prompt)
     {
         if (IsInputScriptSelected())
         {
+            //     string gptInputWithPrompt = inputText + "\n" + prompt;
             CreateNewScriptVersion(inputText);
         }
         else
@@ -183,20 +172,25 @@ public class AIScript : SingleExtensionApplication
     private string CleanAndSaveScriptIntoFile(string script)
     {
         string cleanedScriptResponse = ScriptUtil.CleanScript(script);
-        string gptScriptClassName = ScriptUtil.ExtractClassNameFromScript(cleanedScriptResponse);
-        FileManager<string>.SaveToJsonFileWithPath(
+        string gptScriptClassName = ScriptUtil.ExtractNameAfterKeyWordFromScript(
             cleanedScriptResponse,
-            FileManager<string>.settingsFM.GeneratedFilesFolderPath + gptScriptClassName + ".cs"
+            "class"
         );
-
+        string generatePath =
+            FileManager<string>.settingsFM.GeneratedFilesFolderPath + gptScriptClassName + ".cs";
+        FileManager<string>.SaveToFileWithPath(cleanedScriptResponse, generatePath);
         return cleanedScriptResponse;
     }
 
     private async void CreateNewScriptBasedOnInput(string inputPrompt)
     {
         ClearInputAndResetKeyboardControl();
+        var messageListBuilder = new MessageListBuilder()
+            .AddMessage(OpenAiStandardPrompts.CreateNewScriptWithPrompt, "system")
+            .AddMessage(OpenAiStandardPrompts.ScriptEndNote, "system")
+            .AddMessage(inputPrompt);
 
-        string gptScriptResponse = await OpenAiApiManager.InputToGptCreateScript(inputPrompt);
+        string gptScriptResponse = await OpenAiApiManager.RequestToGpt(messageListBuilder);
         //TODO: maybe convert this to a readable view Debug.Log(gptScriptResponse);
         //if no response is given, do nothing
         if (string.IsNullOrEmpty(gptScriptResponse))
@@ -204,6 +198,7 @@ public class AIScript : SingleExtensionApplication
             return;
         }
         CleanAndSaveScriptIntoFile(gptScriptResponse);
+        AssetDatabase.Refresh();
     }
 
     private async void CreateNewScriptVersion(string inputPrompt)
@@ -222,10 +217,13 @@ public class AIScript : SingleExtensionApplication
         helpBoxMessage = inputScript.name + " got read and sent to GPT.";
         helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
 
-        string gptScriptResponse = await OpenAiApiManager.InputScriptToGptCreateScript(
-            inputPrompt,
-            scriptContent
-        );
+        //TODO: Test if this works
+        var messageListBuilder = new MessageListBuilder()
+            .AddMessage(OpenAiStandardPrompts.UpdateExistingScriptWithPrompt, "system")
+            .AddMessage(OpenAiStandardPrompts.ScriptEndNote, "system")
+            .AddMessage(inputPrompt);
+
+        string gptScriptResponse = await OpenAiApiManager.RequestToGpt(messageListBuilder);
 
         // maybe convert this to a readable view  Debug.Log(gptScriptResponse);
         //if no response is given, do nothing
@@ -243,6 +241,7 @@ public class AIScript : SingleExtensionApplication
             return;
         }
         CleanAndSaveScriptIntoFile(gptScriptResponse);
+        AssetDatabase.Refresh();
     }
 
     private bool IsInputScriptSelected()
@@ -255,6 +254,21 @@ public class AIScript : SingleExtensionApplication
         // TODO: Implement updating the existing script
     }
 
+    public enum EditorPrefKey
+    {
+        InputScriptGUID,
+        InputText,
+        SelectedPrompt
+    }
+
+    private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
+        new()
+        {
+            { EditorPrefKey.InputScriptGUID, "InputScriptGUIDKey" },
+            { EditorPrefKey.InputText, "InputTextKey" },
+            { EditorPrefKey.SelectedPrompt, "SelectedPromptKey" }
+        };
+
     private void LoadEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)
@@ -263,8 +277,9 @@ public class AIScript : SingleExtensionApplication
             {
                 switch (kvp.Key)
                 {
-                    case EditorPrefKey.InputScript:
-                        string inputScriptPath = EditorPrefs.GetString(kvp.Value);
+                    case EditorPrefKey.InputScriptGUID:
+                        // Updated to use GUID because it is more reliable than path
+                        string inputScriptPath = AssetDatabase.GUIDToAssetPath(kvp.Value);
                         inputScript = AssetDatabase.LoadAssetAtPath<MonoScript>(inputScriptPath);
                         break;
                     case EditorPrefKey.InputText:
@@ -284,11 +299,14 @@ public class AIScript : SingleExtensionApplication
         {
             switch (kvp.Key)
             {
-                case EditorPrefKey.InputScript:
+                case EditorPrefKey.InputScriptGUID:
                     if (inputScript != null)
                     {
-                        string inputScriptPath = AssetDatabase.GetAssetPath(inputScript);
-                        EditorPrefs.SetString(kvp.Value, inputScriptPath);
+                        // Updated to use GUID because it is more reliable than path
+                        string inputScriptGUID = AssetDatabase.AssetPathToGUID(
+                            AssetDatabase.GetAssetPath(inputScript)
+                        );
+                        EditorPrefs.SetString(kvp.Value, inputScriptGUID);
                     }
                     else
                     {

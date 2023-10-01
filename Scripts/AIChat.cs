@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 using System.Collections.Generic;
+using System;
 
 public class AIChat : SingleExtensionApplication
 {
@@ -11,16 +12,17 @@ public class AIChat : SingleExtensionApplication
     public override string DisplayName => "AI Chat";
 
     private string inputText = "";
+    private const string messageHistoryFileName = "MessageHistory.json";
     private string messageHistoryOutputField = "";
     private Vector2 inputScrollPosition;
     private Vector2 outputScrollPosition;
 
-    // This can be used later to customize the chat window
-
+    private readonly MessageListBuilder messageHistoryListBuilder = new();
     public override bool ShouldLoadEditorPrefs { get; set; } = true;
 
     // Later on, we will add a list of conversations and replace the messageHistoryOutputField with a dropdown
     // This is necessary for being able to ask about old messages
+    //TODO: Implement
     public class Conversation
     {
         /// <summary>
@@ -31,10 +33,8 @@ public class AIChat : SingleExtensionApplication
         /// <summary>
         /// The list of messages in the conversation.
         /// </summary>
-        public List<string> messageListConversation = new();
+        public MessageListBuilder messageListBuilder;
     }
-
-    private List<string> messageHistoryList = new();
 
     /// <summary>
     /// GUI callback for rendering the AI Chat extension.
@@ -91,7 +91,7 @@ public class AIChat : SingleExtensionApplication
             {
                 try
                 {
-                    GptInputSend(inputText);
+                    ReadInputAndSendToGPT(inputText);
                 }
                 catch (System.Exception ex)
                 {
@@ -121,8 +121,8 @@ public class AIChat : SingleExtensionApplication
 
         using (new EditorGUI.DisabledScope(true))
         {
-            EditorGUILayout.TextArea(
-                MessageHistoryListToFormatedString(messageHistoryList),
+            messageHistoryOutputField = EditorGUILayout.TextArea(
+                MessageHistoryListToFormatedString(messageHistoryListBuilder),
                 richTextStyle,
                 GUILayout.ExpandHeight(true)
             );
@@ -152,47 +152,60 @@ public class AIChat : SingleExtensionApplication
     /// Sends the user input to the AI model for processing.
     /// </summary>
     /// <param name="input">The user input message.</param>
-    private async void GptInputSend(string input)
+    private async void ReadInputAndSendToGPT(string input)
     {
         ResetKeyboardControl();
         inputText = "";
-        helpBox.SetProgressBarProgress(0.2f);
+        helpBox.SetProgressBarProgress(0.1f);
+        AISettingsFileManager settingsFM = AISettingsFileManager.GetInstance();
+        MessageListBuilder tempMessageListBuilder = new();
+        if (settingsFM.LastMessagesToSend > 0)
+        {
+            int messageCount = messageHistoryListBuilder.GetMessageCount();
+            for (int i = 0; i < settingsFM.LastMessagesToSend; i++)
+            {
+                if (i < messageCount)
+                {
+                    tempMessageListBuilder.AddMessage(
+                        messageHistoryListBuilder.GetMessageAt(messageCount - i - 1)
+                    );
+                }
+            }
+        }
+        tempMessageListBuilder.AddMessage(input);
 
-        var gptResponse = await OpenAiApiManager.ChatToGpt(input);
-        AddRoleMessageToMessageList("User", input);
-        AddRoleMessageToMessageList("System", gptResponse);
+        // .AddMessage("Hello, OpenAI!")
+        // .AddMessage("How can I help?", "assistant")
+        // .Build();
+
+        var gptResponse = await OpenAiApiManager.RequestToGpt(tempMessageListBuilder);
+        messageHistoryListBuilder.AddMessage(input, "user");
+        messageHistoryListBuilder.AddMessage(gptResponse, "assistant");
+
         helpBox.UpdateMessage("Message sent to GPT", MessageType.Info);
         helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
     }
 
-    private void AddRoleMessageToMessageList(string role, string message)
-    {
-        string roleMessage = $"{role}: {message}";
-        messageHistoryList.Add(roleMessage);
-    }
-
-    private string MessageHistoryListToFormatedString(List<string> messageList)
+    private string MessageHistoryListToFormatedString(MessageListBuilder messageListBuilder)
     {
         List<string> formattedMessageList = new();
-        for (int i = 0; i < messageList.Count; i++)
+
+        foreach (var requestMessage in messageListBuilder.Build())
         {
-            string[] messageParts = messageList[i].Split(": ");
-            if (messageParts.Length >= 2)
+            string role = requestMessage.role;
+            string content = requestMessage.content;
+            string color = "#F2A900";
+            if (role == "user")
             {
-                string sender = messageParts[0];
-                string content = messageParts[1];
-                string color = "#F2A900";
-                if (sender == "User")
-                {
-                    color = "#6DBE44";
-                }
-                string formattedMessage = $"<color={color}>{sender}:</color> {content}";
-                if (sender == "System")
-                {
-                    formattedMessage += "\n";
-                }
-                formattedMessageList.Add(formattedMessage);
+                color = "#6DBE44";
             }
+            string formattedMessage = $"<color={color}>{role}:</color> {content}";
+            // Add a new line for better readability if the sender is "assistant"
+            if (role == "assistant")
+            {
+                formattedMessage += "\n";
+            }
+            formattedMessageList.Add(formattedMessage);
         }
         if (formattedMessageList.Count > 0)
         {
@@ -204,40 +217,27 @@ public class AIChat : SingleExtensionApplication
         }
     }
 
-    public static bool IsValidMessageHistory(List<string> messageList)
-    {
-        // Check if 'data' is a list of strings in the expected format
-
-        foreach (string message in messageList)
-        {
-            // Check if each message follows the expected format
-            if (!ScriptUtil.IsValidMessageFormat(message))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
     /// <summary>
     /// Loads the message history from a file.
     /// </summary>
+    /// TODO: Replace
     private void LoadMessageHistoryFromFile()
     {
-        List<string> loadedHistory = FileManager<List<string>>.LoadDeserializedJsonPanel(
-            "Load the message history from a file"
-        );
-
-        if (loadedHistory != null && IsValidMessageHistory(loadedHistory))
+        List<MessageListBuilder.RequestMessage> loadedMessageHistory = new();
+        try
         {
-            messageHistoryList = loadedHistory;
-            messageHistoryOutputField = MessageHistoryListToFormatedString(messageHistoryList);
+            loadedMessageHistory = FileManager<
+                List<MessageListBuilder.RequestMessage>
+            >.LoadDeserializedJsonPanel("Load the message history from a file");
         }
-        else
+        catch (Exception ex)
         {
-            string helpBoxMessage = "The loaded message history is not valid.";
-            helpBox.UpdateMessage(helpBoxMessage, MessageType.Warning);
+            string helpBoxMessage =
+                "An error occurred while loading the message history." + ex.Message;
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
         }
+        messageHistoryListBuilder.ClearMessages().AddMessages(loadedMessageHistory);
     }
 
     /// <summary>
@@ -245,7 +245,10 @@ public class AIChat : SingleExtensionApplication
     /// </summary>
     private void SaveMessageHistoryToFile()
     {
-        FileManager<List<string>>.SaveJsonToDefaultPath(messageHistoryList, "MessageHistory.json");
+        FileManager<List<MessageListBuilder.RequestMessage>>.SaveFileToDefaultPath(
+            messageHistoryListBuilder.Build(),
+            messageHistoryFileName
+        );
     }
 
     /// <summary>
@@ -254,52 +257,21 @@ public class AIChat : SingleExtensionApplication
     private void ClearMessageHistory()
     {
         messageHistoryOutputField = "";
-        messageHistoryList.Clear();
+        messageHistoryListBuilder.ClearMessages();
     }
 
     public enum EditorPrefKey
     {
         InputText,
-        MessageHistoryCount
+        MessageHistoryListJson
     }
 
     private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
         new()
         {
             { EditorPrefKey.InputText, "InputText" },
-            { EditorPrefKey.MessageHistoryCount, "MessageHistoryCount" }
+            { EditorPrefKey.MessageHistoryListJson, "MessageHistoryListJson" }
         };
-
-    private void LoadEditorPrefs()
-    {
-        string loadedInputText = "";
-        List<string> loadedMessageHistoryList = new();
-
-        foreach (var kvp in editorPrefKeys)
-        {
-            if (EditorPrefs.HasKey(kvp.Value))
-            {
-                switch (kvp.Key)
-                {
-                    case EditorPrefKey.InputText:
-                        loadedInputText = EditorPrefs.GetString(kvp.Value);
-                        break;
-                    //in the case of the message history, the count get loaded first
-                    case EditorPrefKey.MessageHistoryCount:
-                        //then the messages get loaded by index
-                        for (int i = 0; i < EditorPrefs.GetInt(kvp.Value); i++)
-                        {
-                            loadedMessageHistoryList.Add(
-                                EditorPrefs.GetString("MessageHistory" + i)
-                            );
-                        }
-                        break;
-                }
-            }
-        }
-        inputText = loadedInputText;
-        messageHistoryList = loadedMessageHistoryList;
-    }
 
     private void SetEditorPrefs()
     {
@@ -310,17 +282,94 @@ public class AIChat : SingleExtensionApplication
                 case EditorPrefKey.InputText:
                     EditorPrefs.SetString(kvp.Value, inputText);
                     break;
-                case EditorPrefKey.MessageHistoryCount:
-                    EditorPrefs.SetInt(kvp.Value, messageHistoryList.Count);
-                    string messageHistoryKey = "MessageHistory";
-                    int i = 0;
-                    foreach (string message in messageHistoryList)
-                    {
-                        EditorPrefs.SetString(messageHistoryKey + i, message);
-                        i++;
-                    }
+                case EditorPrefKey.MessageHistoryListJson:
+                    // Serialize the messageHistoryList to JSON
+                    string messageHistoryListJson = FileManager<
+                        List<MessageListBuilder.RequestMessage>
+                    >.SerializeDataToJson(messageHistoryListBuilder.Build());
+                    EditorPrefs.SetString(kvp.Value, messageHistoryListJson);
                     break;
             }
         }
     }
+
+    private void LoadEditorPrefs()
+    {
+        foreach (var kvp in editorPrefKeys)
+        {
+            switch (kvp.Key)
+            {
+                case EditorPrefKey.InputText:
+                    inputText = EditorPrefs.GetString(kvp.Value, "");
+                    break;
+                case EditorPrefKey.MessageHistoryListJson:
+                    // Retrieve the serialized JSON string from EditorPrefs
+                    string messageHistoryListJson = EditorPrefs.GetString(kvp.Value, "");
+
+                    List<MessageListBuilder.RequestMessage> messageHistoryList = FileManager<
+                        List<MessageListBuilder.RequestMessage>
+                    >.DeserializeJsonString(messageHistoryListJson);
+                    messageHistoryListBuilder.ClearMessages();
+                    messageHistoryListBuilder.AddMessages(messageHistoryList);
+                    // Deserialize the JSON string back to a list of RequestMessages
+                    break;
+            }
+        }
+    }
+
+    // private void LoadEditorPrefs()
+    // {
+    //     string loadedInputText = "";
+
+    //     List<string> loadedMessageHistoryList = new();
+
+    //     foreach (var kvp in editorPrefKeys)
+    //     {
+    //         if (EditorPrefs.HasKey(kvp.Value))
+    //         {
+    //             switch (kvp.Key)
+    //             {
+    //                 case EditorPrefKey.InputText:
+    //                     loadedInputText = EditorPrefs.GetString(kvp.Value);
+    //                     break;
+    //                 //in the case of the message history, the count get loaded first
+    //                 case EditorPrefKey.MessageHistoryCount:
+    //                     //then the messages get loaded into the list by index
+    //                     for (int i = 0; i < EditorPrefs.GetInt(kvp.Value); i++)
+    //                     {
+    //                         loadedMessageHistoryList.Add(
+    //                             EditorPrefs.GetString("MessageHistory" + i)
+    //                         );
+    //                     }
+
+    //                     break;
+    //             }
+    //         }
+    //     }
+    //     inputText = loadedInputText;
+    //     messageHistoryList = loadedMessageHistoryList;
+    // }
+
+    // private void SetEditorPrefs()
+    // {
+    //     foreach (var kvp in editorPrefKeys)
+    //     {
+    //         switch (kvp.Key)
+    //         {
+    //             case EditorPrefKey.InputText:
+    //                 EditorPrefs.SetString(kvp.Value, inputText);
+    //                 break;
+    //             case EditorPrefKey.MessageHistoryCount:
+    //                 EditorPrefs.SetInt(kvp.Value, messageHistoryList.Count);
+    //                 string messageHistoryKey = "MessageHistory";
+    //                 int i = 0;
+    //                 foreach (string message in messageHistoryList)
+    //                 {
+    //                     EditorPrefs.SetString(messageHistoryKey + i, message);
+    //                     i++;
+    //                 }
+    //                 break;
+    //         }
+    //     }
+    // }
 }

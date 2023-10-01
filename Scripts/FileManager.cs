@@ -15,19 +15,28 @@ using System.IO;
 ///It provides powerful JSON serialization and deserialization capabilities.
 /// </Description>
 using Newtonsoft.Json;
+using System.Reflection;
 
 public class FileManager<T>
 {
     public static AISettingsFileManager settingsFM = AISettingsFileManager.GetInstance();
 
-    // TODO: Create general functions for datatype and lead to specific functions --> next for script / cs
-    public static void SaveJsonToDefaultPath(T data, string fileName)
+    public static void CreateScriptAssetWithReflection(string path, string data)
     {
-        string path = settingsFM.UserFilesFolderPath + fileName;
-        SaveToJsonFileWithPath(data, path);
+        // Use reflection to access the private method 'CreateScriptAssetWithContent' in Unity's ProjectWindowUtil.
+        var flags = BindingFlags.Static | BindingFlags.NonPublic;
+        var method = typeof(ProjectWindowUtil).GetMethod("CreateScriptAssetWithContent", flags);
+        // Use reflection to invoke 'CreateScriptAssetWithContent' to create a script asset in Unity.
+        method.Invoke(null, new object[] { path, data });
     }
 
-    public static bool SaveToJsonFileWithPath(T data, string filePath)
+    public static void SaveFileToDefaultPath(T data, string fileName)
+    {
+        string path = settingsFM.UserFilesFolderPath + fileName;
+        SaveToFileWithPath(data, path);
+    }
+
+    public static bool SaveToFileWithPath(T data, string filePath)
     {
         HelpBox helpBox = HelpBox.GetInstance();
         string helpBoxMessage = "Saving data to file: " + filePath;
@@ -140,5 +149,19 @@ public class FileManager<T>
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, true, true);
             return default;
         }
+    }
+
+    public static string SerializeDataToJson(T data, Formatting? formatting = Formatting.Indented)
+    {
+        string json;
+        json = JsonConvert.SerializeObject(data, formatting.Value);
+
+        return json;
+    }
+
+    public static T DeserializeJsonString(string jsonData)
+    {
+        T data = JsonConvert.DeserializeObject<T>(jsonData);
+        return data;
     }
 }

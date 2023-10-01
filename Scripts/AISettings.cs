@@ -41,6 +41,9 @@ public class AISettings : SingleExtensionApplication
             RenderModelSelectionField();
             AddDefaultSpace();
 
+            RenderLastMessagesSlider();
+            AddDefaultSpace();
+
             RenderTemperatureSlider();
             AddDefaultSpace();
 
@@ -137,6 +140,23 @@ public class AISettings : SingleExtensionApplication
             EditorGUILayout.EnumPopup("Select an option:", settingsFM.SelectedGptModel);
     }
 
+    private void RenderLastMessagesSlider()
+    {
+        GUILayout.Label(
+            new GUIContent(
+                "Last Messages To Send",
+                "Set how many last messages should be send with a message in the chat. The default is 2."
+            ),
+            EditorStyles.boldLabel
+        );
+
+        settingsFM.LastMessagesToSend = EditorGUILayout.IntSlider(
+            settingsFM.LastMessagesToSend,
+            0,
+            5
+        );
+    }
+
     private void RenderTemperatureSlider()
     {
         GUILayout.Label(
@@ -181,6 +201,13 @@ public class AISettings : SingleExtensionApplication
         {
             settingsFM.WriteSettingsInJson();
         }
+        if (GUILayout.Button("Debug brian gay"))
+        {
+            string helpBoxMessage = "Brian is gay";
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Warning, false, true);
+
+            helpBox.RemoveMessage(2000);
+        }
         GUILayout.EndHorizontal();
     }
 
@@ -190,7 +217,7 @@ public class AISettings : SingleExtensionApplication
         bool isGpt4OrDavinci =
             settingsFM.SelectedGptModel == AISettingsFileManager.GptModels.Gpt4
             || settingsFM.SelectedGptModel == AISettingsFileManager.GptModels.TextDavinci003;
-        bool isValidApiKey = await OpenAiApiManager.TestConnection() != null;
+        bool isValidApiKey = await OpenAiApiManager.RequestToGpt("Hello World!") != null;
         //TODO: Add gpt4
         if (isValidApiKey && !isGpt4OrDavinci)
         {

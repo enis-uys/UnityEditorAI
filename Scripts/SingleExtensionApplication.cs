@@ -47,6 +47,8 @@ public abstract class SingleExtensionApplication : ScriptableObject
 
     protected void RenderHelpBox()
     {
+        if (string.IsNullOrEmpty(helpBox.HBMessage))
+            return;
         EditorGUILayout.HelpBox(helpBox.HBMessage, helpBox.HBMessageType);
         helpBox.RenderProgressBar();
     }

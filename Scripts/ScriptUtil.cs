@@ -1,10 +1,14 @@
-using UnityEngine;
 using System.Text.RegularExpressions;
 
 using UnityEditor;
+using System.Reflection;
 
 public class ScriptUtil
 {
+    //TODO: check for csharp after the backticks
+
+    public const string NameNotFound = "NameNotFound";
+
     public static string CleanScript(string inputString)
     {
         if (string.IsNullOrEmpty(inputString))
@@ -38,23 +42,33 @@ public class ScriptUtil
         return outputString2;
     }
 
-    public static string ExtractClassNameFromScript(string scriptString)
+    public static string ExtractNameAfterKeyWordFromScript(string scriptString, string keyword)
     {
-        //checks for the word after the first class keyword and uses it as the class name
-        string pattern = @"\bclass\s+(\w+)\b";
+        //checks for the word after the first void keyword and uses it as the function name
 
+        string pattern = GetWordAfterKeyWordPattern(keyword);
         Match match = Regex.Match(scriptString, pattern);
         if (match.Success)
         {
-            string className = match.Groups[1].Value;
-            string helpBoxMessage = "Class name extracted from script: " + className;
+            string name = match.Groups[1].Value;
+            string helpBoxMessage = $"{keyword} name extracted from script: {name}";
             HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Info);
-            return className;
+            return name;
         }
         else
         {
-            return "ClassNameNotFound";
+            return NameNotFound;
         }
+    }
+
+    private static string GetWordAfterKeyWordPattern(string keyword)
+    {
+        // Pattern: Find the keyword and match the word after it
+        // \b is a word boundary
+        // keyword is the keyword to find
+        // \s is a whitespace
+        // \w is a the match of any word character
+        return @"\b" + keyword + @"\s+(\w+)\b";
     }
 
     public static bool IsValidMessageFormat(string message)
@@ -68,7 +82,7 @@ public class ScriptUtil
         string cleanedScript = CleanScript(scriptString);
 
         // Extract the class name from the cleaned script
-        string className = ExtractClassNameFromScript(cleanedScript);
+        string className = ExtractNameAfterKeyWordFromScript(cleanedScript, "class");
 
         if (string.IsNullOrEmpty(cleanedScript))
         {
@@ -85,7 +99,7 @@ public class ScriptUtil
             return false;
         }
         // Check if the extracted class name is valid
-        else if (className == "ClassNameNotFound")
+        else if (className == NameNotFound)
         {
             string helpBoxMessage = "Class name not found in the script";
             HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Error);
