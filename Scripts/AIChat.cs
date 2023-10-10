@@ -160,7 +160,7 @@ public class AIChat : SingleExtensionApplication
         AISettingsFileManager settingsFM = AISettingsFileManager.GetInstance();
         MessageListBuilder tempMessageListBuilder = new();
         int lastMessagesCount = settingsFM.LastMessagesToSend;
-        if (lastMessagesCount > 0)
+        if (lastMessagesCount > 0 && messageHistoryListBuilder.GetMessageCount() > 0)
         {
             int messageCount = messageHistoryListBuilder.GetMessageCount();
             for (int i = messageCount - lastMessagesCount; i < messageCount; i++)
