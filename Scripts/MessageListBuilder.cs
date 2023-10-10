@@ -63,7 +63,12 @@ public class MessageListBuilder
 
     public RequestMessage GetMessageAt(int index)
     {
-        return messageList[index];
+        if (index < messageList.Count)
+        {
+            return messageList[index];
+        }
+        else
+            return null;
     }
 
     public int GetMessageCount()
