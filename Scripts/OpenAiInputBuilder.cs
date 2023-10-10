@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using LeastSquares;
 using UnityEngine;
 
 public class OpenAiInputBuilder

@@ -304,71 +304,25 @@ public class AIChat : SingleExtensionApplication
                 case EditorPrefKey.MessageHistoryListJson:
                     // Retrieve the serialized JSON string from EditorPrefs
                     string messageHistoryListJson = EditorPrefs.GetString(kvp.Value, "");
-
-                    List<MessageListBuilder.RequestMessage> messageHistoryList = FileManager<
-                        List<MessageListBuilder.RequestMessage>
-                    >.DeserializeJsonString(messageHistoryListJson);
-                    messageHistoryListBuilder.ClearMessages();
-                    messageHistoryListBuilder.AddMessages(messageHistoryList);
-                    // Deserialize the JSON string back to a list of RequestMessages
+                    if (!string.IsNullOrEmpty(messageHistoryListJson))
+                    {
+                        List<MessageListBuilder.RequestMessage> messageHistoryList = FileManager<
+                            List<MessageListBuilder.RequestMessage>
+                        >.DeserializeJsonString(messageHistoryListJson);
+                        messageHistoryListBuilder.ClearMessages();
+                        if (messageHistoryList != null)
+                        {
+                            messageHistoryListBuilder.AddMessages(messageHistoryList);
+                        }
+                        else
+                        {
+                            string helpBoxMessage = "Deserialized message history list is null.";
+                            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+                        }
+                        // Deserialize the JSON string back to a list of RequestMessages
+                    }
                     break;
             }
         }
     }
-
-    // private void LoadEditorPrefs()
-    // {
-    //     string loadedInputText = "";
-
-    //     List<string> loadedMessageHistoryList = new();
-
-    //     foreach (var kvp in editorPrefKeys)
-    //     {
-    //         if (EditorPrefs.HasKey(kvp.Value))
-    //         {
-    //             switch (kvp.Key)
-    //             {
-    //                 case EditorPrefKey.InputText:
-    //                     loadedInputText = EditorPrefs.GetString(kvp.Value);
-    //                     break;
-    //                 //in the case of the message history, the count get loaded first
-    //                 case EditorPrefKey.MessageHistoryCount:
-    //                     //then the messages get loaded into the list by index
-    //                     for (int i = 0; i < EditorPrefs.GetInt(kvp.Value); i++)
-    //                     {
-    //                         loadedMessageHistoryList.Add(
-    //                             EditorPrefs.GetString("MessageHistory" + i)
-    //                         );
-    //                     }
-
-    //                     break;
-    //             }
-    //         }
-    //     }
-    //     inputText = loadedInputText;
-    //     messageHistoryList = loadedMessageHistoryList;
-    // }
-
-    // private void SetEditorPrefs()
-    // {
-    //     foreach (var kvp in editorPrefKeys)
-    //     {
-    //         switch (kvp.Key)
-    //         {
-    //             case EditorPrefKey.InputText:
-    //                 EditorPrefs.SetString(kvp.Value, inputText);
-    //                 break;
-    //             case EditorPrefKey.MessageHistoryCount:
-    //                 EditorPrefs.SetInt(kvp.Value, messageHistoryList.Count);
-    //                 string messageHistoryKey = "MessageHistory";
-    //                 int i = 0;
-    //                 foreach (string message in messageHistoryList)
-    //                 {
-    //                     EditorPrefs.SetString(messageHistoryKey + i, message);
-    //                     i++;
-    //                 }
-    //                 break;
-    //         }
-    //     }
-    // }
 }

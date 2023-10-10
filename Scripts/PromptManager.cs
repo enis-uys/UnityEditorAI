@@ -80,67 +80,70 @@ public class PromptManager : SingleExtensionApplication
             ),
             EditorStyles.boldLabel
         );
-        if (CustomPromptList.Count == 0)
+        if (CustomPromptList == null || CustomPromptList.Count == 0)
         {
             helpBox.UpdateMessage("No custom prompts found.", MessageType.Warning, false, false);
         }
-
-        int itemToRemove = -1; // Track the item to remove from the list
-        for (int i = 0; i < CustomPromptList.Count; i++)
+        else
         {
-            GUILayout.BeginVertical();
-
-            try
+            int itemToRemove = -1; // Track the item to remove from the list
+            for (int i = 0; i < CustomPromptList.Count; i++)
             {
-                GUILayout.Label(CustomPromptList[i].Title, EditorStyles.boldLabel);
-                using (new EditorGUI.DisabledScope(selectedIndex != i))
+                GUILayout.BeginVertical();
+
+                try
                 {
-                    currentPromptTexts[i] = EditorGUILayout.TextArea(
-                        currentPromptTexts[i],
-                        richTextStyle
-                    );
+                    GUILayout.Label(CustomPromptList[i].Title, EditorStyles.boldLabel);
+                    using (new EditorGUI.DisabledScope(selectedIndex != i))
+                    {
+                        currentPromptTexts[i] = EditorGUILayout.TextArea(
+                            currentPromptTexts[i],
+                            richTextStyle
+                        );
 
-                    GUILayout.BeginHorizontal();
+                        GUILayout.BeginHorizontal();
 
-                    if (GUILayout.Button("Delete", GUILayout.ExpandWidth(true)))
+                        if (GUILayout.Button("Delete", GUILayout.ExpandWidth(true)))
+                        {
+                            selectedIndex = -1;
+                            ResetKeyboardControl();
+                            itemToRemove = i;
+                            ResetCurrentPromptTexts();
+                        }
+                        if (GUILayout.Button("Save", GUILayout.ExpandWidth(true)))
+                        {
+                            selectedIndex = -1;
+                            ResetKeyboardControl();
+                            var updatedItem = (CustomPromptList[i].Title, currentPromptTexts[i]);
+                            CustomPromptList[i] = updatedItem;
+                            SavePromptListInJson();
+                            ResetCurrentPromptTexts();
+                        }
+                    }
+                    if (selectedIndex != i && GUILayout.Button("Edit", GUILayout.ExpandWidth(true)))
+                    {
+                        selectedIndex = i;
+                    }
+                    else if (
+                        selectedIndex == i
+                        && GUILayout.Button("Cancel", GUILayout.ExpandWidth(true))
+                    )
                     {
                         selectedIndex = -1;
-                        ResetKeyboardControl();
-                        itemToRemove = i;
                         ResetCurrentPromptTexts();
-                    }
-                    if (GUILayout.Button("Save", GUILayout.ExpandWidth(true)))
-                    {
-                        selectedIndex = -1;
                         ResetKeyboardControl();
-                        var updatedItem = (CustomPromptList[i].Title, currentPromptTexts[i]);
-                        CustomPromptList[i] = updatedItem;
-                        SavePromptListInJson();
-                        ResetCurrentPromptTexts();
                     }
+                    GUILayout.EndHorizontal();
                 }
-                if (selectedIndex != i && GUILayout.Button("Edit", GUILayout.ExpandWidth(true)))
+                finally
                 {
-                    selectedIndex = i;
+                    GUILayout.EndVertical();
                 }
-                else if (
-                    selectedIndex == i && GUILayout.Button("Cancel", GUILayout.ExpandWidth(true))
-                )
-                {
-                    selectedIndex = -1;
-                    ResetCurrentPromptTexts();
-                    ResetKeyboardControl();
-                }
-                GUILayout.EndHorizontal();
             }
-            finally
+            if (itemToRemove >= 0)
             {
-                GUILayout.EndVertical();
+                CustomPromptList.RemoveAt(itemToRemove);
             }
-        }
-        if (itemToRemove >= 0)
-        {
-            CustomPromptList.RemoveAt(itemToRemove);
         }
     }
 
@@ -259,6 +262,9 @@ public class PromptManager : SingleExtensionApplication
 
     private void ResetCurrentPromptTexts()
     {
-        currentPromptTexts = CustomPromptList.ConvertAll(item => item.Content);
+        if (CustomPromptList != null && CustomPromptList.Count > 0)
+        {
+            currentPromptTexts = CustomPromptList.ConvertAll(item => item.Content);
+        }
     }
 }
