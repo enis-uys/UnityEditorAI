@@ -9,7 +9,13 @@ public abstract class SingleExtensionApplication : ScriptableObject
     protected static HelpBox helpBox = HelpBox.GetInstance();
     protected int defaultSpace = 10;
     public abstract bool ShouldLoadEditorPrefs { get; set; }
-    private protected GUIStyle richTextStyle;
+
+    //hlb = highlight button
+    private protected GUIStyle richTextStyle,
+        hlbStyle;
+    private protected GUISkin hlbSkin;
+
+    private const string HighlightButtonRessourcePath = "HighlightButton";
 
     public void Initialize(EditorWindow window)
     {
@@ -18,32 +24,33 @@ public abstract class SingleExtensionApplication : ScriptableObject
 
     public abstract void OnGUI();
 
-    public virtual void Reload() { }
+    public virtual void OnEnable() { }
 
-    public void Repaint()
-    {
-        window.Repaint();
-    }
+    public void Repaint() => window.Repaint();
 
-    public void Focus()
-    {
-        window.Focus();
-    }
+    public void Focus() => window.Focus();
 
     public void Show()
     {
         window.Show();
     }
 
-    protected void InitializeRichTextStyle()
+    protected void InitializeGuiStyles()
     {
         richTextStyle ??= new GUIStyle(GUI.skin.textArea) { richText = true };
+        GUIStyle defaultStyle = new(GUI.skin.button) { fontStyle = FontStyle.Bold };
+        hlbSkin = Resources.Load<GUISkin>(HighlightButtonRessourcePath);
+        if (hlbSkin != null && hlbSkin.button != null)
+        {
+            hlbStyle = new(hlbSkin.button);
+        }
+        else
+        {
+            hlbStyle = defaultStyle;
+        }
     }
 
-    public HelpBox GetHelpBox()
-    {
-        return helpBox;
-    }
+    public HelpBox GetHelpBox() => helpBox;
 
     protected void RenderHelpBox()
     {
@@ -60,27 +67,11 @@ public abstract class SingleExtensionApplication : ScriptableObject
         Repaint();
     }
 
-    protected void AddDefaultSpace()
-    {
-        GUILayout.Space(defaultSpace);
-    }
+    protected void AddDefaultSpace() => GUILayout.Space(defaultSpace);
 
-    protected void ResetKeyboardControl()
-    {
-        GUIUtility.keyboardControl = 0;
-    }
+    protected void ResetKeyboardControl() => GUIUtility.keyboardControl = 0;
 
-    public void Close()
-    {
-        window.Close();
-    }
+    public void Close() => window.Close();
 
-    public virtual void OnEnable()
-    {
-        Reload();
-    }
-
-    public virtual void OnDisable() { }
-
-    protected Rect position => window.position;
+    // protected Rect Position => window.position;
 }

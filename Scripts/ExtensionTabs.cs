@@ -59,7 +59,7 @@ public class ExtensionTabs : EditorWindow
             if (currentApplication != prevApplication)
             {
                 GUIUtility.keyboardControl = 0;
-                applications[currentApplication].Reload();
+                applications[currentApplication].OnEnable();
             }
             EditorGUILayout.Space();
             EditorGUILayout.LabelField(

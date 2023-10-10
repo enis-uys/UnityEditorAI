@@ -49,7 +49,7 @@ public class AIChat : SingleExtensionApplication
                 LoadEditorPrefs();
                 ShouldLoadEditorPrefs = false;
             }
-            InitializeRichTextStyle();
+            InitializeGuiStyles();
             RenderInputField();
             AddDefaultSpace();
             RenderOutputField();
@@ -159,24 +159,16 @@ public class AIChat : SingleExtensionApplication
         helpBox.SetProgressBarProgress(0.1f);
         AISettingsFileManager settingsFM = AISettingsFileManager.GetInstance();
         MessageListBuilder tempMessageListBuilder = new();
-        if (settingsFM.LastMessagesToSend > 0)
+        int lastMessagesCount = settingsFM.LastMessagesToSend;
+        if (lastMessagesCount > 0)
         {
             int messageCount = messageHistoryListBuilder.GetMessageCount();
-            for (int i = 0; i < settingsFM.LastMessagesToSend; i++)
+            for (int i = messageCount - lastMessagesCount; i < messageCount; i++)
             {
-                if (i < messageCount)
-                {
-                    tempMessageListBuilder.AddMessage(
-                        messageHistoryListBuilder.GetMessageAt(messageCount - i - 1)
-                    );
-                }
+                tempMessageListBuilder.AddMessage(messageHistoryListBuilder.GetMessageAt(i));
             }
         }
-        tempMessageListBuilder.AddMessage(input);
-
-        // .AddMessage("Hello, OpenAI!")
-        // .AddMessage("How can I help?", "assistant")
-        // .Build();
+        tempMessageListBuilder.AddMessage(input, "user");
 
         var gptResponse = await OpenAiApiManager.RequestToGpt(tempMessageListBuilder);
         messageHistoryListBuilder.AddMessage(input, "user");
@@ -229,6 +221,13 @@ public class AIChat : SingleExtensionApplication
             loadedMessageHistory = FileManager<
                 List<MessageListBuilder.RequestMessage>
             >.LoadDeserializedJsonPanel("Load the message history from a file");
+        }
+        catch (Newtonsoft.Json.JsonException jsonEx)
+        {
+            string helpBoxMessage =
+                "JSON data does not match expected type." + "\n" + jsonEx.Message;
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
         }
         catch (Exception ex)
         {

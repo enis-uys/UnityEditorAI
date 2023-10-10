@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using LeastSquares;
 using UnityEngine;
 
 public class OpenAiInputBuilder
@@ -12,7 +12,8 @@ public class OpenAiInputBuilder
 
     public class RequestBuilder
     {
-        private string model;
+        private string model,
+            prompt;
         private MessageListBuilder messageListBuilder = new();
         private float? temperature;
 
@@ -34,6 +35,12 @@ public class OpenAiInputBuilder
             return this;
         }
 
+        public RequestBuilder WithPrompt(string prompt)
+        {
+            this.prompt = prompt;
+            return this;
+        }
+
         public string Build()
         {
             var req = new Request
@@ -44,9 +51,20 @@ public class OpenAiInputBuilder
             };
             return FileManager<Request>.SerializeDataToJson(req);
         }
+
+        public string BuildCompletionRequest()
+        {
+            var request = new CompletionRequest()
+            {
+                model = model,
+                prompt = prompt,
+                temperature = temperature ?? 0.0f
+            };
+            return JsonUtility.ToJson(request);
+        }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Request
     {
         public string model;
@@ -55,25 +73,46 @@ public class OpenAiInputBuilder
         public float temperature;
     }
 
-    //TODO: Explain? why ResponseChoice ...
-    [System.Serializable]
+    [Serializable]
+    public class CompletionRequest
+    {
+        public string model;
+        public string prompt;
+        public float temperature;
+    }
+
+    [Serializable]
     public struct Response
     {
         public string id;
         public ResponseChoice[] choices;
+
+        [Serializable]
+        public struct ResponseChoice
+        {
+            public int index;
+            public ResponseMessage message;
+
+            [Serializable]
+            public struct ResponseMessage
+            {
+                public string role;
+                public string content;
+            }
+        }
     }
 
-    [System.Serializable]
-    public struct ResponseChoice
+    [Serializable]
+    public struct CompletionResponse
     {
-        public int index;
-        public ResponseMessage message;
+        public string id;
+        public CompletionResponseChoice[] choices;
 
-        [System.Serializable]
-        public struct ResponseMessage
+        [Serializable]
+        public struct CompletionResponseChoice
         {
-            public string role;
-            public string content;
+            public int index;
+            public string text;
         }
     }
 }

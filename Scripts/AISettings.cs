@@ -2,7 +2,6 @@ using UnityEditor;
 using UnityEngine;
 
 using System.Collections.Generic;
-using UnityEngine.UIElements;
 
 public class AISettings : SingleExtensionApplication
 {
@@ -52,7 +51,6 @@ public class AISettings : SingleExtensionApplication
 
             RenderActionButtons();
             AddDefaultSpace();
-
             RenderHelpBox();
             SetEditorPrefs();
         }
@@ -134,10 +132,14 @@ public class AISettings : SingleExtensionApplication
     private void RenderModelSelectionField()
     {
         GUILayout.Label("Model", EditorStyles.boldLabel);
-        // Get the corresponding string value from the dictionary//
-
-        settingsFM.SelectedGptModel = (AISettingsFileManager.GptModels)
-            EditorGUILayout.EnumPopup("Select an option:", settingsFM.SelectedGptModel);
+        // Get the corresponding string value from the dictionary
+        int selectedGptModelInt = EditorGUILayout.Popup(
+            "Select an option:",
+            settingsFM.SelectedGptModelInt(),
+            settingsFM.gptModelsArray
+        );
+        // Get the corresponding key from the dictionary
+        settingsFM.SelectedGptModel = settingsFM.gptModelsArray[selectedGptModelInt];
     }
 
     private void RenderLastMessagesSlider()
@@ -201,33 +203,22 @@ public class AISettings : SingleExtensionApplication
         {
             settingsFM.WriteSettingsInJson();
         }
-        if (GUILayout.Button("Debug brian gay"))
-        {
-            string helpBoxMessage = "Brian is gay";
-            helpBox.UpdateMessage(helpBoxMessage, MessageType.Warning, false, true);
-
-            helpBox.RemoveMessage(2000);
-        }
         GUILayout.EndHorizontal();
     }
 
     private async void TestAPI()
     {
         string helpBoxMessage;
-        bool isGpt4OrDavinci =
-            settingsFM.SelectedGptModel == AISettingsFileManager.GptModels.Gpt4
-            || settingsFM.SelectedGptModel == AISettingsFileManager.GptModels.TextDavinci003;
+
         bool isValidApiKey = await OpenAiApiManager.RequestToGpt("Hello World!") != null;
-        //TODO: Add gpt4
-        if (isValidApiKey && !isGpt4OrDavinci)
+        if (isValidApiKey)
         {
             helpBoxMessage = "API Key is valid!";
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
         }
         else
         {
-            helpBoxMessage =
-                "API Key is not valid! Or you have used gpt-4 or davinci. Those are work in progress!";
+            helpBoxMessage = "API Key is not valid!";
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error);
         }
     }

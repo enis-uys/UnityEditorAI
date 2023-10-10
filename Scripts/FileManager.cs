@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
@@ -98,7 +99,7 @@ public class FileManager<T>
                 helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, true, true);
             }
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             helpBoxMessage = "An error occurred: " + ex.Message;
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, true, true);
@@ -131,10 +132,17 @@ public class FileManager<T>
             if (File.Exists(filePath))
             {
                 string jsonData = File.ReadAllText(filePath);
-                T data = JsonConvert.DeserializeObject<T>(jsonData);
-                helpBoxMessage = "Data loaded from: " + filePath;
-                helpBox.UpdateMessage(helpBoxMessage, MessageType.Info, true);
-                return data;
+                try
+                {
+                    T data = JsonConvert.DeserializeObject<T>(jsonData);
+                    helpBoxMessage = "Data loaded from: " + filePath;
+                    helpBox.UpdateMessage(helpBoxMessage, MessageType.Info, true);
+                    return data;
+                }
+                catch (JsonException jsonEx)
+                {
+                    throw jsonEx;
+                }
             }
             else
             {
@@ -143,7 +151,11 @@ public class FileManager<T>
                 return default;
             }
         }
-        catch (System.Exception ex)
+        catch (JsonException jsonEx)
+        {
+            throw jsonEx;
+        }
+        catch (Exception ex)
         {
             helpBoxMessage = "An error occurred: " + ex.Message;
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, true, true);

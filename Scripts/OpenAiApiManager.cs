@@ -23,13 +23,12 @@ using UnityEditor;
 
 public class OpenAiApiManager
 {
-    const string endpoint = "https://api.openai.com/v1/chat/completions";
+    const string chatEndpoint = "https://api.openai.com/v1/chat/completions";
+
+    //for davinci model
+    const string completionsEndpoint = "https://api.openai.com/v1/completions";
 
     private static readonly AISettingsFileManager settingsFM = AISettingsFileManager.GetInstance();
-
-    private static readonly string settingsDefaultOpenAiModel = settingsFM.gptModelDictionary[
-        AISettingsFileManager.GptModels.Default
-    ];
 
     public static async UniTask<string> RequestToGpt(string requestMessage)
     {
@@ -40,7 +39,7 @@ public class OpenAiApiManager
             return await SendMessagesToGpt(
                 settingsFM.ApiKey,
                 messageListBuilder,
-                settingsFM.gptModelDictionary[AISettingsFileManager.GptModels.Default],
+                settingsFM.SelectedGptModel,
                 settingsFM.Temperature,
                 settingsFM.TimeoutInSeconds
             );
@@ -59,7 +58,7 @@ public class OpenAiApiManager
             return await SendMessagesToGpt(
                 settingsFM.ApiKey,
                 messageListBuilder,
-                settingsFM.gptModelDictionary[AISettingsFileManager.GptModels.Default],
+                settingsFM.SelectedGptModel,
                 settingsFM.Temperature,
                 settingsFM.TimeoutInSeconds
             );
@@ -97,15 +96,17 @@ public class OpenAiApiManager
     {
         try
         {
-            gptModel = CheckGptModel(gptModel);
             var requestBody = BuildOpenApiRequest(gptModel, messageListBuilder, temperature);
-
             string jsonResponse = await SendGptApiRequestAsync(
                 apiKey,
+                GetEndPoint(gptModel),
                 requestBody,
                 timeoutInSeconds
             );
-            string responseResult = ParseOpenApiResponse(jsonResponse);
+            string responseResult = ParseOpenApiResponse(
+                jsonResponse,
+                gptModel.Contains("davinci")
+            );
 
             return responseResult;
         }
@@ -123,16 +124,30 @@ public class OpenAiApiManager
         float? temperature
     )
     {
-        var requestBody = new OpenAiInputBuilder.RequestBuilder()
-            .WithModel(gptModel)
-            .WithMessageListBuilder(messageListBuilder)
-            .WithTemperature(temperature)
-            .Build();
-        return requestBody;
+        if (gptModel.Contains("davinci"))
+        {
+            int messageListCount = messageListBuilder.GetMessageCount();
+            var requestBody = new OpenAiInputBuilder.RequestBuilder()
+                .WithModel(gptModel)
+                .WithPrompt(messageListBuilder.GetMessageAt(messageListCount - 1).content)
+                .WithTemperature(temperature)
+                .BuildCompletionRequest();
+            return requestBody;
+        }
+        else
+        {
+            var requestBody = new OpenAiInputBuilder.RequestBuilder()
+                .WithModel(gptModel)
+                .WithMessageListBuilder(messageListBuilder)
+                .WithTemperature(temperature)
+                .Build();
+            return requestBody;
+        }
     }
 
     private static async UniTask<string> SendGptApiRequestAsync(
         string apiKey,
+        string endpoint,
         string requestBody,
         int timeoutInSeconds = 20
     )
@@ -151,7 +166,7 @@ public class OpenAiApiManager
 
             // The await keyword will yield control back to the caller while the request is being processed.
             await req;
-            // Maybe add a progress bar here also change the while loop (not good practice)
+            //TODO: Maybe add a progress bar here
 
             if (
                 post.result == UnityWebRequest.Result.ConnectionError
@@ -179,29 +194,32 @@ public class OpenAiApiManager
         HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
     }
 
-    private static string CheckGptModel(string gptModel)
+    private static string ParseOpenApiResponse(string jsonResponse, bool isCompletion = false)
     {
-        if (
-            gptModel != "gpt-3.5-turbo"
-            && gptModel != "gpt35turbo16k"
-            && gptModel != "text-davinci-003"
-            && gptModel != "gpt-4"
-        )
+        if (isCompletion)
         {
-            return settingsDefaultOpenAiModel;
+            var data = JsonUtility.FromJson<OpenAiInputBuilder.CompletionResponse>(jsonResponse);
+            return data.choices[0].text;
         }
         else
         {
-            return gptModel;
+            var data = JsonUtility.FromJson<OpenAiInputBuilder.Response>(jsonResponse);
+
+            string responseResult = data.choices[0].message.content.Trim();
+            return responseResult;
         }
     }
 
-    private static string ParseOpenApiResponse(string jsonResponse)
+    private static string GetEndPoint(string gptModel)
     {
-        var data = JsonUtility.FromJson<OpenAiInputBuilder.Response>(jsonResponse);
-        string responseResult = data.choices[0].message.content;
-
-        return responseResult;
+        if (gptModel.Contains("davinci"))
+        {
+            return completionsEndpoint;
+        }
+        else
+        {
+            return chatEndpoint;
+        }
     }
 }
 

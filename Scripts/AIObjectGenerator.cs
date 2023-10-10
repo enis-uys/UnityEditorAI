@@ -27,9 +27,10 @@ public class AIObjectGenerator : SingleExtensionApplication
         try
         {
             EditorGUILayout.BeginVertical("Box");
+            InitializeGuiStyles();
             RenderInputField();
             AddDefaultSpace();
-            csPrefab = (GameObject)EditorGUILayout.ObjectField(csPrefab, typeof(GameObject), true);
+            RenderPrefabField();
             AddDefaultSpace();
             RenderHelpBox();
         }
@@ -38,6 +39,9 @@ public class AIObjectGenerator : SingleExtensionApplication
             EditorGUILayout.EndVertical();
         }
     }
+
+    private void RenderPrefabField() =>
+        csPrefab = (GameObject)EditorGUILayout.ObjectField(csPrefab, typeof(GameObject), true);
 
     private void RenderInputField()
     {
@@ -66,13 +70,14 @@ public class AIObjectGenerator : SingleExtensionApplication
         {
             ShowProgressBar(0.5f);
         }
-        string generatePath =
+        string doTaskTemp =
             FileManager<string>.settingsFM.GeneratedFilesFolderPath + DoTaskTemp + ".cs";
-        bool TempFileExists = File.Exists(generatePath);
+        bool TempFileExists = File.Exists(doTaskTemp);
 
         using (new EditorGUI.DisabledScope(!TempFileExists))
         {
-            if (GUILayout.Button("Trigger Object Generation Script"))
+            GUIStyle customButtonStyle = hlbStyle;
+            if (GUILayout.Button("Trigger Object Generation Script", customButtonStyle))
             {
                 //This part is adapted from Kenjiro AICommand (AICommandWindow.cs)
                 // <Availability> https://github.com/keijiro/AICommand/ </Availability>
@@ -89,7 +94,7 @@ public class AIObjectGenerator : SingleExtensionApplication
                     return;
                 }
                 EditorApplication.ExecuteMenuItem("Edit/Do Task");
-                AssetDatabase.DeleteAsset(generatePath);
+                AssetDatabase.DeleteAsset(doTaskTemp);
                 AssetDatabase.Refresh();
                 //End of adapted part from Kenjiro AICommand.
             }

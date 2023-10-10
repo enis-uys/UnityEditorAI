@@ -14,6 +14,7 @@ public class PromptManager : SingleExtensionApplication
     private int selectedIndex = -1;
     string newPromptContent,
         newPromptTitle;
+    public static readonly string promptListFileName = "promptList.json";
     private List<string> currentPromptTexts = new();
 
     public override bool ShouldLoadEditorPrefs { get; set; } = false;
@@ -25,7 +26,7 @@ public class PromptManager : SingleExtensionApplication
         set => customPromptList = value;
     }
 
-    private List<(string Title, string Content)> defaultPromptList =
+    private readonly List<(string Title, string Content)> defaultPromptList =
         new()
         {
             ("Script End Note", OpenAiStandardPrompts.ScriptEndNote),
@@ -48,7 +49,7 @@ public class PromptManager : SingleExtensionApplication
                 ResetCurrentPromptTexts();
                 hasInit = true;
             }
-            InitializeRichTextStyle();
+            InitializeGuiStyles();
             RenderPromptLists();
             AddDefaultSpace();
             RenderNewPromptField();
@@ -176,8 +177,15 @@ public class PromptManager : SingleExtensionApplication
                 List<(string Title, string Content)>
             >.LoadDeserializedJsonFromPath(
                 AISettingsFileManager.GetInstance().UserFilesFolderPath,
-                "promptList.json"
+                promptListFileName
             );
+        }
+        catch (Newtonsoft.Json.JsonException jsonEx)
+        {
+            string helpBoxMessage =
+                "JSON data does not match expected type." + "\n" + jsonEx.Message;
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
         }
         catch (SystemException e)
         {
@@ -195,7 +203,7 @@ public class PromptManager : SingleExtensionApplication
     {
         FileManager<List<(string, string)>>.SaveFileToDefaultPath(
             CustomPromptList,
-            "promptList.json"
+            promptListFileName
         );
     }
 

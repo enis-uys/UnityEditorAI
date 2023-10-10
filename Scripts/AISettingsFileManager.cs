@@ -17,33 +17,27 @@ public class AISettingsFileManager
     private readonly string defaultUserFilesFolderPath = "Assets\\UnityEditorAI\\UserFiles\\";
     private readonly string defaultGeneratedFilesFolderPath = "Assets\\UnityEditorAI\\Generated\\";
 
-    public enum GptModels
-    {
-        Gpt35Turbo,
-        Gpt35Turbo16k,
-        TextDavinci003,
-        Gpt4,
-        Default
-    }
+    public static readonly string Gpt35Turbo = "gpt-3.5-turbo",
+        Gpt35Turbo16k = "gpt-3.5-turbo-16k",
+        TextDavinci003 = "text-davinci-003",
+        Gpt4 = "gpt-4",
+        GptDefault = Gpt35Turbo;
 
-    public readonly Dictionary<GptModels, string> gptModelDictionary =
-        new()
-        {
-            { GptModels.Gpt35Turbo, "gpt-3.5-turbo" },
-            { GptModels.Gpt35Turbo16k, "gpt-3.5-turbo-16k" },
-            { GptModels.TextDavinci003, "text-davinci-003" },
-            { GptModels.Gpt4, "gpt-4" },
-            { GptModels.Default, "gpt-3.5-turbo" }
-        };
+    public string[] gptModelsArray = gptModels.ToArray();
 
-    public GptModels ParseGptModel(string modelString)
+    public static readonly List<string> gptModels =
+        new() { Gpt35Turbo, Gpt35Turbo16k, TextDavinci003, Gpt4 };
+
+    public int SelectedGptModelInt()
     {
-        // If the input string doesn't match any dictionary value, return the default model
-        if (System.Enum.TryParse(modelString, true, out GptModels model))
+        for (int i = 0; i < gptModels.Count; i++)
         {
-            return model;
+            if (gptModels[i] == SelectedGptModel)
+            {
+                return i;
+            }
         }
-        return GptModels.Default;
+        return 0;
     }
 
     public static HelpBox helpBox = HelpBox.GetInstance();
@@ -54,13 +48,12 @@ public class AISettingsFileManager
     public int LastMessagesToSend { get; set; }
     public float Temperature { get; set; }
     public int TimeoutInSeconds { get; set; }
-    public GptModels SelectedGptModel { get; set; }
+    public string SelectedGptModel { get; set; }
 
     public void LoadCustomSettings(string path = null)
     {
         string helpBoxMessage;
         AISettingsSerializable settings = SettingsFileFromPath(path);
-
         if (settings == null)
         {
             helpBoxMessage = "No settings file found! Loading default settings.";
@@ -89,7 +82,7 @@ public class AISettingsFileManager
         LastMessagesToSend = settings.lastMessagesToSend ?? 2;
         Temperature = settings.temperature ?? 1f;
         TimeoutInSeconds = settings.timeoutInSeconds ?? 20;
-        SelectedGptModel = ParseGptModel(settings.selectedGptModel);
+        SelectedGptModel = settings.selectedGptModel;
     }
 
     private string TrimPathToAssets(string fullPath, string projectPath)
@@ -120,6 +113,11 @@ public class AISettingsFileManager
                 helpBoxMessage = "Settings loaded from file: " + path;
                 helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
             }
+            catch (Newtonsoft.Json.JsonException jsonEx)
+            {
+                helpBoxMessage = "JSON data does not match expected type." + "\n" + jsonEx.Message;
+                helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            }
             catch (System.Exception ex)
             {
                 helpBoxMessage = "Error loading settings from file: " + ex.Message;
@@ -140,7 +138,7 @@ public class AISettingsFileManager
                 lastMessagesToSend = 2,
                 temperature = 1f,
                 timeoutInSeconds = 20,
-                selectedGptModel = gptModelDictionary[GptModels.Default]
+                selectedGptModel = GptDefault
             };
 
         return defaultSettings;
@@ -166,10 +164,6 @@ public class AISettingsFileManager
         else
         {
             path = TrimPathToAssets(path, Application.dataPath);
-            string userDirectory = Path.GetDirectoryName(path) + "\\";
-            UserFilesFolderPath = userDirectory;
-            string filename = Path.GetFileName(path);
-            SettingsFileName = filename;
         }
 
         // Check if the file exists
@@ -189,11 +183,15 @@ public class AISettingsFileManager
         settings.temperature ??= 1f;
         settings.timeoutInSeconds ??= 20;
         // Check if selectedGptModel is valid, otherwise set default value
-        if (!gptModelDictionary.ContainsValue(settings.selectedGptModel))
-        {
-            settings.selectedGptModel = gptModelDictionary[GptModels.Default];
-        }
 
+        settings.selectedGptModel = gptModels.Contains(settings.selectedGptModel)
+            ? settings.selectedGptModel
+            : GptDefault;
+        //After loading the settings file, set the user files folder path and settings file name
+        string userDirectory = Path.GetDirectoryName(path) + "\\";
+        UserFilesFolderPath = userDirectory;
+        string filename = Path.GetFileName(path);
+        SettingsFileName = filename;
         return settings;
     }
 
@@ -236,7 +234,7 @@ public class AISettingsFileManager
                 lastMessagesToSend = LastMessagesToSend,
                 temperature = Temperature,
                 timeoutInSeconds = TimeoutInSeconds,
-                selectedGptModel = SelectedGptModel.ToString()
+                selectedGptModel = SelectedGptModel
             };
         FileManager<AISettingsSerializable>.SaveToFileWithPath(settings, path);
         helpBoxMessage = "Settings saved to file: " + path;
