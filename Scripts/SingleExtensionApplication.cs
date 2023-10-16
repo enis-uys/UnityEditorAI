@@ -81,6 +81,13 @@ public abstract class SingleExtensionApplication : ScriptableObject
         Repaint();
     }
 
+    protected void FinishProgressBarWithDelay(int milliSeconds = 1500)
+    {
+        helpBox.FinishProgressBarWithDelay(milliSeconds);
+        EditorApplication.update -= helpBox.UpdateProgressBar;
+        Repaint();
+    }
+
     protected void AddDefaultSpace() => GUILayout.Space(defaultSpace);
 
     protected void ResetKeyboardControl() => GUIUtility.keyboardControl = 0;

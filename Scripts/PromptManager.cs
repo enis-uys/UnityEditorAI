@@ -33,8 +33,9 @@ public class PromptManager : SingleExtensionApplication
             OpenAiStandardPrompts.RemoveVariablesPrompt,
             OpenAiStandardPrompts.RemoveDebugLogsPrompt,
             OpenAiStandardPrompts.AutoGenerateSerializationPrompt,
-            OpenAiStandardPrompts.CategoryExampleA,
-            OpenAiStandardPrompts.CategoryExampleB,
+            OpenAiStandardPrompts.GenerateRotationScriptPrompt,
+            OpenAiStandardPrompts.GenerateParticleSystemPrompt,
+            OpenAiStandardPrompts.GenerateLightsPrompt,
         };
     private readonly List<(string Title, string Content)> defaultPromptList =
         new()
@@ -239,7 +240,6 @@ public class PromptManager : SingleExtensionApplication
             string helpBoxMessage =
                 "JSON data does not match expected type." + "\n" + jsonEx.Message;
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
-            helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
         }
         catch (SystemException e)
         {

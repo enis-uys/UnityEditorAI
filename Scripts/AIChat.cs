@@ -99,7 +99,7 @@ public class AIChat : SingleExtensionApplication
                     string helpBoxMessage =
                         "An error occurred while processing the input." + ex.Message;
                     helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
-                    helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
+                    FinishProgressBarWithDelay();
                 }
             }
         }
@@ -157,7 +157,7 @@ public class AIChat : SingleExtensionApplication
     {
         ResetKeyboardControl();
         inputText = "";
-        helpBox.SetProgressBarProgress(0.1f);
+        ShowProgressBar(0.1f);
         AISettingsFileManager settingsFM = AISettingsFileManager.GetInstance();
         MessageListBuilder tempMessageListBuilder = new();
         int lastMessagesCount = settingsFM.LastMessagesToSend;
@@ -176,7 +176,7 @@ public class AIChat : SingleExtensionApplication
         messageHistoryListBuilder.AddMessage(gptResponse, "assistant");
 
         helpBox.UpdateMessage("Message sent to GPT", MessageType.Info);
-        helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
+        FinishProgressBarWithDelay();
     }
 
     private string MessageHistoryListToFormatedString(MessageListBuilder messageListBuilder)
@@ -228,14 +228,14 @@ public class AIChat : SingleExtensionApplication
             string helpBoxMessage =
                 "JSON data does not match expected type." + "\n" + jsonEx.Message;
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
-            helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
+            FinishProgressBarWithDelay();
         }
         catch (Exception ex)
         {
             string helpBoxMessage =
                 "An error occurred while loading the message history." + ex.Message;
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
-            helpBox.FinishProgressBarWithDelay(helpBox.ProgressBarDelayInMilliseconds);
+            FinishProgressBarWithDelay();
         }
         messageHistoryListBuilder.ClearMessages().AddMessages(loadedMessageHistory);
     }

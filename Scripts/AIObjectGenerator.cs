@@ -198,21 +198,27 @@ public class AIObjectGenerator : SingleExtensionApplication
     {
         ResetKeyboardControl();
         inputText = "";
+        ShowProgressBar(0.1f);
         var messageListBuilder = new MessageListBuilder()
             .AddMessage(OpenAiStandardPrompts.ObjectGenerationPrompt.Content, "system")
             .AddMessage(inputPrompt);
+        ShowProgressBar(0.3f);
 
         string gptScriptResponse = await OpenAiApiManager.RequestToGpt(messageListBuilder);
+        ShowProgressBar(0.8f);
+
         if (string.IsNullOrEmpty(gptScriptResponse))
         {
             string helpBoxMessage = "No response from OpenAI API.";
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            FinishProgressBarWithDelay();
             return;
         }
         else
         {
             string helpBoxMessage = "Successfully received response from OpenAI API.";
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
+            FinishProgressBarWithDelay();
             // Saves the response from the OpenAI API into doTaskScriptContent
             doTaskScriptContent = gptScriptResponse;
             Repaint();

@@ -126,7 +126,7 @@ public class OpenAiStandardPrompts
     public static readonly (string Title, string Content) ObjectGenerationPrompt = (
         "Object Generation Prompt",
         @"Write a Unity Editor script.
-        It doesn’t provide any editor window. It will immediately do the task when the menu item is invoked.
+        It doesn’t provide any editor window. It will immediately do the task when the item is invoked and should have one single static method.
         Don’t use GameObject.Find* Functions. Do not use any Tags without the necessary Libary for it.
         Do not forget the necessary libraries inside the script. Especially using UnityEditor and using UnityEngine
         There is no selected object. Find game objects manually.
@@ -151,35 +151,39 @@ public class OpenAiStandardPrompts
         "
     );
 
-    public static readonly (string Title, string Content) NewPromptTemplate = ("", @"");
+    //private static readonly (string Title, string Content) NewPromptTemplate = ("", @"");
     public static readonly (string Title, string Content) ImproveScriptPrompt = (
-        "Improve script",
+        "Improve/Improve script",
         @"Improve the script by adding comments and removing unused variables."
     );
     public static readonly (string Title, string Content) WriteCommentsPrompt = (
-        "Write Comments",
+        "Improve/Write Comments",
         @"Write comments for the script.
         The comments should be useful and explain the code.
         The comments should be written in English."
     );
     public static readonly (string Title, string Content) RemoveVariablesPrompt = (
-        "Remove unused variables",
+        "Improve/Remove unused variables",
         @"Remove unused variables from the script."
     );
     public static readonly (string Title, string Content) RemoveDebugLogsPrompt = (
-        "Remove Debug Logs",
+        "Improve/Remove Debug Logs",
         @"Remove all Debug.Log() calls from the script."
     );
     public static readonly (string Title, string Content) AutoGenerateSerializationPrompt = (
-        "Auto-Generate Serialization",
+        "Improve/Auto-Generate Serialization",
         @"Auto-generate serialization for the script."
     );
-    public static readonly (string Title, string Content) CategoryExampleA = (
-        "Category/Option A",
-        @"Do not do anything (yet)."
+    public static readonly (string Title, string Content) GenerateRotationScriptPrompt = (
+        "Improve/Generate a rotation script",
+        @"Generate a script that rotates a game object over time."
     );
-    public static readonly (string Title, string Content) CategoryExampleB = (
-        "Category/Option B",
-        @"Do not do anything (yet)."
+    public static readonly (string Title, string Content) GenerateParticleSystemPrompt = (
+        "Generate/Generate Particle System",
+        @"Generate a Unity Editor script that creates new game objects with particle systems. Do not use any prefabs."
+    );
+    public static readonly (string Title, string Content) GenerateLightsPrompt = (
+        "Generate/Generate Lights",
+        @"Generate a Unity Editor script that spawns directional lights at specified positions in the scene. Do not use any prefabs."
     );
 }

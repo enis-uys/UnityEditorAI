@@ -96,6 +96,7 @@ public class OpenAiApiManager
     {
         try
         {
+            HelpBox.GetInstance().UpdateIntendedProgress(0.4f);
             var requestBody = BuildOpenApiRequest(gptModel, messageListBuilder, temperature);
             string jsonResponse = await SendGptApiRequestAsync(
                 apiKey,
@@ -103,6 +104,7 @@ public class OpenAiApiManager
                 requestBody,
                 timeoutInSeconds
             );
+            HelpBox.GetInstance().UpdateIntendedProgress(0.5f);
             string responseResult = ParseOpenApiResponse(
                 jsonResponse,
                 gptModel.Contains("davinci")

@@ -210,6 +210,7 @@ public class AIScript : SingleExtensionApplication
     //TODO: Implement checkbox under the input field that allows to select if the prompt should be included
     private void ProcessInputPrompt(string prompt)
     {
+        ShowProgressBar(0.1f);
         if (IsInputScriptSelected())
         {
             //     string gptInputWithPrompt = inputText + "\n" + prompt;
@@ -244,13 +245,17 @@ public class AIScript : SingleExtensionApplication
 
     private async void CreateNewScriptBasedOnInput(string inputPrompt)
     {
+        ShowProgressBar(0.2f);
         ClearInputAndResetKeyboardControl();
         var messageListBuilder = new MessageListBuilder()
             .AddMessage(OpenAiStandardPrompts.CreateNewScriptWithPrompt.Content, "system")
             .AddMessage(OpenAiStandardPrompts.ScriptEndNote.Content, "system")
             .AddMessage(inputPrompt);
+        ShowProgressBar(0.3f);
 
         string gptScriptResponse = await OpenAiApiManager.RequestToGpt(messageListBuilder);
+        ShowProgressBar(0.8f);
+
         //TODO: maybe convert this to a readable view Debug.Log(gptScriptResponse);
         //if no response is given, do nothing
         if (string.IsNullOrEmpty(gptScriptResponse))
@@ -263,8 +268,8 @@ public class AIScript : SingleExtensionApplication
 
     private async void CreateNewScriptVersion(string inputPrompt)
     {
+        ShowProgressBar(0.2f);
         ClearInputAndResetKeyboardControl();
-
         string helpBoxMessage;
         if (inputScript == null)
         {
