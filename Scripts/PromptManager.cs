@@ -135,6 +135,12 @@ public class PromptManager : SingleExtensionApplication
                                 SavePromptListInJson();
                             }
                         }
+                        if (GUILayout.Button("Copy", GUILayout.ExpandWidth(true)))
+                        {
+                            EditorGUIUtility.systemCopyBuffer = currentPromptTexts[i];
+                            string helpBoxMessage = "Copied prompt to clipboard.";
+                            helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
+                        }
                         if (
                             selectedIndex != i
                             && GUILayout.Button("Edit", GUILayout.ExpandWidth(true))
@@ -193,6 +199,12 @@ public class PromptManager : SingleExtensionApplication
             finally
             {
                 GUILayout.EndVertical();
+            }
+            if (GUILayout.Button("Copy", GUILayout.ExpandWidth(true)))
+            {
+                EditorGUIUtility.systemCopyBuffer = defaultPromptList[i].Content;
+                string helpBoxMessage = "Copied prompt to clipboard.";
+                helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
             }
         }
     }

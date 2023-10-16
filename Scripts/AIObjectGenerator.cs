@@ -173,6 +173,8 @@ public class AIObjectGenerator : SingleExtensionApplication
                         if (GUILayout.Button("Copy Content"))
                         {
                             EditorGUIUtility.systemCopyBuffer = doTaskScriptContent;
+                            string helpBoxMessage = "Copied script to clipboard.";
+                            helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
                         }
                         if (GUILayout.Button("Trigger Object Generation Script", customButtonStyle))
                         {

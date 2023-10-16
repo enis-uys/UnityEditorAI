@@ -141,6 +141,8 @@ public class AIScript : SingleExtensionApplication
                         if (GUILayout.Button("Copy Content"))
                         {
                             EditorGUIUtility.systemCopyBuffer = newScriptContent;
+                            string helpBoxMessage = "Copied script to clipboard.";
+                            helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
                         }
                         if (GUILayout.Button("Create Script File", customButtonStyle))
                         {
