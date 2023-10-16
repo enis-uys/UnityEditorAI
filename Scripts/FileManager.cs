@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using UnityEditor;
 using System.IO;
 
@@ -22,31 +21,49 @@ public class FileManager<T>
 {
     public static AISettingsFileManager settingsFM = AISettingsFileManager.GetInstance();
 
+    //This part is adapted from Kenjiro AICommand (AICommandWindow.cs)
+    // <Availability> https://github.com/keijiro/AICommand/ </Availability>
+    // View LICENSE.md to see the license and information.
     public static void CreateScriptAssetWithReflection(string path, string data)
     {
         // Use reflection to access the private method 'CreateScriptAssetWithContent' in Unity's ProjectWindowUtil.
         var flags = BindingFlags.Static | BindingFlags.NonPublic;
         var method = typeof(ProjectWindowUtil).GetMethod("CreateScriptAssetWithContent", flags);
         // Use reflection to invoke 'CreateScriptAssetWithContent' to create a script asset in Unity.
-        method.Invoke(null, new object[] { path, data });
+        method?.Invoke(null, new object[] { path, data });
     }
 
-    public static void SaveFileToDefaultPath(T data, string fileName)
+    //End of adapted part from Kenjiro AICommand.
+
+    public static void InvokeFunction(string className, string methodName)
+    {
+        var flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+        var classType = Type.GetType(className);
+        if (classType != null)
+        {
+            var method = classType.GetMethod(methodName, flags);
+            method?.Invoke(null, null);
+        }
+    }
+
+    public static void SaveJsonFileToDefaultPath(T data, string fileName)
     {
         string path = settingsFM.UserFilesFolderPath + fileName;
-        SaveToFileWithPath(data, path);
+        SaveToJsonFileWithPath(data, path);
     }
 
-    public static bool SaveToFileWithPath(T data, string filePath)
+    public static bool SaveToJsonFileWithPath(T data, string filePath)
     {
         HelpBox helpBox = HelpBox.GetInstance();
-        string helpBoxMessage = "Saving data to file: " + filePath;
-        MessageType messageType = MessageType.Info;
-
-        var jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
-        helpBox.UpdateMessage(helpBoxMessage, messageType);
+        string helpBoxMessage;
         try
         {
+            helpBoxMessage = "Saving data to file: " + filePath;
+            MessageType messageType = MessageType.Info;
+            helpBox.UpdateMessage(helpBoxMessage, messageType);
+
+            var jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
+
             string folderPath = Path.GetDirectoryName(filePath);
             if (!Directory.Exists(folderPath))
             {
@@ -54,19 +71,13 @@ public class FileManager<T>
                 helpBox.UpdateMessage(helpBoxMessage, messageType, true);
                 Directory.CreateDirectory(folderPath);
             }
-            if (!File.Exists(filePath))
-            {
-                helpBoxMessage = "File does not exist, creating file at: " + filePath;
-                messageType = MessageType.Info;
-                helpBox.UpdateMessage(helpBoxMessage, messageType, true);
-                using StreamWriter sw = File.CreateText(filePath);
-            }
+            CreateFileIfNotExisting(filePath);
             File.WriteAllText(filePath, jsonData);
             helpBoxMessage = "Data saved to file: " + filePath;
             helpBox.UpdateMessage(helpBoxMessage, messageType, true);
             return true;
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             helpBoxMessage = "An error occurred: " + ex.Message;
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
@@ -137,6 +148,10 @@ public class FileManager<T>
                     T data = JsonConvert.DeserializeObject<T>(jsonData);
                     helpBoxMessage = "Data loaded from: " + filePath;
                     helpBox.UpdateMessage(helpBoxMessage, MessageType.Info, true);
+                    if (data == null)
+                    {
+                        return ReturnEmptyT();
+                    }
                     return data;
                 }
                 catch (JsonException jsonEx)
@@ -148,7 +163,7 @@ public class FileManager<T>
             {
                 helpBoxMessage = "File not found: " + filePath;
                 helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, true, true);
-                return default;
+                return ReturnEmptyT();
             }
         }
         catch (JsonException jsonEx)
@@ -159,8 +174,29 @@ public class FileManager<T>
         {
             helpBoxMessage = "An error occurred: " + ex.Message;
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, true, true);
-            return default;
+            return ReturnEmptyT();
         }
+    }
+
+    public static T ReturnEmptyT()
+    {
+        if (!typeof(T).IsValueType)
+        {
+            return (T)Activator.CreateInstance(typeof(T));
+        }
+        return default;
+    }
+
+    public static bool CreateFileIfNotExisting(string filePath)
+    {
+        bool fileExists = File.Exists(filePath);
+        if (!fileExists)
+        {
+            string helpBoxMessage = "File does not exist, creating file at: " + filePath;
+            HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Info, true);
+            using StreamWriter sw = File.CreateText(filePath);
+        }
+        return fileExists;
     }
 
     public static string SerializeDataToJson(T data, Formatting? formatting = Formatting.Indented)

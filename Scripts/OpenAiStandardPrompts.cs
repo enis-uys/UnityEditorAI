@@ -1,6 +1,7 @@
 public class OpenAiStandardPrompts
 {
-    public const string CreateNewScriptWithPrompt =
+    public static readonly (string Title, string Content) CreateNewScriptWithPrompt = (
+        "Create New Script With Prompt",
         // @"Create a C# script that rotates a GameObject over time.";
         // use verbatim string for easier editing
         //TODO: Watch the gpt course again for better output formatting []<>, etc.
@@ -36,11 +37,13 @@ public class OpenAiStandardPrompts
                 {
                     //This is an empty class without content.
                 }`'                
-        ";
+        "
+    );
 
-    public const string UpdateExistingScriptWithPrompt
+    public static readonly (string Title, string Content) UpdateExistingScriptWithPrompt
     //TODO: implement this
-    =
+    = (
+        "Update Existing Script With Prompt",
         @"
         Your expertise in AI enables you to update Unity C# scripts to fulfills the user's specific requirements.
         Upon receiving the user's input with the description, and the source code of the script, 
@@ -110,25 +113,32 @@ public class OpenAiStandardPrompts
                     {
                     }
                 }`'
-        ";
+        "
+    );
 
     //This part is adapted from Kenjiro AICommand (AICommandWindow.cs)
     // <Availability> https://github.com/keijiro/AICommand/ </Availability>
     // View LICENSE.md to see the license and information.
-    public const string ObjectGenerationPrompt =
+    //TODO: Explain the changes here: Library names, that where missing, etc.
+    //Removed:   It provides its functionality as a menu item placed ""Edit"" > ""Do Task""
+    //Replaced  with InitializeOnLoadMethod
+
+    public static readonly (string Title, string Content) ObjectGenerationPrompt = (
+        "Object Generation Prompt",
         @"Write a Unity Editor script.
-        It provides its functionality as a menu item placed Edit > Do Task
-        It doesn’t provide any editor window. It immediately does the task when the menu item is invoked.
-        Don’t use GameObject.FindGameObjectsWithTag.
-        Do not forget to add the library to the script.
+        It doesn’t provide any editor window. It will immediately do the task when the menu item is invoked.
+        Don’t use GameObject.Find* Functions. Do not use any Tags without the necessary Libary for it.
+        Do not forget the necessary libraries inside the script. Especially using UnityEditor and using UnityEngine
         There is no selected object. Find game objects manually.
         I only need the script body. Don’t add any explanation.
         The task is described as follows:
-      ";
+      "
+    );
 
     //End of adapted part from Kenjiro AICommand.
 
-    public const string ScriptEndNote =
+    public static readonly (string Title, string Content) ScriptEndNote = (
+        "Script End Note",
         @" Note:         
         Only respond with the script part inside [OUTPUT]`script`. 
         Make sure to not include unnecessary symbols because your output will be transformed to a C# class.
@@ -137,7 +147,39 @@ public class OpenAiStandardPrompts
         and gracefully handle any errors that the user may have inadvertently introduced. Fix errors if the user wrote some.
         In situations where you encounter difficulty in code generation, gracefully create a working code without functions or attributes
         including appending a C Sharp comment explaining the reasons behind this decision.
-
         This is the `prompt`and/or the `script` you should use for the task:
-        ";
+        "
+    );
+
+    public static readonly (string Title, string Content) NewPromptTemplate = ("", @"");
+    public static readonly (string Title, string Content) ImproveScriptPrompt = (
+        "Improve script",
+        @"Improve the script by adding comments and removing unused variables."
+    );
+    public static readonly (string Title, string Content) WriteCommentsPrompt = (
+        "Write Comments",
+        @"Write comments for the script.
+        The comments should be useful and explain the code.
+        The comments should be written in English."
+    );
+    public static readonly (string Title, string Content) RemoveVariablesPrompt = (
+        "Remove unused variables",
+        @"Remove unused variables from the script."
+    );
+    public static readonly (string Title, string Content) RemoveDebugLogsPrompt = (
+        "Remove Debug Logs",
+        @"Remove all Debug.Log() calls from the script."
+    );
+    public static readonly (string Title, string Content) AutoGenerateSerializationPrompt = (
+        "Auto-Generate Serialization",
+        @"Auto-generate serialization for the script."
+    );
+    public static readonly (string Title, string Content) CategoryExampleA = (
+        "Category/Option A",
+        @"Do not do anything (yet)."
+    );
+    public static readonly (string Title, string Content) CategoryExampleB = (
+        "Category/Option B",
+        @"Do not do anything (yet)."
+    );
 }

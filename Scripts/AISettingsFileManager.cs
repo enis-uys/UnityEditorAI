@@ -61,8 +61,6 @@ public class AISettingsFileManager
             settings = DefaultSettingsFile();
         }
         SetSettingsFromSerializable(settings);
-        helpBoxMessage = "Settings loaded from file: " + UserFilesFolderPath + SettingsFileName;
-        helpBox.UpdateMessage(helpBoxMessage, MessageType.Info, true);
     }
 
     public void SetSettingsFromSerializable(AISettingsSerializable settings, bool isDefault = false)
@@ -102,16 +100,18 @@ public class AISettingsFileManager
         {
             UserFilesFolderPath = defaultUserFilesFolderPath;
         }
-        string path = EditorUtility.OpenFilePanel("Load Settings", UserFilesFolderPath, "json");
-        if (!string.IsNullOrEmpty(path))
+        string panelPath = EditorUtility.OpenFilePanel(
+            "Load Settings",
+            UserFilesFolderPath,
+            "json"
+        );
+        if (!string.IsNullOrEmpty(panelPath))
         {
-            path = TrimPathToAssets(path, Application.dataPath);
+            panelPath = TrimPathToAssets(panelPath, Application.dataPath);
             try
             {
-                AISettingsSerializable panelSettings = SettingsFileFromPath(path);
+                AISettingsSerializable panelSettings = SettingsFileFromPath(panelPath);
                 SetSettingsFromSerializable(panelSettings);
-                helpBoxMessage = "Settings loaded from file: " + path;
-                helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
             }
             catch (Newtonsoft.Json.JsonException jsonEx)
             {
@@ -144,11 +144,11 @@ public class AISettingsFileManager
         return defaultSettings;
     }
 
-    public AISettingsSerializable SettingsFileFromPath(string path = null)
+    public AISettingsSerializable SettingsFileFromPath(string settingsPath = null)
     {
         string helpBoxMessage;
         // Use the provided path or the default path if not provided
-        if (string.IsNullOrEmpty(path))
+        if (string.IsNullOrEmpty(settingsPath))
         {
             //Check if the settings paths are empty. If so set default values
             if (string.IsNullOrEmpty(UserFilesFolderPath))
@@ -159,25 +159,25 @@ public class AISettingsFileManager
             {
                 SettingsFileName = "customSettings.json";
             }
-            path = UserFilesFolderPath + SettingsFileName;
+            settingsPath = UserFilesFolderPath + SettingsFileName;
         }
         else
         {
-            path = TrimPathToAssets(path, Application.dataPath);
+            settingsPath = TrimPathToAssets(settingsPath, Application.dataPath);
         }
 
         // Check if the file exists
-        if (!File.Exists(path))
+        if (!File.Exists(settingsPath))
         {
-            helpBoxMessage = "Settings file not found at path: " + path;
-            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            helpBoxMessage = "Settings file not found at path: " + settingsPath;
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, false);
             return DefaultSettingsFile();
         }
 
-        helpBoxMessage = "Loading settings from file: " + path;
+        helpBoxMessage = "Loading settings from file: " + settingsPath;
         helpBox.UpdateMessage(helpBoxMessage, MessageType.Warning);
         AISettingsSerializable settings =
-            FileManager<AISettingsSerializable>.LoadDeserializedJsonFromPath(path);
+            FileManager<AISettingsSerializable>.LoadDeserializedJsonFromPath(settingsPath);
         //check if setting is defined otherwise set default value
         settings.lastMessagesToSend ??= 2;
         settings.temperature ??= 1f;
@@ -188,9 +188,9 @@ public class AISettingsFileManager
             ? settings.selectedGptModel
             : GptDefault;
         //After loading the settings file, set the user files folder path and settings file name
-        string userDirectory = Path.GetDirectoryName(path) + "\\";
+        string userDirectory = Path.GetDirectoryName(settingsPath) + "\\";
         UserFilesFolderPath = userDirectory;
-        string filename = Path.GetFileName(path);
+        string filename = Path.GetFileName(settingsPath);
         SettingsFileName = filename;
         return settings;
     }
@@ -236,7 +236,7 @@ public class AISettingsFileManager
                 timeoutInSeconds = TimeoutInSeconds,
                 selectedGptModel = SelectedGptModel
             };
-        FileManager<AISettingsSerializable>.SaveToFileWithPath(settings, path);
+        FileManager<AISettingsSerializable>.SaveToJsonFileWithPath(settings, path);
         helpBoxMessage = "Settings saved to file: " + path;
         helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
     }

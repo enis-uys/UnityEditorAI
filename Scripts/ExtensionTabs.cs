@@ -8,7 +8,7 @@ public class ExtensionTabs : EditorWindow
     private static SingleExtensionApplication[] applications;
     private static string[] DisplayNames => applications.Select(a => a.DisplayName).ToArray();
     private int currentApplication;
-    private bool hasInit = false;
+    private bool HasInit { get; set; } = false;
     private Vector2 scrollPosition;
 
     [MenuItem("Window/AI Tabs")]
@@ -19,10 +19,10 @@ public class ExtensionTabs : EditorWindow
 
     private void OnEnable()
     {
-        if (!hasInit)
+        if (!HasInit)
         {
             Initialize();
-            hasInit = true;
+            HasInit = true;
         }
     }
 
@@ -54,7 +54,6 @@ public class ExtensionTabs : EditorWindow
             EditorGUILayout.LabelField("Choose a tool", EditorStyles.boldLabel);
             EditorGUILayout.Space();
             var prevApplication = currentApplication;
-
             currentApplication = GUILayout.Toolbar(currentApplication, DisplayNames);
             if (currentApplication != prevApplication)
             {

@@ -12,13 +12,14 @@ public class AIChat : SingleExtensionApplication
     public override string DisplayName => "AI Chat";
 
     private string inputText = "";
+    GUIStyle richTextStyle;
     private const string messageHistoryFileName = "MessageHistory.json";
     private string messageHistoryOutputField = "";
     private Vector2 inputScrollPosition;
     private Vector2 outputScrollPosition;
 
     private readonly MessageListBuilder messageHistoryListBuilder = new();
-    public override bool ShouldLoadEditorPrefs { get; set; } = true;
+    public bool HasInit { get; set; } = false;
 
     // Later on, we will add a list of conversations and replace the messageHistoryOutputField with a dropdown
     // This is necessary for being able to ask about old messages
@@ -41,18 +42,18 @@ public class AIChat : SingleExtensionApplication
     /// </summary>
     public override void OnGUI()
     {
+        EditorGUILayout.BeginVertical("Box");
         try
         {
-            EditorGUILayout.BeginVertical("Box");
-            if (ShouldLoadEditorPrefs)
+            if (HasInit)
             {
                 LoadEditorPrefs();
-                ShouldLoadEditorPrefs = false;
+                HasInit = true;
             }
-            InitializeGuiStyles();
+            richTextStyle = CreateRichTextStyle();
             RenderInputField();
             AddDefaultSpace();
-            RenderOutputField();
+            RenderConversationField();
             AddDefaultSpace();
             RenderHelpBox();
             SetEditorPrefs();
@@ -93,7 +94,7 @@ public class AIChat : SingleExtensionApplication
                 {
                     ReadInputAndSendToGPT(inputText);
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
                     string helpBoxMessage =
                         "An error occurred while processing the input." + ex.Message;
@@ -111,9 +112,9 @@ public class AIChat : SingleExtensionApplication
     /// <summary>
     /// Renders the output field for displaying the chat history.
     /// </summary>
-    private void RenderOutputField()
+    private void RenderConversationField()
     {
-        EditorGUILayout.LabelField("Output:");
+        EditorGUILayout.LabelField("Conversation:");
         outputScrollPosition = EditorGUILayout.BeginScrollView(
             outputScrollPosition,
             GUILayout.ExpandHeight(true)
@@ -244,7 +245,7 @@ public class AIChat : SingleExtensionApplication
     /// </summary>
     private void SaveMessageHistoryToFile()
     {
-        FileManager<List<MessageListBuilder.RequestMessage>>.SaveFileToDefaultPath(
+        FileManager<List<MessageListBuilder.RequestMessage>>.SaveJsonFileToDefaultPath(
             messageHistoryListBuilder.Build(),
             messageHistoryFileName
         );

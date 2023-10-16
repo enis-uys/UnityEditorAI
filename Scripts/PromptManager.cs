@@ -2,40 +2,47 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using System.Linq;
 
 public class PromptManager : SingleExtensionApplication
 {
     public override string DisplayName => "Prompt Manager";
     private Vector2 scrollPosition;
 
-    private bool addField = false,
-        hasInit = false;
+    private bool addField = false;
     private int selectedIndex = -1;
     string newPromptContent,
         newPromptTitle;
     public static readonly string promptListFileName = "promptList.json";
     private List<string> currentPromptTexts = new();
+    GUIStyle codeStyle;
+    private bool HasInit { get; set; } = false;
 
-    public override bool ShouldLoadEditorPrefs { get; set; } = false;
-
-    private List<(string Title, string Content)> customPromptList = new();
-    public List<(string Title, string Content)> CustomPromptList
+    private static List<(string Title, string Content)> customPromptList = new();
+    public static List<(string Title, string Content)> CustomPromptList
     {
         get => customPromptList;
         set => customPromptList = value;
     }
 
+    //These prompt get loaded if no custom prompts are found
+    private static readonly List<(string Title, string Content)> defaultCustomPrompts =
+        new()
+        {
+            OpenAiStandardPrompts.ImproveScriptPrompt,
+            OpenAiStandardPrompts.WriteCommentsPrompt,
+            OpenAiStandardPrompts.RemoveVariablesPrompt,
+            OpenAiStandardPrompts.RemoveDebugLogsPrompt,
+            OpenAiStandardPrompts.AutoGenerateSerializationPrompt,
+            OpenAiStandardPrompts.CategoryExampleA,
+            OpenAiStandardPrompts.CategoryExampleB,
+        };
     private readonly List<(string Title, string Content)> defaultPromptList =
         new()
         {
-            ("Script End Note", OpenAiStandardPrompts.ScriptEndNote),
-            ("Create New Script With Prompt", OpenAiStandardPrompts.CreateNewScriptWithPrompt),
-            ("Create New Object With Prompt", OpenAiStandardPrompts.ObjectGenerationPrompt),
-            (
-                "Update Existing Script With Prompt",
-                OpenAiStandardPrompts.UpdateExistingScriptWithPrompt
-            )
+            OpenAiStandardPrompts.ScriptEndNote,
+            OpenAiStandardPrompts.CreateNewScriptWithPrompt,
+            OpenAiStandardPrompts.ObjectGenerationPrompt,
+            OpenAiStandardPrompts.UpdateExistingScriptWithPrompt,
         };
 
     public override void OnGUI()
@@ -43,13 +50,13 @@ public class PromptManager : SingleExtensionApplication
         EditorGUILayout.BeginVertical("Box");
         try
         {
-            if (!hasInit)
+            if (!HasInit)
             {
                 CustomPromptList = LoadPromptListFromJson();
                 ResetCurrentPromptTexts();
-                hasInit = true;
+                codeStyle = CreateCodeStyle();
+                HasInit = true;
             }
-            InitializeGuiStyles();
             RenderPromptLists();
             AddDefaultSpace();
             RenderNewPromptField();
@@ -66,6 +73,7 @@ public class PromptManager : SingleExtensionApplication
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
         RenderCustomPromptList();
         AddDefaultSpace();
+        AddDefaultSpace();
         RenderDefaultPromptList();
 
         EditorGUILayout.EndScrollView();
@@ -75,7 +83,7 @@ public class PromptManager : SingleExtensionApplication
     {
         GUILayout.Label(
             new GUIContent(
-                "Custom Prompts",
+                "Custom Prompts:",
                 "Custom Prompts are saved inside the extension's userfiles folder."
             ),
             EditorStyles.boldLabel
@@ -83,6 +91,7 @@ public class PromptManager : SingleExtensionApplication
         if (CustomPromptList == null || CustomPromptList.Count == 0)
         {
             helpBox.UpdateMessage("No custom prompts found.", MessageType.Warning, false, false);
+            GUILayout.Label("NO CUSTOM PROMPTS FOUND.", EditorStyles.boldLabel);
         }
         else
         {
@@ -93,56 +102,72 @@ public class PromptManager : SingleExtensionApplication
 
                 try
                 {
+                    AddDefaultSpace();
                     GUILayout.Label(CustomPromptList[i].Title, EditorStyles.boldLabel);
                     using (new EditorGUI.DisabledScope(selectedIndex != i))
                     {
                         currentPromptTexts[i] = EditorGUILayout.TextArea(
                             currentPromptTexts[i],
-                            richTextStyle
+                            codeStyle
                         );
+                    }
 
-                        GUILayout.BeginHorizontal();
-
-                        if (GUILayout.Button("Delete", GUILayout.ExpandWidth(true)))
+                    GUILayout.BeginHorizontal();
+                    try
+                    {
+                        using (new EditorGUI.DisabledScope(selectedIndex != i))
+                        {
+                            if (GUILayout.Button("Delete", GUILayout.ExpandWidth(true)))
+                            {
+                                itemToRemove = i;
+                                selectedIndex = -1;
+                                ResetKeyboardControl();
+                            }
+                            if (GUILayout.Button("Save", GUILayout.ExpandWidth(true)))
+                            {
+                                selectedIndex = -1;
+                                ResetKeyboardControl();
+                                var updatedItem = (
+                                    CustomPromptList[i].Title,
+                                    currentPromptTexts[i]
+                                );
+                                CustomPromptList[i] = updatedItem;
+                                SavePromptListInJson();
+                            }
+                        }
+                        if (
+                            selectedIndex != i
+                            && GUILayout.Button("Edit", GUILayout.ExpandWidth(true))
+                        )
+                        {
+                            selectedIndex = i;
+                        }
+                        else if (
+                            selectedIndex == i
+                            && GUILayout.Button("Cancel", GUILayout.ExpandWidth(true))
+                        )
                         {
                             selectedIndex = -1;
-                            ResetKeyboardControl();
-                            itemToRemove = i;
                             ResetCurrentPromptTexts();
-                        }
-                        if (GUILayout.Button("Save", GUILayout.ExpandWidth(true)))
-                        {
-                            selectedIndex = -1;
                             ResetKeyboardControl();
-                            var updatedItem = (CustomPromptList[i].Title, currentPromptTexts[i]);
-                            CustomPromptList[i] = updatedItem;
-                            SavePromptListInJson();
-                            ResetCurrentPromptTexts();
                         }
                     }
-                    if (selectedIndex != i && GUILayout.Button("Edit", GUILayout.ExpandWidth(true)))
+                    finally
                     {
-                        selectedIndex = i;
+                        GUILayout.EndHorizontal();
                     }
-                    else if (
-                        selectedIndex == i
-                        && GUILayout.Button("Cancel", GUILayout.ExpandWidth(true))
-                    )
-                    {
-                        selectedIndex = -1;
-                        ResetCurrentPromptTexts();
-                        ResetKeyboardControl();
-                    }
-                    GUILayout.EndHorizontal();
                 }
                 finally
                 {
                     GUILayout.EndVertical();
                 }
             }
+            // Remove marked items from the list in reverse order to avoid index issues
+
             if (itemToRemove >= 0)
             {
                 CustomPromptList.RemoveAt(itemToRemove);
+                SavePromptListInJson();
             }
         }
     }
@@ -150,7 +175,7 @@ public class PromptManager : SingleExtensionApplication
     private void RenderDefaultPromptList()
     {
         GUILayout.Label(
-            new GUIContent("Default Prompts", "Default Prompts are not editable."),
+            new GUIContent("Default Prompts:", "Default Prompts are not editable."),
             EditorStyles.boldLabel
         );
         for (int i = 0; i < defaultPromptList.Count; i++)
@@ -158,10 +183,11 @@ public class PromptManager : SingleExtensionApplication
             GUILayout.BeginVertical();
             try
             {
+                AddDefaultSpace();
                 GUILayout.Label(defaultPromptList[i].Title, EditorStyles.boldLabel);
                 using (new EditorGUI.DisabledScope(true))
                 {
-                    EditorGUILayout.TextArea(defaultPromptList[i].Content, richTextStyle);
+                    EditorGUILayout.TextArea(defaultPromptList[i].Content, codeStyle);
                 }
             }
             finally
@@ -171,17 +197,30 @@ public class PromptManager : SingleExtensionApplication
         }
     }
 
-    private List<(string Title, string Content)> LoadPromptListFromJson()
+    public static List<(string Title, string Content)> LoadPromptListFromJson()
     {
         List<(string Title, string Content)> loadedPromptList = new();
         try
         {
+            string filePath =
+                AISettingsFileManager.GetInstance().UserFilesFolderPath + promptListFileName;
+
+            // Create the file if it doesn't exist and saves it
+            if (
+                !FileManager<List<(string Title, string Content)>>.CreateFileIfNotExisting(filePath)
+            )
+            {
+                loadedPromptList = defaultCustomPrompts;
+                FileManager<List<(string, string)>>.SaveToJsonFileWithPath(
+                    loadedPromptList,
+                    filePath
+                );
+                return loadedPromptList;
+            }
+
             loadedPromptList = FileManager<
                 List<(string Title, string Content)>
-            >.LoadDeserializedJsonFromPath(
-                AISettingsFileManager.GetInstance().UserFilesFolderPath,
-                promptListFileName
-            );
+            >.LoadDeserializedJsonFromPath(filePath);
         }
         catch (Newtonsoft.Json.JsonException jsonEx)
         {
@@ -204,10 +243,12 @@ public class PromptManager : SingleExtensionApplication
 
     private void SavePromptListInJson()
     {
-        FileManager<List<(string, string)>>.SaveFileToDefaultPath(
+        FileManager<List<(string, string)>>.SaveJsonFileToDefaultPath(
             CustomPromptList,
             promptListFileName
         );
+        ResetCurrentPromptTexts();
+        AIScript.ReloadPromptList();
     }
 
     private void RenderNewPromptField()
@@ -229,8 +270,11 @@ public class PromptManager : SingleExtensionApplication
         {
             using (new EditorGUI.DisabledScope(!addField))
             {
-                newPromptContent = EditorGUILayout.TextField("New Prompt Title", newPromptContent);
-                newPromptTitle = EditorGUILayout.TextField("New Prompt Content", newPromptTitle);
+                newPromptTitle = EditorGUILayout.TextField("New Prompt Title", newPromptTitle);
+                newPromptContent = EditorGUILayout.TextField(
+                    "New Prompt Content",
+                    newPromptContent
+                );
                 GUILayout.BeginHorizontal();
 
                 if (GUILayout.Button("Add"))

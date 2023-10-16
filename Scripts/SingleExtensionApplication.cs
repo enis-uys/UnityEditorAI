@@ -8,12 +8,6 @@ public abstract class SingleExtensionApplication : ScriptableObject
     public abstract string DisplayName { get; }
     protected static HelpBox helpBox = HelpBox.GetInstance();
     protected int defaultSpace = 10;
-    public abstract bool ShouldLoadEditorPrefs { get; set; }
-
-    //hlb = highlight button
-    private protected GUIStyle richTextStyle,
-        hlbStyle;
-    private protected GUISkin hlbSkin;
 
     private const string HighlightButtonRessourcePath = "HighlightButton";
 
@@ -35,19 +29,39 @@ public abstract class SingleExtensionApplication : ScriptableObject
         window.Show();
     }
 
-    protected void InitializeGuiStyles()
+    protected GUIStyle CreateRichTextStyle()
     {
-        richTextStyle ??= new GUIStyle(GUI.skin.textArea) { richText = true };
-        GUIStyle defaultStyle = new(GUI.skin.button) { fontStyle = FontStyle.Bold };
-        hlbSkin = Resources.Load<GUISkin>(HighlightButtonRessourcePath);
-        if (hlbSkin != null && hlbSkin.button != null)
+        return new GUIStyle(GUI.skin.textArea) { richText = true, wordWrap = true, };
+    }
+
+    protected GUIStyle CreateCodeStyle()
+    {
+        return new GUIStyle(EditorStyles.textArea)
         {
-            hlbStyle = new(hlbSkin.button);
+            font = EditorStyles.miniFont,
+            fontSize = 12,
+            wordWrap = true,
+            normal = { textColor = Color.white },
+            hover = { textColor = Color.white },
+            richText = true,
+        };
+    }
+
+    protected GUIStyle CreateHighlightButtonStyle()
+    {
+        GUISkin highightButtonSkin = Resources.Load<GUISkin>(HighlightButtonRessourcePath);
+        GUIStyle defaultStyle = new(GUI.skin.button) { fontStyle = FontStyle.Bold };
+        GUIStyle hightLightButtonStyle;
+        if (highightButtonSkin != null && highightButtonSkin.button != null)
+        {
+            hightLightButtonStyle = new(highightButtonSkin.button);
         }
         else
         {
-            hlbStyle = defaultStyle;
+            hightLightButtonStyle = defaultStyle;
         }
+
+        return hightLightButtonStyle;
     }
 
     public HelpBox GetHelpBox() => helpBox;

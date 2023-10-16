@@ -8,16 +8,16 @@ public class AISettings : SingleExtensionApplication
     public override string DisplayName => "AI Settings";
     private static readonly AISettingsFileManager settingsFM = AISettingsFileManager.GetInstance();
 
-    private bool hasInit = false;
-    public override bool ShouldLoadEditorPrefs { get; set; } = true;
+    private bool HasInit { get; set; } = false;
+    private bool ShouldLoadEditorPrefs { get; set; } = true;
 
     //Important to only set this OnEnable otherwise settings might not be loaded
     public override void OnEnable()
     {
-        if (!hasInit)
+        if (!HasInit)
         {
             settingsFM.LoadCustomSettings();
-            hasInit = true;
+            HasInit = true;
         }
     }
 
@@ -68,7 +68,6 @@ public class AISettings : SingleExtensionApplication
     private void RenderFilePathField()
     {
         GUILayout.Label("Settings File Path", EditorStyles.boldLabel);
-
         if (GUILayout.Button(settingsFM.UserFilesFolderPath))
         {
             string selectedSettingsFolderPath = EditorUtility.OpenFolderPanel(
