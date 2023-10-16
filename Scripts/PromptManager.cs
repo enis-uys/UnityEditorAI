@@ -249,6 +249,7 @@ public class PromptManager : SingleExtensionApplication
         );
         ResetCurrentPromptTexts();
         AIScript.ReloadPromptList();
+        AIObjectGenerator.ReloadPromptList();
     }
 
     private void RenderNewPromptField()

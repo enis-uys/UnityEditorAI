@@ -184,7 +184,7 @@ public class AIScript : SingleExtensionApplication
                 loadedPromptListArray,
                 GUILayout.MaxWidth(300)
             );
-            if (GUILayout.Button("Execute Selected Prompt", GUILayout.MaxWidth(300)))
+            if (GUILayout.Button("Execute Selected Prompt", GUILayout.ExpandWidth(true)))
             {
                 if (selectedPromptKey >= 0 && selectedPromptKey < loadedPromptList.Count)
                 {

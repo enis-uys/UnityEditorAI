@@ -72,7 +72,7 @@ public class AIChat : SingleExtensionApplication
         EditorGUILayout.LabelField("Input:");
         inputScrollPosition = EditorGUILayout.BeginScrollView(
             inputScrollPosition,
-            GUILayout.MinHeight(150)
+            GUILayout.ExpandHeight(true)
         );
         inputText = EditorGUILayout.TextArea(inputText, GUILayout.ExpandHeight(true));
 
