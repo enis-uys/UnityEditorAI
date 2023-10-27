@@ -125,8 +125,9 @@ public class OpenAiStandardPrompts
 
     public static readonly (string Title, string Content) ObjectGenerationPrompt = (
         "Object Generation Prompt",
-        @"Write a Unity Editor script.
+        @"Write an Unity Editor script.
         It doesn’t provide any editor window. It will immediately do the task when the item is invoked and should have one single static method.
+        Do not write WindowItem or EditorWindow.
         Don’t use GameObject.Find* Functions. Do not use any Tags without the necessary Libary for it.
         Do not forget the necessary libraries inside the script. Especially using UnityEditor and using UnityEngine
         There is no selected object. Find game objects manually.

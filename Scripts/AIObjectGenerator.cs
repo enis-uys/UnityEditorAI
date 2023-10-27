@@ -231,7 +231,11 @@ public class AIObjectGenerator : SingleExtensionApplication
     private void WriteDoTaskScriptInFile()
     {
         generatePath = FileManager<string>.settingsFM.GeneratedFilesFolderPath + DoTaskTemp + ".cs";
-        FileManager<string>.CreateScriptAssetWithReflection(generatePath, doTaskScriptContent);
+        string cleanedDoTaskScriptContent = ScriptUtil.CleanScript(doTaskScriptContent);
+        FileManager<string>.CreateScriptAssetWithReflection(
+            generatePath,
+            cleanedDoTaskScriptContent
+        );
         doTaskScriptContent = "";
         AssetDatabase.Refresh();
     }
