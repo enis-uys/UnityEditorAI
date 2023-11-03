@@ -33,10 +33,11 @@ public class ExtensionTabs : EditorWindow
 
         applications = new SingleExtensionApplication[]
         {
-            CreateInstance<AIChat>(),
+            CreateInstance<AiAssistant>(),
             CreateInstance<AIScript>(),
             CreateInstance<AIObjectGenerator>(),
             CreateInstance<PromptManager>(),
+            CreateInstance<ColorExtruder>(),
             CreateInstance<AISettings>()
         };
         foreach (var app in applications)
@@ -47,9 +48,9 @@ public class ExtensionTabs : EditorWindow
 
     private void OnGUI()
     {
+        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
         try
         {
-            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
             Initialize();
             EditorGUILayout.LabelField("Choose a tool", EditorStyles.boldLabel);
             EditorGUILayout.Space();

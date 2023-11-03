@@ -3,7 +3,7 @@ public class OpenAiStandardPrompts
     public static readonly (string Title, string Content) CreateNewScriptWithPrompt = (
         "Create New Script With Prompt",
         // @"Create a C# script that rotates a GameObject over time.";
-        // use verbatim string for easier editing
+        // use of verbatim string for easier editing
         //TODO: Watch the gpt course again for better output formatting []<>, etc.
         @"
         Your expertise in AI enables you to generate custom Unity C# scripts that fulfills the user's specific requirements.
@@ -127,7 +127,7 @@ public class OpenAiStandardPrompts
         "Object Generation Prompt",
         @"Write an Unity Editor script.
         It doesn’t provide any editor window. It will immediately do the task when the item is invoked and should have one single static method.
-        Do not write WindowItem or EditorWindow.
+        Do not write MenuItem, WindowItem or EditorWindow as a Tag. Only the static method inside the class.
         Don’t use GameObject.Find* Functions. Do not use any Tags without the necessary Libary for it.
         Do not forget the necessary libraries inside the script. Especially using UnityEditor and using UnityEngine
         There is no selected object. Find game objects manually.
@@ -150,6 +150,29 @@ public class OpenAiStandardPrompts
         including appending a C Sharp comment explaining the reasons behind this decision.
         This is the `prompt`and/or the `script` you should use for the task:
         "
+    );
+
+    public static readonly (string Title, string Content) ColorImageGenerationPrompt = (
+        "Generate Color Image From Data Prompt",
+        @"Create a C# Unity script that turns image data into a 3D grid of colored spheres, one for each pixel starting from bottom left.
+        The generated spheres should start at 0,0,0 and be spaced 1 unit apart and have the size of 1.
+        It should create primitive spheres and not use any prefabs. Then it should color each sphere according to the pixel color.
+        It should spawn the spheres inside a new generated ParentObject.
+        The Method ColorExtruder.ColorArrayObjectFromFile(); reads from a file out of the EditorPrefs. It does not need any parameters.
+        It returns a ColorArrayObject with image size and colors in this format:
+        ```csharp
+            public class ColorArrayObject {
+            public int width, height;
+            public List<string> colors;
+            public List<int> pixels;
+        }
+        ``` 
+        The colors are stored as strings in the format #RRGGBBAA.
+        Write a own method to parse a hex color string to a Color object.
+        The pixels List store the index of the color in the colors list.
+        Make sure to to use the ColorExtruder.ColorArrayObjectFromFile(); method to get the data. 
+        The script should be called by a single static method from EditorMenu.
+       "
     );
 
     //private static readonly (string Title, string Content) NewPromptTemplate = ("", @"");

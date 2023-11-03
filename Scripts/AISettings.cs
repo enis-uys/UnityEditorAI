@@ -186,23 +186,33 @@ public class AISettings : SingleExtensionApplication
     private void RenderActionButtons()
     {
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Test API"))
+        try
         {
-            TestAPI();
+            if (GUILayout.Button("Test API"))
+            {
+                TestAPI();
+            }
+            if (GUILayout.Button("Reset To Default Settings"))
+            {
+                settingsFM.SetSettingsFromSerializable(settingsFM.DefaultSettingsFile(), true);
+            }
+            if (GUILayout.Button("Load Settings From File"))
+            {
+                settingsFM.LoadSettingsFromFilePanel();
+            }
+            if (
+                GUILayout.Button(
+                    new GUIContent("Save Settings", "Saves the settings to a json file")
+                )
+            )
+            {
+                settingsFM.WriteSettingsInJson();
+            }
         }
-        if (GUILayout.Button("Reset To Default Settings"))
+        finally
         {
-            settingsFM.SetSettingsFromSerializable(settingsFM.DefaultSettingsFile(), true);
+            GUILayout.EndHorizontal();
         }
-        if (GUILayout.Button("Load Settings From File"))
-        {
-            settingsFM.LoadSettingsFromFilePanel();
-        }
-        if (GUILayout.Button(new GUIContent("Save Settings", "Saves the settings to a json file")))
-        {
-            settingsFM.WriteSettingsInJson();
-        }
-        GUILayout.EndHorizontal();
     }
 
     private async void TestAPI()
@@ -229,13 +239,39 @@ public class AISettings : SingleExtensionApplication
         SettingsFileName
     }
 
-    private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
+    private static readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
         new()
         {
             { EditorPrefKey.UserFilesFolderPath, "UserFilesFolderPath" },
             { EditorPrefKey.GeneratedFilesFolderPath, "GeneratedFilesFolderPath" },
             { EditorPrefKey.SettingsFileName, "SettingsFileName" }
         };
+
+    public static string GetGenerateFilesFolderPathFromEditorPrefs()
+    {
+        string generatedPath = EditorPrefs.GetString(
+            editorPrefKeys[EditorPrefKey.GeneratedFilesFolderPath]
+        );
+        if (string.IsNullOrEmpty(generatedPath))
+        {
+            //Default path
+            return "Assets/UnityEditorAI/Generated/";
+        }
+        return generatedPath;
+    }
+
+    public static string GetUserFilesFolderPathFromEditorPrefs()
+    {
+        string userFilesPath = EditorPrefs.GetString(
+            editorPrefKeys[EditorPrefKey.UserFilesFolderPath]
+        );
+        if (string.IsNullOrEmpty(userFilesPath))
+        {
+            //Default path
+            return "Assets/UnityEditorAI/UserFiles/";
+        }
+        return userFilesPath;
+    }
 
     private void LoadEditorPrefs()
     {

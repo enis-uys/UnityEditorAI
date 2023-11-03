@@ -46,13 +46,13 @@ public class FileManager<T>
         }
     }
 
-    public static void SaveJsonFileToDefaultPath(T data, string fileName)
+    public static string SaveJsonFileToDefaultPath(T data, string fileName)
     {
         string path = settingsFM.UserFilesFolderPath + fileName;
-        SaveToJsonFileWithPath(data, path);
+        return SaveToJsonFileWithPath(data, path);
     }
 
-    public static bool SaveToJsonFileWithPath(T data, string filePath)
+    public static string SaveToJsonFileWithPath(T data, string filePath)
     {
         HelpBox helpBox = HelpBox.GetInstance();
         string helpBoxMessage;
@@ -63,7 +63,6 @@ public class FileManager<T>
             helpBox.UpdateMessage(helpBoxMessage, messageType);
 
             var jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
-
             string folderPath = Path.GetDirectoryName(filePath);
             if (!Directory.Exists(folderPath))
             {
@@ -74,14 +73,14 @@ public class FileManager<T>
             CreateFileIfNotExisting(filePath);
             File.WriteAllText(filePath, jsonData);
             helpBoxMessage = "Data saved to file: " + filePath;
-            helpBox.UpdateMessage(helpBoxMessage, messageType, true);
-            return true;
+            helpBox.UpdateMessage(helpBoxMessage, messageType);
+            return jsonData;
         }
         catch (Exception ex)
         {
             helpBoxMessage = "An error occurred: " + ex.Message;
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
-            return false;
+            return null;
         }
     }
 
@@ -147,7 +146,7 @@ public class FileManager<T>
                 {
                     T data = JsonConvert.DeserializeObject<T>(jsonData);
                     helpBoxMessage = "Data loaded from: " + filePath;
-                    helpBox.UpdateMessage(helpBoxMessage, MessageType.Info, true);
+                    helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
                     if (data == null)
                     {
                         return ReturnEmptyT();
@@ -203,13 +202,20 @@ public class FileManager<T>
     {
         string json;
         json = JsonConvert.SerializeObject(data, formatting.Value);
-
         return json;
     }
 
     public static T DeserializeJsonString(string jsonData)
     {
-        T data = JsonConvert.DeserializeObject<T>(jsonData);
-        return data;
+        try
+        {
+            T data = JsonConvert.DeserializeObject<T>(jsonData);
+            return data;
+        }
+        catch (JsonException ex)
+        {
+            Console.WriteLine($"Error deserializing JSON: {ex.Message}");
+            return default;
+        }
     }
 }

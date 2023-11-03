@@ -1,7 +1,6 @@
 using System.Text.RegularExpressions;
 
 using UnityEditor;
-using System.Reflection;
 
 public class ScriptUtil
 {
@@ -17,11 +16,9 @@ public class ScriptUtil
             HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Warning);
             return inputString;
         }
-        // Step 1: Remove text before and after backticks
-
-        // Pattern: Match two or more backticks at the start or end and remove before and after
-        string pattern1 = ".*?(`{2,})(.*?)(`{2,})(.*)";
-        string replacement1 = "$1$2$3";
+        //Step 1: Remove the term csharp from the script
+        string pattern1 = @"csharp|c#";
+        string replacement1 = "";
         string outputString1 = Regex.Replace(
             inputString,
             pattern1,
@@ -29,17 +26,42 @@ public class ScriptUtil
             RegexOptions.Multiline
         );
 
-        // Step 2: Remove any remaining backticks
-        string pattern2 = @"(`{2,})";
-        string replacement2 = "";
+        // Step 2: Remove text before backticks
+        // Pattern: Match two or more backticks at the start or end and remove before the start and after the end backticks
+        string pattern2 = @"^[\s\S]*?(`{2,}[\s\S]*?`{2,})";
+        string replacement2 = "$1";
+
         string outputString2 = Regex.Replace(
             outputString1,
             pattern2,
             replacement2,
             RegexOptions.Multiline
         );
+        //Step 3: Remove text after backticks
+        // Pattern: Match two or more backticks at the start and end and remove after the end backticks
+        string pattern3 = @"(`{2,}[\s\S]*?`{2,})[\s\S]*$";
+        string replacement3 = "$1";
+        string outputString3 = Regex.Replace(
+            outputString2,
+            pattern3,
+            replacement3,
+            RegexOptions.Multiline
+        );
+        // Step 4: Remove any remaining backtick series of 2 or more
+        string pattern4 = @"(`{2,})";
+        string replacement4 = "";
+        string outputString4 = Regex.Replace(
+            outputString3,
+            pattern4,
+            replacement4,
+            RegexOptions.Multiline
+        );
+        return outputString4;
+    }
 
-        return outputString2;
+    public string RemoveTagsFromScript()
+    {
+        return "";
     }
 
     public static string ExtractNameAfterKeyWordFromScript(string scriptString, string keyword)

@@ -4,16 +4,16 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public class AIChat : SingleExtensionApplication
+public class AiAssistant : SingleExtensionApplication
 {
     /// <summary>
-    /// The display name of the AI Chat extension.
+    /// The display name of the AI Assistant extension.
     /// </summary>
-    public override string DisplayName => "AI Chat";
+    public override string DisplayName => "AI Assistant";
 
     private string inputText = "";
     GUIStyle richTextStyle;
-    private const string messageHistoryFileName = "MessageHistory.json";
+    private const string messageHistoryFileName = "messageHistory.json";
     private string messageHistoryOutputField = "";
     private Vector2 inputScrollPosition;
     private Vector2 outputScrollPosition;
@@ -45,7 +45,7 @@ public class AIChat : SingleExtensionApplication
         EditorGUILayout.BeginVertical("Box");
         try
         {
-            if (HasInit)
+            if (!HasInit)
             {
                 LoadEditorPrefs();
                 HasInit = true;
@@ -119,34 +119,45 @@ public class AIChat : SingleExtensionApplication
             outputScrollPosition,
             GUILayout.ExpandHeight(true)
         );
-
-        using (new EditorGUI.DisabledScope(true))
+        try
         {
-            messageHistoryOutputField = EditorGUILayout.TextArea(
-                MessageHistoryListToFormatedString(messageHistoryListBuilder),
-                richTextStyle,
-                GUILayout.ExpandHeight(true)
-            );
+            using (new EditorGUI.DisabledScope(true))
+            {
+                messageHistoryOutputField = EditorGUILayout.TextArea(
+                    MessageHistoryListToFormatedString(messageHistoryListBuilder),
+                    richTextStyle,
+                    GUILayout.ExpandHeight(true)
+                );
+            }
         }
-
-        EditorGUILayout.EndScrollView();
-
+        finally
+        {
+            EditorGUILayout.EndScrollView();
+        }
         GUILayout.BeginHorizontal();
-
-        if (GUILayout.Button("Clear"))
+        try
         {
-            ClearMessageHistory();
+            if (GUILayout.Button("Clear"))
+            {
+                ClearMessageHistory();
+            }
+            if (GUILayout.Button("Copy Conversation"))
+            {
+                EditorGUIUtility.systemCopyBuffer = messageHistoryOutputField;
+            }
+            if (GUILayout.Button("Load Conversation"))
+            {
+                LoadMessageHistoryFromFile();
+            }
+            if (GUILayout.Button("Save Conversation"))
+            {
+                SaveMessageHistoryToFile();
+            }
         }
-        if (GUILayout.Button("Load Conversation"))
+        finally
         {
-            LoadMessageHistoryFromFile();
+            GUILayout.EndHorizontal();
         }
-        if (GUILayout.Button("Save Conversation"))
-        {
-            SaveMessageHistoryToFile();
-        }
-
-        GUILayout.EndHorizontal();
     }
 
     /// <summary>
@@ -172,10 +183,18 @@ public class AIChat : SingleExtensionApplication
         tempMessageListBuilder.AddMessage(input, "user");
 
         var gptResponse = await OpenAiApiManager.RequestToGpt(tempMessageListBuilder);
-        messageHistoryListBuilder.AddMessage(input, "user");
-        messageHistoryListBuilder.AddMessage(gptResponse, "assistant");
-
-        helpBox.UpdateMessage("Message sent to GPT", MessageType.Info);
+        Debug.Log("GPT response: " + gptResponse);
+        if (gptResponse != null)
+        {
+            messageHistoryListBuilder.AddMessage(input, "user");
+            messageHistoryListBuilder.AddMessage(gptResponse, "assistant");
+            helpBox.UpdateMessage("Message received from GPT", MessageType.Info);
+        }
+        else
+        {
+            string helpBoxMessage = "GPT did not answer.";
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+        }
         FinishProgressBarWithDelay();
     }
 
@@ -213,15 +232,23 @@ public class AIChat : SingleExtensionApplication
     /// <summary>
     /// Loads the message history from a file.
     /// </summary>
-    /// TODO: Replace
     private void LoadMessageHistoryFromFile()
     {
         List<MessageListBuilder.RequestMessage> loadedMessageHistory = new();
         try
         {
-            loadedMessageHistory = FileManager<
+            var loadedData = FileManager<
                 List<MessageListBuilder.RequestMessage>
             >.LoadDeserializedJsonPanel("Load the message history from a file");
+            if (loadedData != null)
+            {
+                loadedMessageHistory = loadedData;
+            }
+            else
+            {
+                string helpBoxMessage = "No message history selected.";
+                helpBox.UpdateMessage(helpBoxMessage, MessageType.Error);
+            }
         }
         catch (Newtonsoft.Json.JsonException jsonEx)
         {
@@ -269,8 +296,8 @@ public class AIChat : SingleExtensionApplication
     private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
         new()
         {
-            { EditorPrefKey.InputText, "InputText" },
-            { EditorPrefKey.MessageHistoryListJson, "MessageHistoryListJson" }
+            { EditorPrefKey.InputText, "InputTextKey" },
+            { EditorPrefKey.MessageHistoryListJson, "MessageHistoryListJsonKey" }
         };
 
     private void SetEditorPrefs()
@@ -300,11 +327,11 @@ public class AIChat : SingleExtensionApplication
             switch (kvp.Key)
             {
                 case EditorPrefKey.InputText:
-                    inputText = EditorPrefs.GetString(kvp.Value, "");
+                    inputText = EditorPrefs.GetString(kvp.Value);
                     break;
                 case EditorPrefKey.MessageHistoryListJson:
                     // Retrieve the serialized JSON string from EditorPrefs
-                    string messageHistoryListJson = EditorPrefs.GetString(kvp.Value, "");
+                    string messageHistoryListJson = EditorPrefs.GetString(kvp.Value);
                     if (!string.IsNullOrEmpty(messageHistoryListJson))
                     {
                         List<MessageListBuilder.RequestMessage> messageHistoryList = FileManager<

@@ -42,7 +42,7 @@ public class AIScript : SingleExtensionApplication
             RenderInputField();
             AddDefaultSpace();
             RenderNewScriptContent();
-            RenderPlaceHolder();
+            // RenderGameObjectPlaceHolder();
 
             AddDefaultSpace();
             RenderHelpBox();
@@ -105,13 +105,25 @@ public class AIScript : SingleExtensionApplication
         GUILayout.EndHorizontal();
     }
 
-    private void RenderPlaceHolder()
+    //TODO: Implement gameObject manipulation / analysis
+    private void RenderGameObjectPlaceHolder()
     {
         GUILayout.Label(
             "Those are placeholders. Later you can put in files that need to be changed.",
             EditorStyles.boldLabel
         );
         csPrefab = (GameObject)EditorGUILayout.ObjectField(csPrefab, typeof(GameObject), true);
+    }
+
+    private void RenderInputScript()
+    {
+        inputScript = (MonoScript)
+            EditorGUILayout.ObjectField(
+                inputScript,
+                typeof(MonoScript),
+                true,
+                GUILayout.Width(300)
+            );
     }
 
     private void RenderNewScriptContent()
@@ -146,7 +158,7 @@ public class AIScript : SingleExtensionApplication
                         }
                         if (GUILayout.Button("Create Script File", customButtonStyle))
                         {
-                            CleanAndSaveScriptIntoFile();
+                            SaveScriptIntoFile();
                         }
                     }
                     finally
@@ -162,15 +174,18 @@ public class AIScript : SingleExtensionApplication
         }
     }
 
-    private void RenderInputScript()
+    private string SaveScriptIntoFile()
     {
-        inputScript = (MonoScript)
-            EditorGUILayout.ObjectField(
-                inputScript,
-                typeof(MonoScript),
-                true,
-                GUILayout.Width(300)
-            );
+        string gptScriptClassName = ScriptUtil.ExtractNameAfterKeyWordFromScript(
+            newScriptContent,
+            "class"
+        );
+        string generatePath =
+            AISettings.GetGenerateFilesFolderPathFromEditorPrefs() + gptScriptClassName + ".cs";
+        FileManager<string>.CreateScriptAssetWithReflection(generatePath, newScriptContent);
+        AssetDatabase.Refresh();
+        newScriptContent = "";
+        return newScriptContent;
     }
 
     private void RenderPopupField()
@@ -206,47 +221,25 @@ public class AIScript : SingleExtensionApplication
         }
     }
 
-    //TODO: Implement system that includes the selected prompt
     //TODO: Implement checkbox under the input field that allows to select if the prompt should be included
     private void ProcessInputPrompt(string prompt)
     {
         ShowProgressBar(0.1f);
         if (IsInputScriptSelected())
         {
-            //     string gptInputWithPrompt = inputText + "\n" + prompt;
-            CreateNewScriptVersion(inputText);
+            CreateUpdatedScriptVersion(prompt);
         }
         else
         {
-            CreateNewScriptBasedOnInput(inputText);
+            CreateNewScript(prompt);
         }
     }
 
-    private void ClearInputAndResetKeyboardControl()
-    {
-        inputText = "";
-        ResetKeyboardControl();
-    }
-
-    private string CleanAndSaveScriptIntoFile()
-    {
-        string cleanedScriptContent = ScriptUtil.CleanScript(newScriptContent);
-        string gptScriptClassName = ScriptUtil.ExtractNameAfterKeyWordFromScript(
-            cleanedScriptContent,
-            "class"
-        );
-        string generatePath =
-            FileManager<string>.settingsFM.GeneratedFilesFolderPath + gptScriptClassName + ".cs";
-        FileManager<string>.CreateScriptAssetWithReflection(generatePath, newScriptContent);
-        AssetDatabase.Refresh();
-        newScriptContent = "";
-        return cleanedScriptContent;
-    }
-
-    private async void CreateNewScriptBasedOnInput(string inputPrompt)
+    private async void CreateNewScript(string inputPrompt)
     {
         ShowProgressBar(0.2f);
         ClearInputAndResetKeyboardControl();
+        string helpBoxMessage;
         var messageListBuilder = new MessageListBuilder()
             .AddMessage(OpenAiStandardPrompts.CreateNewScriptWithPrompt.Content, "system")
             .AddMessage(OpenAiStandardPrompts.ScriptEndNote.Content, "system")
@@ -256,17 +249,26 @@ public class AIScript : SingleExtensionApplication
         string gptScriptResponse = await OpenAiApiManager.RequestToGpt(messageListBuilder);
         ShowProgressBar(0.8f);
 
-        //TODO: maybe convert this to a readable view Debug.Log(gptScriptResponse);
-        //if no response is given, do nothing
         if (string.IsNullOrEmpty(gptScriptResponse))
         {
+            helpBoxMessage = "Generated Script was empty.";
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            FinishProgressBarWithDelay();
             return;
         }
-        newScriptContent = gptScriptResponse;
+        else if (!ScriptUtil.IsValidScript(gptScriptResponse))
+        {
+            helpBoxMessage = "Generated Script was not valid.";
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            FinishProgressBarWithDelay();
+            return;
+        }
+        string cleanedScriptContent = ScriptUtil.CleanScript(gptScriptResponse);
+        newScriptContent = cleanedScriptContent;
         Repaint();
     }
 
-    private async void CreateNewScriptVersion(string inputPrompt)
+    private async void CreateUpdatedScriptVersion(string inputPrompt)
     {
         ShowProgressBar(0.2f);
         ClearInputAndResetKeyboardControl();
@@ -278,6 +280,7 @@ public class AIScript : SingleExtensionApplication
             return;
         }
         // Read the content of the MonoScript asset
+        //TODO:
         string scriptContent = inputScript.ToString();
         helpBoxMessage = inputScript.name + " got read and sent to GPT.";
         helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
@@ -286,27 +289,36 @@ public class AIScript : SingleExtensionApplication
         var messageListBuilder = new MessageListBuilder()
             .AddMessage(OpenAiStandardPrompts.UpdateExistingScriptWithPrompt.Content, "system")
             .AddMessage(OpenAiStandardPrompts.ScriptEndNote.Content, "system")
-            .AddMessage(inputPrompt);
+            .AddMessage(inputPrompt)
+            .AddMessage(scriptContent);
+        ShowProgressBar(0.3f);
 
         string gptScriptResponse = await OpenAiApiManager.RequestToGpt(messageListBuilder);
-
-        // maybe convert this to a readable view  Debug.Log(gptScriptResponse);
-        //if no response is given, do nothing
-
+        ShowProgressBar(0.8f);
         if (string.IsNullOrEmpty(gptScriptResponse))
         {
             helpBoxMessage = "Generated Script was empty.";
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            FinishProgressBarWithDelay();
             return;
         }
         else if (!ScriptUtil.IsValidScript(gptScriptResponse))
         {
             helpBoxMessage = "Generated Script was not valid.";
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            FinishProgressBarWithDelay();
             return;
         }
-        newScriptContent = gptScriptResponse;
+        string cleanedScriptContent = ScriptUtil.CleanScript(gptScriptResponse);
+        newScriptContent = cleanedScriptContent;
+        FinishProgressBarWithDelay();
         Repaint();
+    }
+
+    private void ClearInputAndResetKeyboardControl()
+    {
+        inputText = "";
+        ResetKeyboardControl();
     }
 
     public static void ReloadPromptList()
@@ -327,7 +339,7 @@ public class AIScript : SingleExtensionApplication
     public enum EditorPrefKey
     {
         InputScriptGUID,
-        InputText,
+        InputScriptText,
         NewScriptContent,
         SelectedPrompt
     }
@@ -336,7 +348,7 @@ public class AIScript : SingleExtensionApplication
         new()
         {
             { EditorPrefKey.InputScriptGUID, "InputScriptGUIDKey" },
-            { EditorPrefKey.InputText, "InputTextKey" },
+            { EditorPrefKey.InputScriptText, "InputScriptTextKey" },
             { EditorPrefKey.NewScriptContent, "NewScriptContentKey" },
             { EditorPrefKey.SelectedPrompt, "SelectedPromptKey" }
         };
@@ -351,10 +363,12 @@ public class AIScript : SingleExtensionApplication
                 {
                     case EditorPrefKey.InputScriptGUID:
                         // Updated to use GUID because it is more reliable than path
-                        string inputScriptPath = AssetDatabase.GUIDToAssetPath(kvp.Value);
+                        string inputScriptPath = AssetDatabase.GUIDToAssetPath(
+                            EditorPrefs.GetString(kvp.Value)
+                        );
                         inputScript = AssetDatabase.LoadAssetAtPath<MonoScript>(inputScriptPath);
                         break;
-                    case EditorPrefKey.InputText:
+                    case EditorPrefKey.InputScriptText:
                         inputText = EditorPrefs.GetString(kvp.Value);
                         break;
                     case EditorPrefKey.NewScriptContent:
@@ -388,7 +402,7 @@ public class AIScript : SingleExtensionApplication
                         EditorPrefs.SetString(kvp.Value, "");
                     }
                     break;
-                case EditorPrefKey.InputText:
+                case EditorPrefKey.InputScriptText:
                     EditorPrefs.SetString(kvp.Value, inputText);
                     break;
                 case EditorPrefKey.NewScriptContent:

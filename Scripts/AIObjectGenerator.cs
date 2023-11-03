@@ -218,9 +218,10 @@ public class AIObjectGenerator : SingleExtensionApplication
         {
             string helpBoxMessage = "Successfully received response from OpenAI API.";
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
-            FinishProgressBarWithDelay();
             // Saves the response from the OpenAI API into doTaskScriptContent
-            doTaskScriptContent = gptScriptResponse;
+            string cleanedDoTaskScriptContent = ScriptUtil.CleanScript(gptScriptResponse);
+            doTaskScriptContent = cleanedDoTaskScriptContent;
+            FinishProgressBarWithDelay();
             Repaint();
         }
     }
@@ -230,12 +231,8 @@ public class AIObjectGenerator : SingleExtensionApplication
     // View LICENSE.md to see the license and information.
     private void WriteDoTaskScriptInFile()
     {
-        generatePath = FileManager<string>.settingsFM.GeneratedFilesFolderPath + DoTaskTemp + ".cs";
-        string cleanedDoTaskScriptContent = ScriptUtil.CleanScript(doTaskScriptContent);
-        FileManager<string>.CreateScriptAssetWithReflection(
-            generatePath,
-            cleanedDoTaskScriptContent
-        );
+        generatePath = AISettings.GetGenerateFilesFolderPathFromEditorPrefs() + DoTaskTemp + ".cs";
+        FileManager<string>.CreateScriptAssetWithReflection(generatePath, doTaskScriptContent);
         doTaskScriptContent = "";
         AssetDatabase.Refresh();
     }
@@ -274,7 +271,7 @@ public class AIObjectGenerator : SingleExtensionApplication
 
     public enum EditorPrefKey
     {
-        InputText,
+        InputObjectText,
         DoTaskScriptContent,
         GeneratePath,
         SelectedPrompt
@@ -283,7 +280,7 @@ public class AIObjectGenerator : SingleExtensionApplication
     private static readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
         new()
         {
-            { EditorPrefKey.InputText, "InputTextKey" },
+            { EditorPrefKey.InputObjectText, "InputObjectTextKey" },
             { EditorPrefKey.DoTaskScriptContent, "DoTaskScriptContentKey" },
             { EditorPrefKey.GeneratePath, "GeneratePathKey" },
             { EditorPrefKey.SelectedPrompt, "SelectedPromptKey" }
@@ -297,7 +294,7 @@ public class AIObjectGenerator : SingleExtensionApplication
             {
                 switch (kvp.Key)
                 {
-                    case EditorPrefKey.InputText:
+                    case EditorPrefKey.InputObjectText:
                         inputText = EditorPrefs.GetString(kvp.Value);
                         break;
                     case EditorPrefKey.DoTaskScriptContent:
@@ -320,7 +317,7 @@ public class AIObjectGenerator : SingleExtensionApplication
         {
             switch (kvp.Key)
             {
-                case EditorPrefKey.InputText:
+                case EditorPrefKey.InputObjectText:
                     EditorPrefs.SetString(kvp.Value, inputText);
                     break;
                 case EditorPrefKey.DoTaskScriptContent:

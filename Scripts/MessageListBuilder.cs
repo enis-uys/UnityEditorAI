@@ -65,10 +65,11 @@ public class MessageListBuilder
     {
         if (index < messageList.Count)
         {
+            Debug.Log("MessageListBuilder: GetMessageAt: " + messageList[index].content);
             return messageList[index];
         }
         else
-            return null;
+            return new RequestMessage("", "system");
     }
 
     public int GetMessageCount()
