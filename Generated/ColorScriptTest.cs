@@ -1,47 +1,35 @@
 using UnityEngine;
-using System.Collections.Generic;
 
-public class SphereGenerator : MonoBehaviour
+public class ColorSciptTest : MonoBehaviour
 {
-    public void Start()
+    public static void GenerateColors()
     {
-        // Read color data from file
         ColorArrayObject colorArrayObject = ColorExtruder.ColorArrayObjectFromFile();
 
-        // Create parent object
-        GameObject parentObject = new GameObject("ParentObject");
-
-        // Iterate through each pixel
-        for (int i = 0; i < colorArrayObject.pixels.Count; i++)
+        GameObject findParent = GameObject.Find("ImageParent");
+        if (findParent != null)
         {
-            // Get pixel color index
-            int colorIndex = colorArrayObject.pixels[i];
+            DestroyImmediate(findParent);
+        }
+        GameObject imageParent = new GameObject("ImageParent");
 
-            // Get pixel color
-            string colorHex = colorArrayObject.colors[colorIndex];
-            Color color = ParseHexColor(colorHex);
-
-            // Calculate position of sphere
+        for (int i = 0; i < colorArrayObject.width * colorArrayObject.height; i++)
+        {
             int x = i % colorArrayObject.width;
             int y = i / colorArrayObject.width;
-            Vector3 position = new Vector3(x, y, 0);
+            Vector3 position = new(x, y, colorArrayObject.width);
 
-            // Create sphere
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.transform.position = position;
-            sphere.transform.localScale = Vector3.one;
-            sphere.GetComponent<Renderer>().material.color = color;
-            sphere.transform.parent = parentObject.transform;
+            sphere.transform.localScale = Vector3.one; // Slightly smaller to create gaps between spheres
+            sphere.transform.parent = imageParent.transform;
+            int colorIndex = colorArrayObject.pixels[i];
+            Color newColor;
+            if (ColorUtility.TryParseHtmlString(colorArrayObject.colors[colorIndex], out newColor))
+            {
+                Renderer renderer = sphere.GetComponent<Renderer>();
+                renderer.material = new Material(Shader.Find("Standard")) { color = newColor };
+            }
         }
-    }
-
-    private static Color ParseHexColor(string hexColor)
-    {
-        hexColor = hexColor.Replace("#", "");
-        byte r = byte.Parse(hexColor.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
-        byte g = byte.Parse(hexColor.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
-        byte b = byte.Parse(hexColor.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
-        byte a = byte.Parse(hexColor.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
-        return new Color32(r, g, b, a);
     }
 }

@@ -3,20 +3,48 @@ using UnityEngine;
 
 using System.Linq;
 
+/// <summary>
+/// The main window of the AI extension.
+/// </summary>
 public class ExtensionTabs : EditorWindow
 {
+    /// <summary>
+    /// The list of applications to display in the toolbar.
+    /// </summary>
     private static SingleExtensionApplication[] applications;
+
+    /// <summary>
+    /// The list of display names for the applications.
+    /// </summary>
     private static string[] DisplayNames => applications.Select(a => a.DisplayName).ToArray();
+
+    /// <summary>
+    /// The index of the current application.
+    /// </summary>
     private int currentApplication;
+
+    /// <summary>
+    /// Whether the window has been initialized.
+    /// </summary>
     private bool HasInit { get; set; } = false;
+
+    /// <summary>
+    /// The scroll position of the whole extension window.
+    /// </summary>
     private Vector2 scrollPosition;
 
+    /// <summary>
+    /// Opens the window.
+    /// </summary>
     [MenuItem("Window/AI Tabs")]
     public static void ShowWindow()
     {
         GetWindow<ExtensionTabs>("AI Tabs");
     }
 
+    /// <summary>
+    /// Initializes the window.
+    /// </summary>
     private void OnEnable()
     {
         if (!HasInit)
@@ -26,6 +54,9 @@ public class ExtensionTabs : EditorWindow
         }
     }
 
+    /// <summary>
+    /// Initializes the applications.
+    /// </summary>
     private void Initialize()
     {
         if (applications != null)
@@ -33,7 +64,7 @@ public class ExtensionTabs : EditorWindow
 
         applications = new SingleExtensionApplication[]
         {
-            CreateInstance<AiAssistant>(),
+            CreateInstance<AIAssistant>(),
             CreateInstance<AIScript>(),
             CreateInstance<AIObjectGenerator>(),
             CreateInstance<PromptManager>(),
@@ -46,6 +77,9 @@ public class ExtensionTabs : EditorWindow
         }
     }
 
+    /// <summary>
+    /// Draws the window.
+    /// </summary>
     private void OnGUI()
     {
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);

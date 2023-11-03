@@ -1,27 +1,54 @@
 using UnityEditor;
 using UnityEngine;
-
-// for the dictionary
 using System.Collections.Generic;
-// for ToArray()
 using System.Linq;
 
+/// <summary>
+/// Single application for the AI extension. It is used to create new scripts or update existing ones.
+/// </summary>
 public class AIScript : SingleExtensionApplication
 {
+    /// <summary>
+    /// The display name of the application.
+    /// </summary>
     public override string DisplayName => "AI Script";
+
+    /// <summary>
+    /// The input script that is used to update an existing script.
+    /// </summary>
     private MonoScript inputScript;
+
+    /// <summary>
+    /// The input text that is used to create a new script.
+    /// </summary>
     private string inputText = "";
+
+    /// <summary>
+    /// The content of the new script that is generated.
+    /// </summary>
     private string newScriptContent;
+
+    /// <summary>
+    /// The scroll position of the input field.
+    /// </summary>
     private Vector2 inputScrollPosition;
-    private GameObject csPrefab;
+
+    /// <summary>
+    ///
+    /// </summary>
     private bool HasInit { get; set; } = false;
 
+    /// <summary>
+    /// The list of prompts that are loaded from the JSON file.
+    /// </summary>
     private static List<(string Title, string Content)> loadedPromptList = new();
+    private int selectedPromptKey = 0;
 
     //TODO: Implement system that updates existing script and asks for confirmation
     //private bool shouldUpdateExistingScript = false;
-    private int selectedPromptKey = 0;
-
+    /// <summary>
+    /// GUI callback for rendering the AI Script extension.
+    /// </summary>
     public override void OnGUI()
     {
         EditorGUILayout.BeginVertical("Box");
@@ -42,7 +69,6 @@ public class AIScript : SingleExtensionApplication
             RenderInputField();
             AddDefaultSpace();
             RenderNewScriptContent();
-            // RenderGameObjectPlaceHolder();
 
             AddDefaultSpace();
             RenderHelpBox();
@@ -54,6 +80,9 @@ public class AIScript : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Renders the input field for the prompt.
+    /// </summary>
     private void RenderInputField()
     {
         GUILayout.Label(
@@ -74,7 +103,6 @@ public class AIScript : SingleExtensionApplication
         if (GUILayout.Button("Clear"))
         {
             inputScript = null;
-            csPrefab = null;
             ResetKeyboardControl();
             inputText = "";
         }
@@ -105,16 +133,9 @@ public class AIScript : SingleExtensionApplication
         GUILayout.EndHorizontal();
     }
 
-    //TODO: Implement gameObject manipulation / analysis
-    private void RenderGameObjectPlaceHolder()
-    {
-        GUILayout.Label(
-            "Those are placeholders. Later you can put in files that need to be changed.",
-            EditorStyles.boldLabel
-        );
-        csPrefab = (GameObject)EditorGUILayout.ObjectField(csPrefab, typeof(GameObject), true);
-    }
-
+    /// <summary>
+    /// Renders the input script field.
+    /// </summary>
     private void RenderInputScript()
     {
         inputScript = (MonoScript)
@@ -126,6 +147,9 @@ public class AIScript : SingleExtensionApplication
             );
     }
 
+    /// <summary>
+    /// Renders the new script content (if there is any).
+    /// </summary>
     private void RenderNewScriptContent()
     {
         bool scriptContentEmpty = string.IsNullOrEmpty(newScriptContent);
@@ -174,6 +198,12 @@ public class AIScript : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Saves the generated script into a file inside the GenerateFolder
+    /// </summary>
+    /// <returns>
+    /// Returns the content of the new script.
+    /// </returns>
     private string SaveScriptIntoFile()
     {
         string gptScriptClassName = ScriptUtil.ExtractNameAfterKeyWordFromScript(
@@ -188,6 +218,9 @@ public class AIScript : SingleExtensionApplication
         return newScriptContent;
     }
 
+    /// <summary>
+    /// Renders the popup field for the prompt list.
+    /// </summary>
     private void RenderPopupField()
     {
         GUILayout.BeginHorizontal();
@@ -222,6 +255,11 @@ public class AIScript : SingleExtensionApplication
     }
 
     //TODO: Implement checkbox under the input field that allows to select if the prompt should be included
+
+    /// <summary>
+    /// Processes the input prompt and creates a new script or updates an existing one.
+    /// </summary>
+    /// <param name="prompt"></param>
     private void ProcessInputPrompt(string prompt)
     {
         ShowProgressBar(0.1f);
@@ -235,6 +273,10 @@ public class AIScript : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Sends the input prompt to the AI API and creates a new script.
+    /// </summary>
+    /// <param name="inputPrompt"></param>
     private async void CreateNewScript(string inputPrompt)
     {
         ShowProgressBar(0.2f);
@@ -268,6 +310,10 @@ public class AIScript : SingleExtensionApplication
         Repaint();
     }
 
+    /// <summary>
+    /// Sends the input prompt to the AI API and updates the selected script.
+    /// </summary>
+    /// <param name="inputPrompt"></param>
     private async void CreateUpdatedScriptVersion(string inputPrompt)
     {
         ShowProgressBar(0.2f);
@@ -315,25 +361,30 @@ public class AIScript : SingleExtensionApplication
         Repaint();
     }
 
+    /// <summary>
+    /// Clears the input field and resets the keyboard control.
+    /// </summary>
     private void ClearInputAndResetKeyboardControl()
     {
         inputText = "";
         ResetKeyboardControl();
     }
 
+    /// <summary>
+    /// Reloads the prompt list from the JSON file.
+    /// </summary>
     public static void ReloadPromptList()
     {
         loadedPromptList = PromptManager.LoadPromptListFromJson();
     }
 
+    /// <summary>
+    /// Checks if an input script is selected.
+    /// </summary>
+    /// <returns></returns>
     private bool IsInputScriptSelected()
     {
         return inputScript != null;
-    }
-
-    private void UpdateExistingScript(string inputPrompt)
-    {
-        // TODO: Implement updating the existing script
     }
 
     public enum EditorPrefKey
@@ -344,6 +395,9 @@ public class AIScript : SingleExtensionApplication
         SelectedPrompt
     }
 
+    /// <summary>
+    /// The list of keys for the editor prefs.
+    /// </summary>
     private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
         new()
         {
@@ -353,6 +407,9 @@ public class AIScript : SingleExtensionApplication
             { EditorPrefKey.SelectedPrompt, "SelectedPromptKey" }
         };
 
+    /// <summary>
+    /// Loads the editor prefs.
+    /// </summary>
     private void LoadEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)
@@ -382,6 +439,9 @@ public class AIScript : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Sets the editor prefs.
+    /// </summary>
     private void SetEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)

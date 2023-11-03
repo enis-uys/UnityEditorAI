@@ -3,31 +3,66 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The file manager for the AI settings.
+/// </summary>
 public class AISettingsFileManager
 {
+    /// <summary>
+    /// The singleton instance of the file manager.
+    /// </summary>
     private static AISettingsFileManager instance;
 
+    /// <summary>
+    /// Gets the singleton instance of the file manager.
+    /// </summary>
+    /// <returns></returns>
     public static AISettingsFileManager GetInstance()
     {
         instance ??= new AISettingsFileManager();
         return instance;
     }
 
+    /// <summary>
+    /// The default settings file name.
+    /// </summary>
     private readonly string defaultSettingsFileName = "defaultSettings.json";
+
+    /// <summary>
+    /// The default user files folder path.
+    /// </summary>
     private readonly string defaultUserFilesFolderPath = "Assets\\UnityEditorAI\\UserFiles\\";
+
+    /// <summary>
+    /// The default generated files folder path.
+    /// </summary>
     private readonly string defaultGeneratedFilesFolderPath = "Assets\\UnityEditorAI\\Generated\\";
 
+    /// <summary>
+    /// The ai models available.
+    /// </summary>
     public static readonly string Gpt35Turbo = "gpt-3.5-turbo",
         Gpt35Turbo16k = "gpt-3.5-turbo-16k",
         TextDavinci003 = "text-davinci-003",
         Gpt4 = "gpt-4",
         GptDefault = Gpt35Turbo;
 
-    public string[] gptModelsArray = gptModels.ToArray();
+    /// <summary>
+    /// The list of ai models available.
+    /// </summary>
 
     public static readonly List<string> gptModels =
         new() { Gpt35Turbo, Gpt35Turbo16k, TextDavinci003, Gpt4 };
 
+    /// <summary>
+    /// The list of ai models available as an array (for the dropdown menu)
+    /// </summary>
+    public string[] gptModelsArray = gptModels.ToArray();
+
+    /// <summary>
+    /// The index of the selected ai model.
+    /// </summary>
+    /// <returns></returns>
     public int SelectedGptModelInt()
     {
         for (int i = 0; i < gptModels.Count; i++)
@@ -40,16 +75,57 @@ public class AISettingsFileManager
         return 0;
     }
 
+    /// <summary>
+    /// Access to the help box.
+    /// </summary>
     public static HelpBox helpBox = HelpBox.GetInstance();
+
+    /// <summary>
+    /// The API Key to use for the AI.
+    /// </summary>
     public string ApiKey { get; set; }
+
+    /// <summary>
+    /// The path to the user files folder.
+    /// </summary>
     public string UserFilesFolderPath { get; set; }
+
+    /// <summary>
+    /// The name of the settings file.
+    /// </summary>
     public string SettingsFileName { get; set; }
+
+    /// <summary>
+    /// The path to the generated files folder.
+    /// </summary>
     public string GeneratedFilesFolderPath { get; set; }
+
+    /// <summary>
+    /// The number of messages to send to the AI.
+    /// </summary>
     public int LastMessagesToSend { get; set; }
+
+    /// <summary>
+    /// Temperature of the AI
+    /// </summary>
     public float Temperature { get; set; }
+
+    /// <summary>
+    /// Timeout in seconds for the AI after which it will stop the request
+    /// </summary>
     public int TimeoutInSeconds { get; set; }
+
+    /// <summary>
+    /// The selected GPT model
+    /// </summary>
     public string SelectedGptModel { get; set; }
 
+    /// <summary>
+    /// Loads the settings from a file.
+    /// </summary>
+    /// <param name="path">
+    /// The path to the settings file. If null, the default path is used.
+    /// </param>
     public void LoadCustomSettings(string path = null)
     {
         string helpBoxMessage;
@@ -63,6 +139,15 @@ public class AISettingsFileManager
         SetSettingsFromSerializable(settings);
     }
 
+    /// <summary>
+    /// Sets the settings from a serializable object.
+    /// </summary>
+    /// <param name="settings">
+    /// The serializable settings object to set the settings from.
+    /// </param>
+    /// <param name="isDefault">
+    /// Whether the settings are default settings. If true, the API Key is not set, so the api key is not overwritten.
+    /// </param>
     public void SetSettingsFromSerializable(AISettingsSerializable settings, bool isDefault = false)
     {
         // Only set the API Key if the settings are not default
@@ -83,6 +168,18 @@ public class AISettingsFileManager
         SelectedGptModel = settings.selectedGptModel;
     }
 
+    /// <summary>
+    /// Trims the path to the assets folder, so there is no long path shown in the inspector.
+    /// </summary>
+    /// <param name="fullPath">
+    /// The full path to trim.
+    /// </param>
+    /// <param name="projectPath">
+    /// The path to the project.
+    /// </param>
+    /// <returns>
+    /// returns the trimmed path that starts with "Assets".
+    /// </returns>
     private string TrimPathToAssets(string fullPath, string projectPath)
     {
         if (fullPath.StartsWith(projectPath))
@@ -93,6 +190,9 @@ public class AISettingsFileManager
         return fullPath;
     }
 
+    /// <summary>
+    /// Saves the settings from file panel.
+    /// </summary>
     public void LoadSettingsFromFilePanel()
     {
         string helpBoxMessage;
@@ -126,6 +226,12 @@ public class AISettingsFileManager
         }
     }
 
+    /// <summary>
+    /// Saves the settings to file panel.
+    /// </summary>
+    /// <returns>
+    /// Returns the path to the settings file.
+    /// </returns>
     public AISettingsSerializable DefaultSettingsFile()
     {
         AISettingsSerializable defaultSettings =
@@ -144,6 +250,13 @@ public class AISettingsFileManager
         return defaultSettings;
     }
 
+    /// <summary>
+    /// Loads the settings from a file.
+    /// </summary>
+    /// <param name="settingsPath">
+    /// The path to the settings file. If null, the default path is used.
+    /// </param>
+    /// <returns></returns>
     public AISettingsSerializable SettingsFileFromPath(string settingsPath = null)
     {
         string helpBoxMessage;
@@ -195,6 +308,12 @@ public class AISettingsFileManager
         return settings;
     }
 
+    /// <summary>
+    /// Writes the settings to a json file.
+    /// </summary>
+    /// <param name="path">
+    /// The path to the settings file. If null, the default path is used.
+    /// </param>
     public void WriteSettingsInJson(string path = null)
     {
         string helpBoxMessage;
@@ -242,7 +361,9 @@ public class AISettingsFileManager
     }
 }
 
-// Serializable AISettings class
+/// <summary>
+/// Serializable class for the AI settings.
+/// </summary>
 [System.Serializable]
 public class AISettingsSerializable
 {

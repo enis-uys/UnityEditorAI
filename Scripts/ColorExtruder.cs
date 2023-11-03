@@ -89,7 +89,7 @@ public class ColorExtruder : SingleExtensionApplication
             }
             else if (GUILayout.Button("Use Existing Color Generation Code"))
             {
-                // ImageFromSpheres.GenerateColors();
+                ColorSciptTest.GenerateColors();
             }
         }
         finally

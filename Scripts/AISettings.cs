@@ -5,36 +5,53 @@ using System.Collections.Generic;
 
 public class AISettings : SingleExtensionApplication
 {
+    /// <summary>
+    /// The display name of a single application.
+    /// </summary>
     public override string DisplayName => "AI Settings";
+
+    /// <summary>
+    /// A FileManager for the AI Settings that reads and writes the settings to a json file.
+    /// </summary>
     private static readonly AISettingsFileManager settingsFM = AISettingsFileManager.GetInstance();
-
     private bool HasInit { get; set; } = false;
-    private bool ShouldLoadEditorPrefs { get; set; } = true;
 
-    //Important to only set this OnEnable otherwise settings might not be loaded
+    /// <summary>
+    /// Whether the EditorPrefs should be loaded.
+    /// </summary>
+    private bool ShouldLoadCustomSettings { get; set; } = true;
+
+    /// <summary>
+    /// Loads the custom settings from the the settings file manager.
+    /// Important to only set this to OnEnable otherwise settings might not be loaded before the other applications are initialized.
+    /// TODO: Change to store a settings json in the editor prefs and load from there
+    /// </summary>
     public override void OnEnable()
     {
-        if (!HasInit)
+        if (ShouldLoadCustomSettings)
         {
             settingsFM.LoadCustomSettings();
-            HasInit = true;
+            ShouldLoadCustomSettings = false;
         }
     }
 
+    /// <summary>
+    /// Renders the GUI of the application.
+    /// </summary>
     public override void OnGUI()
     {
         EditorGUILayout.BeginVertical("Box");
         try
         {
-            if (ShouldLoadEditorPrefs)
+            if (!HasInit)
             {
                 LoadEditorPrefs();
-                ShouldLoadEditorPrefs = false;
+                HasInit = true;
             }
             RenderApiKeyField();
             AddDefaultSpace();
 
-            RenderFilePathField();
+            RenderUserFilesPathField();
             AddDefaultSpace();
 
             RenderModelSelectionField();
@@ -60,14 +77,20 @@ public class AISettings : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Renders the ApiKey field.
+    /// </summary>
     private void RenderApiKeyField()
     {
         settingsFM.ApiKey = EditorGUILayout.TextField("OpenAI API Key", settingsFM.ApiKey);
     }
 
-    private void RenderFilePathField()
+    /// <summary>
+    /// Renders the User Files Path field.
+    /// </summary>
+    private void RenderUserFilesPathField()
     {
-        GUILayout.Label("Settings File Path", EditorStyles.boldLabel);
+        GUILayout.Label("User Settings File Path", EditorStyles.boldLabel);
         if (GUILayout.Button(settingsFM.UserFilesFolderPath))
         {
             string selectedSettingsFolderPath = EditorUtility.OpenFolderPanel(
@@ -97,6 +120,14 @@ public class AISettings : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Updates the folder path inside the settings file manager.
+    /// </summary>
+    /// <param name="selectedFolderPath">
+    /// </param>
+    /// <param name="isGenerateFolderPath">
+    /// Has an default value of false. If true then instead the generated files folder path will be updated.
+    /// </param>
     private void UpdateFolderPath(string selectedFolderPath, bool isGenerateFolderPath = false)
     {
         int assetsIndex = selectedFolderPath.IndexOf("Assets");
@@ -128,6 +159,9 @@ public class AISettings : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Renders the Model Selection field.
+    /// </summary>
     private void RenderModelSelectionField()
     {
         GUILayout.Label("Model", EditorStyles.boldLabel);
@@ -141,6 +175,9 @@ public class AISettings : SingleExtensionApplication
         settingsFM.SelectedGptModel = settingsFM.gptModelsArray[selectedGptModelInt];
     }
 
+    /// <summary>
+    /// Renders the Last Messages Slider.
+    /// </summary>
     private void RenderLastMessagesSlider()
     {
         GUILayout.Label(
@@ -158,6 +195,9 @@ public class AISettings : SingleExtensionApplication
         );
     }
 
+    /// <summary>
+    /// Renders the Temperature Slider.
+    /// </summary>
     private void RenderTemperatureSlider()
     {
         GUILayout.Label(
@@ -171,6 +211,9 @@ public class AISettings : SingleExtensionApplication
         settingsFM.Temperature = EditorGUILayout.Slider(settingsFM.Temperature, 0.0f, 1.0f);
     }
 
+    /// <summary>
+    /// Renders the Timeout in Seconds Slider.
+    /// </summary>
     private void RenderTimeoutInSecondsSlider()
     {
         GUILayout.Label(
@@ -183,6 +226,9 @@ public class AISettings : SingleExtensionApplication
         settingsFM.TimeoutInSeconds = EditorGUILayout.IntSlider(settingsFM.TimeoutInSeconds, 5, 60);
     }
 
+    /// <summary>
+    /// Renders the Action Buttons.
+    /// </summary>
     private void RenderActionButtons()
     {
         GUILayout.BeginHorizontal();
@@ -215,6 +261,9 @@ public class AISettings : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Tests the API Key by sending a request with Hello World! as the prompt.
+    /// </summary>
     private async void TestAPI()
     {
         string helpBoxMessage;
@@ -239,6 +288,9 @@ public class AISettings : SingleExtensionApplication
         SettingsFileName
     }
 
+    /// <summary>
+    /// The list of keys for the EditorPrefs.
+    /// </summary>
     private static readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
         new()
         {
@@ -247,6 +299,12 @@ public class AISettings : SingleExtensionApplication
             { EditorPrefKey.SettingsFileName, "SettingsFileName" }
         };
 
+    /// <summary>
+    /// Gets the generated files folder path from the EditorPrefs.
+    /// </summary>
+    /// <returns>
+    /// Returns the stored generated files folder path. If no path is stored then returns the default path.
+    /// </returns>
     public static string GetGenerateFilesFolderPathFromEditorPrefs()
     {
         string generatedPath = EditorPrefs.GetString(
@@ -260,6 +318,12 @@ public class AISettings : SingleExtensionApplication
         return generatedPath;
     }
 
+    /// <summary>
+    /// Gets the user files folder path from the EditorPrefs.
+    /// </summary>
+    /// <returns>
+    /// Returns the stored user files folder path. If no path is stored then returns the default path.
+    /// </returns>
     public static string GetUserFilesFolderPathFromEditorPrefs()
     {
         string userFilesPath = EditorPrefs.GetString(
@@ -273,6 +337,9 @@ public class AISettings : SingleExtensionApplication
         return userFilesPath;
     }
 
+    /// <summary>
+    /// Loads the EditorPrefs.
+    /// </summary>
     private void LoadEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)
@@ -295,6 +362,9 @@ public class AISettings : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Sets the EditorPrefs.
+    /// </summary>
     private void SetEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)

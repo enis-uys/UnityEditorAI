@@ -4,41 +4,50 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public class AiAssistant : SingleExtensionApplication
+/// <summary>
+/// Single application for the AI extension. It is used to chat with the AI model.
+/// </summary>
+public class AIAssistant : SingleExtensionApplication
 {
     /// <summary>
     /// The display name of the AI Assistant extension.
     /// </summary>
     public override string DisplayName => "AI Assistant";
 
+    /// <summary>
+    /// The input text of the user.
+    /// </summary>
     private string inputText = "";
     GUIStyle richTextStyle;
+
+    /// <summary>
+    /// The name of the file to save the message history to.
+    /// </summary>
     private const string messageHistoryFileName = "messageHistory.json";
+
+    /// <summary>
+    /// The output field for displaying the chat history.
+    /// </summary>
     private string messageHistoryOutputField = "";
+
+    /// <summary>
+    /// The scroll position of the input field.
+    /// </summary>
     private Vector2 inputScrollPosition;
+
+    /// <summary>
+    /// The scroll position of the output field.
+    /// </summary>
     private Vector2 outputScrollPosition;
 
+    /// <summary>
+    /// The list of messages in the conversation.
+    /// </summary>
     private readonly MessageListBuilder messageHistoryListBuilder = new();
     public bool HasInit { get; set; } = false;
 
-    // Later on, we will add a list of conversations and replace the messageHistoryOutputField with a dropdown
-    // This is necessary for being able to ask about old messages
-    //TODO: Implement
-    public class Conversation
-    {
-        /// <summary>
-        /// The name of the conversation.
-        /// </summary>
-        public string conversationName;
-
-        /// <summary>
-        /// The list of messages in the conversation.
-        /// </summary>
-        public MessageListBuilder messageListBuilder;
-    }
-
     /// <summary>
-    /// GUI callback for rendering the AI Chat extension.
+    /// GUI callback for rendering the AI Assistant extension.
     /// </summary>
     public override void OnGUI()
     {
@@ -198,6 +207,13 @@ public class AiAssistant : SingleExtensionApplication
         FinishProgressBarWithDelay();
     }
 
+    /// <summary>
+    /// Creates a readable string from the message history list that is formatted for the output field.
+    /// </summary>
+    /// <param name="messageListBuilder">
+    /// Contains the messages to display in the conversation.
+    /// </param>
+    /// <returns></returns>
     private string MessageHistoryListToFormatedString(MessageListBuilder messageListBuilder)
     {
         List<string> formattedMessageList = new();
@@ -230,7 +246,7 @@ public class AiAssistant : SingleExtensionApplication
     }
 
     /// <summary>
-    /// Loads the message history from a file.
+    /// Loads the message history from the file panel and adds it to the message history list.
     /// </summary>
     private void LoadMessageHistoryFromFile()
     {
@@ -293,6 +309,9 @@ public class AiAssistant : SingleExtensionApplication
         MessageHistoryListJson
     }
 
+    /// <summary>
+    /// The keys for the EditorPrefs.
+    /// </summary>
     private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
         new()
         {
@@ -300,6 +319,9 @@ public class AiAssistant : SingleExtensionApplication
             { EditorPrefKey.MessageHistoryListJson, "MessageHistoryListJsonKey" }
         };
 
+    /// <summary>
+    /// Sets the EditorPrefs.
+    /// </summary>
     private void SetEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)
@@ -320,6 +342,9 @@ public class AiAssistant : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Loads the EditorPrefs.
+    /// </summary>
     private void LoadEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)

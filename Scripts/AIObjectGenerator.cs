@@ -5,20 +5,61 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+/// <summary>
+/// Single application for the AI extension. It is used to generate new GameObjects inside a Unity Scene.
+/// </summary>
 public class AIObjectGenerator : SingleExtensionApplication
 {
+    /// <summary>
+    /// The display name of the application.
+    /// </summary>
     public override string DisplayName => "AI Object Generator";
 
+    /// <summary>
+    /// The input text for the prompt.
+    /// </summary>
     private string inputText = "";
+
+    /// <summary>
+    /// The scroll position of the input text.
+    /// </summary>
     private Vector2 inputScrollPosition;
+
+    /// <summary>
+    /// The prefab that is used to generate the new GameObject. It is not used yet.
+    /// TODO: Implement the usage of the prefab.
+    /// </summary>
     private GameObject csPrefab;
+
+    /// <summary>
+    /// The name of the temporary script that is used to generate the new GameObject.
+    /// </summary>
     private const string DoTaskTemp = "DoTaskTemp";
+
+    /// <summary>
+    /// The content of the temporary script that is used to generate the new GameObject.
+    /// </summary>
     private string doTaskScriptContent;
+
+    /// <summary>
+    /// The path of the temporary script that is used to generate the new GameObject.
+    /// </summary>
     private static string generatePath;
     private bool HasInit { get; set; } = false;
+
+    /// <summary>
+    /// The list of prompts that are loaded from the JSON file.
+    /// </summary>
     private static List<(string Title, string Content)> loadedPromptList = new();
+
+    /// <summary>
+    /// The index of the selected prompt.
+    /// </summary>
     private int selectedPromptKey = 0;
 
+    /// <summary>
+    /// GUI callback for rendering the AI Object Generator extension.
+    /// </summary>
     public override void OnGUI()
     {
         EditorGUILayout.BeginVertical("Box");
@@ -46,9 +87,15 @@ public class AIObjectGenerator : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Renders the prefab field. (not used yet)
+    /// </summary>
     private void RenderPrefabField() =>
         csPrefab = (GameObject)EditorGUILayout.ObjectField(csPrefab, typeof(GameObject), true);
 
+    /// <summary>
+    /// Renders the input field.
+    /// </summary>
     private void RenderInputField()
     {
         GUILayout.Label(
@@ -100,6 +147,9 @@ public class AIObjectGenerator : SingleExtensionApplication
         GUILayout.EndHorizontal();
     }
 
+    /// <summary>
+    /// Renders the prompt popup field.
+    /// </summary>
     private void RenderPopupField()
     {
         GUILayout.BeginHorizontal();
@@ -142,6 +192,9 @@ public class AIObjectGenerator : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Renders the temporary script content (if it exists)
+    /// </summary>
     private void RenderTempDoTaskContent()
     {
         bool scriptContentEmpty = string.IsNullOrEmpty(doTaskScriptContent);
@@ -194,6 +247,10 @@ public class AIObjectGenerator : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Processes the input prompt and sends it to the OpenAI API to generate a new GameObject.
+    /// </summary>
+    /// <param name="inputPrompt"></param>
     private async void ProcessInputPromptForGenerate(string inputPrompt)
     {
         ResetKeyboardControl();
@@ -228,7 +285,10 @@ public class AIObjectGenerator : SingleExtensionApplication
 
     //This part is adapted from Kenjiro AICommand (AICommandWindow.cs)
     // <Availability> https://github.com/keijiro/AICommand/ </Availability>
-    // View LICENSE.md to see the license and information.
+    ///View LICENSE.md to see the license and information.
+    /// <summary>
+    /// Creates a script with reflection inside a temporary file and refreshes the asset database.
+    /// </summary>
     private void WriteDoTaskScriptInFile()
     {
         generatePath = AISettings.GetGenerateFilesFolderPathFromEditorPrefs() + DoTaskTemp + ".cs";
@@ -239,6 +299,10 @@ public class AIObjectGenerator : SingleExtensionApplication
 
     // End adapted part from Kenjiro AICommand
 
+
+    /// <summary>
+    ///   Executes the temporary script and deletes it afterwards. It is called after the asset database is refreshed.
+    /// </summary>
     [InitializeOnLoadMethod]
     private static void ExecuteAndDeleteAfterReload()
     {
@@ -264,6 +328,9 @@ public class AIObjectGenerator : SingleExtensionApplication
         AssetDatabase.DeleteAsset(generatePath);
     }
 
+    /// <summary>
+    /// Reloads the prompt list from the JSON file.
+    /// </summary>
     public static void ReloadPromptList()
     {
         loadedPromptList = PromptManager.LoadPromptListFromJson();
@@ -277,6 +344,9 @@ public class AIObjectGenerator : SingleExtensionApplication
         SelectedPrompt
     }
 
+    /// <summary>
+    /// The dictionary that contains the keys for the editor prefs.
+    /// </summary>
     private static readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
         new()
         {
@@ -286,6 +356,9 @@ public class AIObjectGenerator : SingleExtensionApplication
             { EditorPrefKey.SelectedPrompt, "SelectedPromptKey" }
         };
 
+    /// <summary>
+    /// Loads the editor prefs.
+    /// </summary>
     private void LoadEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)
@@ -311,6 +384,9 @@ public class AIObjectGenerator : SingleExtensionApplication
         }
     }
 
+    /// <summary>
+    /// Sets the editor prefs.
+    /// </summary>
     private void SetEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)
