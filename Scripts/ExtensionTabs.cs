@@ -3,48 +3,32 @@ using UnityEngine;
 
 using System.Linq;
 
-/// <summary>
-/// The main window of the AI extension.
-/// </summary>
+/// <summary> The main window of the AI extension </summary>
 public class ExtensionTabs : EditorWindow
 {
-    /// <summary>
-    /// The list of applications to display in the toolbar.
-    /// </summary>
+    /// <summary> The list of applications to display in the toolbar. </summary>
     private static SingleExtensionApplication[] applications;
 
-    /// <summary>
-    /// The list of display names for the applications.
-    /// </summary>
+    /// <summary> The list of display names for the applications. </summary>
     private static string[] DisplayNames => applications.Select(a => a.DisplayName).ToArray();
 
-    /// <summary>
-    /// The index of the current application.
-    /// </summary>
+    /// <summary> The index of the current application. </summary>
     private int currentApplication;
 
-    /// <summary>
-    /// Whether the window has been initialized.
-    /// </summary>
+    /// <summary> Whether the window has been initialized. </summary>
     private bool HasInit { get; set; } = false;
 
-    /// <summary>
-    /// The scroll position of the whole extension window.
-    /// </summary>
+    /// <summary> The scroll position of the whole extension window. </summary>
     private Vector2 scrollPosition;
 
-    /// <summary>
-    /// Opens the window.
-    /// </summary>
+    /// <summary> Opens the window. </summary>
     [MenuItem("Window/AI Tabs")]
     public static void ShowWindow()
     {
         GetWindow<ExtensionTabs>("AI Tabs");
     }
 
-    /// <summary>
-    /// Initializes the window.
-    /// </summary>
+    /// <summary> Initializes the window. </summary>
     private void OnEnable()
     {
         if (!HasInit)

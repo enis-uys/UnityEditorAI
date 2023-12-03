@@ -3,21 +3,43 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
+/// <summary> The prompt manager is used to manage custom prompts and display pre-defined prompts. </summary>
 public class PromptManager : SingleExtensionApplication
 {
+    /// <summary> The display name of the prompt manager. </summary>
     public override string DisplayName => "Prompt Manager";
+
+    /// <summary> The scroll position of the prompt manager. </summary>
     private Vector2 scrollPosition;
 
+    /// <summary> The boolean that indicates if a new prompt should be added. </summary>
     private bool addField = false;
+
+    /// <summary> The index of the selected prompt. </summary>
     private int selectedIndex = -1;
+
+    /// <summary> The content of the new prompt. </summary>
     string newPromptContent,
+        /// <summary> The title of the new prompt. </summary>
         newPromptTitle;
+
+    /// <summary> The name of the prompt list file. </summary>
     public static readonly string promptListFileName = "promptList.json";
+
+    /// <summary> The current prompt texts. </summary>
     private List<string> currentPromptTexts = new();
+
+    /// <summary> The GUIStyle for displaying strings as code. </summary>
     GUIStyle codeStyle;
+
+    /// <summary> The boolean that indicates if the prompt manager has been initialized. </summary>
     private bool HasInit { get; set; } = false;
 
+    /// <summary> The list of custom prompts. </summary>
+
     private static List<(string Title, string Content)> customPromptList = new();
+
+    /// <summary> The getter and setter for the custom prompt list. </summary>
     public static List<(string Title, string Content)> CustomPromptList
     {
         get => customPromptList;
@@ -25,6 +47,8 @@ public class PromptManager : SingleExtensionApplication
     }
 
     //These prompt get loaded if no custom prompts are found
+
+    /// <summary>The default custom prompts that get loaded when no prompt is loaded. </summary>
     private static readonly List<(string Title, string Content)> defaultCustomPrompts =
         new()
         {
@@ -37,6 +61,8 @@ public class PromptManager : SingleExtensionApplication
             OpenAiStandardPrompts.GenerateParticleSystemPrompt,
             OpenAiStandardPrompts.GenerateLightsPrompt,
         };
+
+    /// <summary> The default pre-defined prompt list. </summary>
     private readonly List<(string Title, string Content)> defaultPromptList =
         new()
         {
@@ -44,8 +70,10 @@ public class PromptManager : SingleExtensionApplication
             OpenAiStandardPrompts.CreateNewScriptWithPrompt,
             OpenAiStandardPrompts.ObjectGenerationPrompt,
             OpenAiStandardPrompts.UpdateExistingScriptWithPrompt,
+            OpenAiStandardPrompts.ColorImageGenerationPrompt,
         };
 
+    /// <summary> The method that renders the GUI of the prompt manager. </summary>
     public override void OnGUI()
     {
         EditorGUILayout.BeginVertical("Box");
@@ -69,6 +97,7 @@ public class PromptManager : SingleExtensionApplication
         }
     }
 
+    /// <summary> Renders the custom and default prompt lists. </summary>
     private void RenderPromptLists()
     {
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
@@ -80,6 +109,7 @@ public class PromptManager : SingleExtensionApplication
         EditorGUILayout.EndScrollView();
     }
 
+    /// <summary> Renders the custom prompt list. </summary>
     private void RenderCustomPromptList()
     {
         GUILayout.Label(
@@ -179,6 +209,7 @@ public class PromptManager : SingleExtensionApplication
         }
     }
 
+    ///  Renders the default  </summary>
     private void RenderDefaultPromptList()
     {
         GUILayout.Label(
@@ -210,6 +241,8 @@ public class PromptManager : SingleExtensionApplication
         }
     }
 
+    /// <summary> Loads the prompt list from the json file. </summary>
+    /// <returns> The loaded prompt list. </returns>
     public static List<(string Title, string Content)> LoadPromptListFromJson()
     {
         List<(string Title, string Content)> loadedPromptList = new();
@@ -253,6 +286,7 @@ public class PromptManager : SingleExtensionApplication
         return loadedPromptList;
     }
 
+    /// <summary> Saves the prompt list in the json file. </summary>
     private void SavePromptListInJson()
     {
         FileManager<List<(string, string)>>.SaveJsonFileToDefaultPath(
@@ -264,6 +298,7 @@ public class PromptManager : SingleExtensionApplication
         AIObjectGenerator.ReloadPromptList();
     }
 
+    /// <summary> Renders the the new prompt field. </summary>
     private void RenderNewPromptField()
     {
         EditorGUILayout.BeginHorizontal();
@@ -317,6 +352,7 @@ public class PromptManager : SingleExtensionApplication
         }
     }
 
+    /// <summary> Resets the current prompt texts to reload the custom prompt list. </summary>
     private void ResetCurrentPromptTexts()
     {
         if (CustomPromptList != null && CustomPromptList.Count > 0)

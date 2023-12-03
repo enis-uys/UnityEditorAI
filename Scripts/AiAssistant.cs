@@ -4,51 +4,35 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-/// <summary>
-/// Single application for the AI extension. It is used to chat with the AI model.
-/// </summary>
+/// <summary> Single application for the AI extension. It is used to chat with the AI model </summary>
 public class AIAssistant : SingleExtensionApplication
 {
-    /// <summary>
-    /// The display name of the AI Assistant extension.
-    /// </summary>
+    /// <summary> The display name of the AI Assistant extension. </summary>
     public override string DisplayName => "AI Assistant";
 
-    /// <summary>
-    /// The input text of the user.
-    /// </summary>
+    /// <summary> The input text of the user. </summary>
     private string inputText = "";
     GUIStyle richTextStyle;
 
-    /// <summary>
-    /// The name of the file to save the message history to.
-    /// </summary>
+    /// <summary> The name of the file to save the message history to. </summary>
     private const string messageHistoryFileName = "messageHistory.json";
 
-    /// <summary>
-    /// The output field for displaying the chat history.
-    /// </summary>
+    /// <summary> The output field for displaying the chat history. </summary>
     private string messageHistoryOutputField = "";
 
-    /// <summary>
-    /// The scroll position of the input field.
-    /// </summary>
+    /// <summary> The scroll position of the input field. </summary>
     private Vector2 inputScrollPosition;
 
-    /// <summary>
-    /// The scroll position of the output field.
-    /// </summary>
+    /// <summary> The scroll position of the output field. </summary>
     private Vector2 outputScrollPosition;
 
-    /// <summary>
-    /// The list of messages in the conversation.
-    /// </summary>
+    /// <summary> The list of messages in the conversation. </summary>
     private readonly MessageListBuilder messageHistoryListBuilder = new();
+
+    /// <summary> The help box for displaying messages to the user. </summary>
     public bool HasInit { get; set; } = false;
 
-    /// <summary>
-    /// GUI callback for rendering the AI Assistant extension.
-    /// </summary>
+    /// <summary> GUI callback for rendering the AI Assistant extension. </summary>
     public override void OnGUI()
     {
         EditorGUILayout.BeginVertical("Box");
@@ -73,15 +57,14 @@ public class AIAssistant : SingleExtensionApplication
         }
     }
 
-    /// <summary>
-    /// Renders the input field for user input.
-    /// </summary>
+    /// <summary> Renders the input field for user input. </summary>
     private void RenderInputField()
     {
         EditorGUILayout.LabelField("Input:");
         inputScrollPosition = EditorGUILayout.BeginScrollView(
             inputScrollPosition,
-            GUILayout.ExpandHeight(true)
+            GUILayout.ExpandHeight(true),
+            GUILayout.MaxHeight(250)
         );
         inputText = EditorGUILayout.TextArea(inputText, GUILayout.ExpandHeight(true));
 
@@ -118,15 +101,14 @@ public class AIAssistant : SingleExtensionApplication
         }
     }
 
-    /// <summary>
-    /// Renders the output field for displaying the chat history.
-    /// </summary>
+    /// <summary> Renders the output field for displaying the chat history. </summary>
     private void RenderConversationField()
     {
         EditorGUILayout.LabelField("Conversation:");
         outputScrollPosition = EditorGUILayout.BeginScrollView(
             outputScrollPosition,
-            GUILayout.ExpandHeight(true)
+            GUILayout.ExpandHeight(true),
+            GUILayout.MaxHeight(350)
         );
         try
         {
@@ -169,10 +151,8 @@ public class AIAssistant : SingleExtensionApplication
         }
     }
 
-    /// <summary>
-    /// Sends the user input to the AI model for processing.
-    /// </summary>
-    /// <param name="input">The user input message.</param>
+    /// <summary> Sends the user input to the AI model for processing. </summary>
+    /// <param name="input"> The user input message.</param>
     private async void ReadInputAndSendToGPT(string input)
     {
         ResetKeyboardControl();
@@ -183,16 +163,11 @@ public class AIAssistant : SingleExtensionApplication
         int lastMessagesCount = settingsFM.LastMessagesToSend;
         if (lastMessagesCount > 0 && messageHistoryListBuilder.GetMessageCount() > 0)
         {
-            int messageCount = messageHistoryListBuilder.GetMessageCount();
-            for (int i = messageCount - lastMessagesCount; i < messageCount; i++)
-            {
-                tempMessageListBuilder.AddMessage(messageHistoryListBuilder.GetMessageAt(i));
-            }
+            tempMessageListBuilder.AddMessages(messageHistoryListBuilder.Build());
         }
         tempMessageListBuilder.AddMessage(input, "user");
 
         var gptResponse = await OpenAiApiManager.RequestToGpt(tempMessageListBuilder);
-        Debug.Log("GPT response: " + gptResponse);
         if (gptResponse != null)
         {
             messageHistoryListBuilder.AddMessage(input, "user");
@@ -207,13 +182,9 @@ public class AIAssistant : SingleExtensionApplication
         FinishProgressBarWithDelay();
     }
 
-    /// <summary>
-    /// Creates a readable string from the message history list that is formatted for the output field.
-    /// </summary>
-    /// <param name="messageListBuilder">
-    /// Contains the messages to display in the conversation.
-    /// </param>
-    /// <returns></returns>
+    /// <summary> Creates a readable string from the message history list that is formatted for the output field. </summary>
+    /// <param name="messageListBuilder"> Contains the messages to display in the conversation. </param>
+    /// <returns> The formatted message list as a string. </returns>
     private string MessageHistoryListToFormatedString(MessageListBuilder messageListBuilder)
     {
         List<string> formattedMessageList = new();
@@ -245,25 +216,24 @@ public class AIAssistant : SingleExtensionApplication
         }
     }
 
-    /// <summary>
-    /// Loads the message history from the file panel and adds it to the message history list.
-    /// </summary>
+    /// <summary> Loads the message history from the file panel and adds it to the message history list. </summary>
     private void LoadMessageHistoryFromFile()
     {
-        List<MessageListBuilder.RequestMessage> loadedMessageHistory = new();
+        List<RequestMessage> loadedMessageHistory = new();
         try
         {
-            var loadedData = FileManager<
-                List<MessageListBuilder.RequestMessage>
-            >.LoadDeserializedJsonPanel("Load the message history from a file");
-            if (loadedData != null)
+            var loadedData = FileManager<List<RequestMessage>>.LoadDeserializedJsonPanel(
+                "Load the message history from a file"
+            );
+            if (loadedData != null && loadedData.Count > 0)
             {
                 loadedMessageHistory = loadedData;
+                messageHistoryListBuilder.ClearMessages().AddMessages(loadedMessageHistory);
             }
             else
             {
                 string helpBoxMessage = "No message history selected.";
-                helpBox.UpdateMessage(helpBoxMessage, MessageType.Error);
+                helpBox.UpdateMessage(helpBoxMessage, MessageType.Warning);
             }
         }
         catch (Newtonsoft.Json.JsonException jsonEx)
@@ -280,23 +250,18 @@ public class AIAssistant : SingleExtensionApplication
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
             FinishProgressBarWithDelay();
         }
-        messageHistoryListBuilder.ClearMessages().AddMessages(loadedMessageHistory);
     }
 
-    /// <summary>
-    /// Saves the message history to a file.
-    /// </summary>
+    /// <summary> Saves the message history to a file. </summary>
     private void SaveMessageHistoryToFile()
     {
-        FileManager<List<MessageListBuilder.RequestMessage>>.SaveJsonFileToDefaultPath(
+        FileManager<List<RequestMessage>>.SaveJsonFileToDefaultPath(
             messageHistoryListBuilder.Build(),
             messageHistoryFileName
         );
     }
 
-    /// <summary>
-    /// Clears the message history.
-    /// </summary>
+    /// <summary> Clears the message history. </summary>
     private void ClearMessageHistory()
     {
         messageHistoryOutputField = "";
@@ -309,9 +274,7 @@ public class AIAssistant : SingleExtensionApplication
         MessageHistoryListJson
     }
 
-    /// <summary>
-    /// The keys for the EditorPrefs.
-    /// </summary>
+    /// <summary> The keys for the EditorPrefs. </summary>
     private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
         new()
         {
@@ -319,9 +282,7 @@ public class AIAssistant : SingleExtensionApplication
             { EditorPrefKey.MessageHistoryListJson, "MessageHistoryListJsonKey" }
         };
 
-    /// <summary>
-    /// Sets the EditorPrefs.
-    /// </summary>
+    /// <summary> Sets the EditorPrefs. </summary>
     private void SetEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)
@@ -334,7 +295,7 @@ public class AIAssistant : SingleExtensionApplication
                 case EditorPrefKey.MessageHistoryListJson:
                     // Serialize the messageHistoryList to JSON
                     string messageHistoryListJson = FileManager<
-                        List<MessageListBuilder.RequestMessage>
+                        List<RequestMessage>
                     >.SerializeDataToJson(messageHistoryListBuilder.Build());
                     EditorPrefs.SetString(kvp.Value, messageHistoryListJson);
                     break;
@@ -342,9 +303,7 @@ public class AIAssistant : SingleExtensionApplication
         }
     }
 
-    /// <summary>
-    /// Loads the EditorPrefs.
-    /// </summary>
+    /// <summary> Loads the EditorPrefs. </summary>
     private void LoadEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)
@@ -359,8 +318,8 @@ public class AIAssistant : SingleExtensionApplication
                     string messageHistoryListJson = EditorPrefs.GetString(kvp.Value);
                     if (!string.IsNullOrEmpty(messageHistoryListJson))
                     {
-                        List<MessageListBuilder.RequestMessage> messageHistoryList = FileManager<
-                            List<MessageListBuilder.RequestMessage>
+                        List<RequestMessage> messageHistoryList = FileManager<
+                            List<RequestMessage>
                         >.DeserializeJsonString(messageHistoryListJson);
                         messageHistoryListBuilder.ClearMessages();
                         if (messageHistoryList != null)

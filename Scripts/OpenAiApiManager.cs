@@ -12,23 +12,30 @@ using UnityEngine.Networking;
 /// <License> Open-Source MIT License https://opensource.org/licenses/MIT </License>
 /// <Description>
 /// Every Task is wrapped in a UniTask. UniTask is a wrapper for Task and Task<T>.
-/// It is a lightweight alternative to C# async/await for Unity. It is faster than async/await and allocates less memory.
+/// It is a alternative to C# async/await for Unity. It is faster than async/await and allocates less memory.
 /// It is also compatible with the Unity SynchronizationContext, so you can use it for Unity's main thread and coroutine.
 /// </Description>
 using Cysharp.Threading.Tasks;
 
-//TODO: Why? if UNITY_EDITOR is not defined, the code is not executed
-#if UNITY_EDITOR
 using UnityEditor;
+
+/// <summary> The response class that contains the id and choices. </summary>
 
 public class OpenAiApiManager
 {
+    /// <summary> The endpoint for the chat model. </summary>
+
     const string chatEndpoint = "https://api.openai.com/v1/chat/completions";
 
-    //for davinci model
+    /// <summary> The endpoint for the completion model. (Davinci) </summary>
     const string completionsEndpoint = "https://api.openai.com/v1/completions";
 
+    /// <summary> The singleton instance of the settings file manager that contains the settings for the AI. </summary>
     private static readonly AISettingsFileManager settingsFM = AISettingsFileManager.GetInstance();
+
+    /// <summary> Sends a single message to the GPT model and returns the response. </summary>
+    /// <param name="requestMessage"> The message that should be sent to the GPT model. </param>
+    /// <returns> The response of the GPT model. </returns>
 
     public static async UniTask<string> RequestToGpt(string requestMessage)
     {
@@ -51,6 +58,9 @@ public class OpenAiApiManager
         }
     }
 
+    /// <summary> Sends a list of messages to the GPT model and returns the response. </summary>
+    /// <param name="messageListBuilder">The message list builder that contains the messages that should be sent to the GPT model. </param>
+    /// <returns>The response of the GPT model. </returns>
     public static async UniTask<string> RequestToGpt(MessageListBuilder messageListBuilder)
     {
         try
@@ -70,22 +80,13 @@ public class OpenAiApiManager
         }
     }
 
-    //Parts of this method are inspired from AICommand
-    ///<Title> AICommand GitHub Repository </Title>
-    /// <Author> Keijiro Takahashi (keijiro) </Author>
-    /// <Release Date> 20.03.2023 </Release Date>
-    /// <Access Date> 10.09.2023 </Access Date>
-    /// <Code version> N/A </Code version>
-    /// <Availability> https://github.com/keijiro/AICommand/ </Availability>
-    /// <Usecase> Proof-of-Concept Integration of ChatGPT into Unity Editor </Usecase>
-    /// <License> Unlicense (Public Domain) </License>
-    /// <Description>
-    /// AICommand is a proof-of-concept integration of ChatGPT into Unity Editor. It allows controlling the Editor using natural language prompts.
-    /// </Description>
-
-    //TODO: explain why not more parameters in the bachelor add more parameters (top_p, frequency_penalty, presence_penalty,
-    //stop, n, logprobs, echo, stream, best_of, logit_bias, return_prompt, return_metadata, return_sequences, expand, **kwargs)
-
+    /// <summary> Sends a list of messages to the GPT model and returns the response. </summary>
+    /// <param name="apiKey">The API key that should be used to send the request. </param>
+    /// <param name="messageListBuilder"> The message list builder that contains the messages that should be sent to the GPT model. </param>
+    /// <param name="gptModel"> The GPT model that should be used to send the request. </param>
+    /// <param name="temperature"> The temperature that should be used to send the request. </param>
+    /// <param name="timeoutInSeconds"> The timeout in seconds that should be used to send the request. </param>
+    /// <returns> The response of the GPT model. </returns>
     public static async UniTask<string> SendMessagesToGpt(
         string apiKey,
         MessageListBuilder messageListBuilder,
@@ -105,14 +106,13 @@ public class OpenAiApiManager
                 timeoutInSeconds
             );
             HelpBox.GetInstance().UpdateIntendedProgress(0.5f);
+
             string responseResult = ParseOpenApiResponse(
                 jsonResponse,
                 gptModel.Contains("davinci")
             );
-
             return responseResult;
         }
-        // catch errors that occur while preparing the request
         catch (Exception e)
         {
             ErrorMessage(e);
@@ -120,6 +120,11 @@ public class OpenAiApiManager
         }
     }
 
+    /// <summary> Builds the request body for the OpenAI API </summary>
+    /// <param name="gptModel"> The GPT model that should be used to send the request. </param>
+    /// <param name="messageListBuilder"> The message list builder that contains the messages that should be sent to the GPT model. </param>
+    /// <param name="temperature"></param>
+    /// <returns> The request body as a string for the OpenAI API. </returns>
     private static string BuildOpenApiRequest(
         string gptModel,
         MessageListBuilder messageListBuilder,
@@ -147,6 +152,19 @@ public class OpenAiApiManager
         }
     }
 
+    //Parts of this method are inspired from AICommand
+    /// <Author> Keijiro Takahashi (keijiro) </Author>
+    /// <Release Date> 20.03.2023 </Release Date>
+    /// <Access Date> 10.09.2023 </Access Date>
+    /// <Availability> https://github.com/keijiro/AICommand/blob/main/Assets/Editor/OpenAIUtil.cs </Availability>
+    /// <Usecase> Proof-of-Concept Integration of the GPT API into Unity Editor </Usecase>
+    /// <License> Unlicense (Public Domain) View LICENSE.md to see the license and information. </License>
+    /// <Description>
+    /// AICommand is a proof-of-concept integration of ChatGPT into Unity Editor. It allows controlling the Editor using natural language prompts.
+    /// </Description>
+    /// <summary> Sends a request to the OpenAI API and returns the response. </summary>
+    /// <param name="apiKey"> The API key that should be used to send the request. </param>
+    /// <param name="endpoint"> The endpoint that should be used to send the request. </param>
     private static async UniTask<string> SendGptApiRequestAsync(
         string apiKey,
         string endpoint,
@@ -154,22 +172,14 @@ public class OpenAiApiManager
         int timeoutInSeconds = 20
     )
     {
-        //using calls the dispose method after the code block is done
         try
         {
             using var post = UnityWebRequest.Post(endpoint, requestBody, "application/json");
-            // Set the timeout to the value specified in the settings
-
             post.timeout = timeoutInSeconds;
-
             post.SetRequestHeader("Authorization", "Bearer " + apiKey);
-
             var req = post.SendWebRequest();
-
             // The await keyword will yield control back to the caller while the request is being processed.
             await req;
-            //TODO: Maybe add a progress bar here
-
             if (
                 post.result == UnityWebRequest.Result.ConnectionError
                 || post.result == UnityWebRequest.Result.ProtocolError
@@ -183,35 +193,46 @@ public class OpenAiApiManager
             var jsonResponse = post.downloadHandler.text;
             return jsonResponse;
         }
-        // catch errors that occur while getting a response and throws them
         catch (Exception)
         {
             throw;
         }
     }
 
+    /// <summary>
+    /// Updates the help box with an error message. Recommends a higher timeout.
+    /// </summary>
+    /// <param name="e"> The exception that should be used to update the help box. </param>
     private static void ErrorMessage(Exception e)
     {
         string helpBoxMessage = e.Message + "\nTry to set a higher timeout in the settings.";
         HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
     }
 
+    /// <summary> Parses the response of the OpenAI API and returns the response as a string.</summary>
+    /// <param name="jsonResponse"> The response of the OpenAI API as a string. </param>
+    /// <param name="isCompletion"> Whether the response is a completion response or not. </param>
+    /// <returns> The response of the OpenAI API as a string. </returns>
     private static string ParseOpenApiResponse(string jsonResponse, bool isCompletion = false)
     {
         if (isCompletion)
         {
-            var data = JsonUtility.FromJson<OpenAiInputBuilder.CompletionResponse>(jsonResponse);
+            var data = JsonUtility.FromJson<GptCompletionResponse>(jsonResponse);
             return data.choices[0].text;
         }
         else
         {
-            var data = JsonUtility.FromJson<OpenAiInputBuilder.Response>(jsonResponse);
-
+            var data = JsonUtility.FromJson<GptResponse>(jsonResponse);
             string responseResult = data.choices[0].message.content.Trim();
             return responseResult;
         }
     }
 
+    /// <summary>
+    /// Returns the endpoint for the GPT model.
+    /// </summary>
+    /// <param name="gptModel"> The GPT model that should be used to send the request. </param>
+    /// <returns> The endpoint for the GPT model. </returns>
     private static string GetEndPoint(string gptModel)
     {
         if (gptModel.Contains("davinci"))
@@ -224,5 +245,3 @@ public class OpenAiApiManager
         }
     }
 }
-
-#endif

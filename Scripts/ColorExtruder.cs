@@ -3,16 +3,32 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+/// <summary> The color extruder, that extracts the colors of an image and saves them as a color array object. </summary>
 public class ColorExtruder : SingleExtensionApplication
 {
+    /// <summary> The display name of the color extruder. </summary>
     public override string DisplayName => "Color Extruder";
     public bool HasInit { get; set; } = false;
+
+    /// <summary> The image that should be used to extract the colors. Can be dragged into the field. </summary>
     public Sprite imageSprite;
+
+    /// <summary> The output of the color array object as a string. </summary>
     public static string colorArrayOutput = "";
+
+    /// <summary> The name of the file that the color array object is saved to. </summary>
     private const string colorArrayObjectFileName = "colorArrayObject.json";
+
+    /// <summary> Bool that indicates if the color array content should be shown because it is too long. </summary>
     private bool showColorArrayContent = false;
+
+    /// <summary> The content of the color script that the AI did generate. </summary>
+    private string colorScriptContent;
+
+    /// <summary> The scroll position of the displayed prompt text. </summary>
     private Vector2 scrollPosition;
 
+    /// <summary> The GUI of the color extruder. </summary>
     public override void OnGUI()
     {
         EditorGUILayout.BeginVertical("Box");
@@ -25,7 +41,10 @@ public class ColorExtruder : SingleExtensionApplication
             }
             RenderImageField();
             AddDefaultSpace();
+            AddDefaultSpace();
+            RenderOutputScriptField();
             RenderOutputColorArrayField();
+            AddDefaultSpace();
             RenderHelpBox();
             SetEditorPrefs();
         }
@@ -35,10 +54,11 @@ public class ColorExtruder : SingleExtensionApplication
         }
     }
 
+    /// <summary> Method that renders the ImageField and a prompt that is used for "Let AI Generate Color Generation Code". </summary>
     private void RenderImageField()
     {
         GUILayout.Label("Input an Image to get the color array", EditorStyles.boldLabel);
-        EditorGUIUtility.labelWidth = 50; // Adjust the label width
+        EditorGUIUtility.labelWidth = 50;
         GUILayout.BeginHorizontal();
         try
         {
@@ -66,6 +86,12 @@ public class ColorExtruder : SingleExtensionApplication
         }
         AddDefaultSpace();
 
+        RenderActionButtons();
+    }
+
+    /// <summary> Method that renders the action buttons of the color extruder. </summary>
+    private void RenderActionButtons()
+    {
         GUILayout.BeginHorizontal();
         try
         {
@@ -74,7 +100,7 @@ public class ColorExtruder : SingleExtensionApplication
                 imageSprite = null;
                 ResetKeyboardControl();
             }
-            else if (GUILayout.Button("Show Color Array Content"))
+            else if (GUILayout.Button("Show/Hide Color Array Content"))
             {
                 showColorArrayContent = !showColorArrayContent;
             }
@@ -85,11 +111,11 @@ public class ColorExtruder : SingleExtensionApplication
             }
             else if (GUILayout.Button("Let AI Generate Color Generation Code"))
             {
-                SendColorArrayMessageToAI();
+                SendAIColorArrayPrompt();
             }
             else if (GUILayout.Button("Use Existing Color Generation Code"))
             {
-                ColorSciptTest.GenerateColors();
+                ColorScriptDemo.GenerateColors();
             }
         }
         finally
@@ -98,12 +124,12 @@ public class ColorExtruder : SingleExtensionApplication
         }
     }
 
-    private async void SendColorArrayMessageToAI()
+    /// <summary> Method that sends the color array prompt to the OpenAI API. </summary>
+    private async void SendAIColorArrayPrompt()
     {
         ShowProgressBar(0.1f);
         string helpBoxMessage = "Sending message to OpenAI API...";
         helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
-        Debug.Log(OpenAiStandardPrompts.ColorImageGenerationPrompt.Content);
         var messageListBuilder = new MessageListBuilder().AddMessage(
             OpenAiStandardPrompts.ColorImageGenerationPrompt.Content,
             "system"
@@ -123,13 +149,13 @@ public class ColorExtruder : SingleExtensionApplication
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
             // Saves the response from the OpenAI API into doTaskScriptContent
             string cleanedColorScriptContent = ScriptUtil.CleanScript(gptScriptResponse);
-            Debug.Log(gptScriptResponse);
-            Debug.Log(cleanedColorScriptContent);
+            colorScriptContent = cleanedColorScriptContent;
             FinishProgressBarWithDelay();
             Repaint();
         }
     }
 
+    /// <summary> Method that gets the color array of the image and saves it to a file inside the UserFiles folder. </summary>
     private void GetColorArrayAndSaveItToFile()
     {
         if (imageSprite != null)
@@ -156,7 +182,7 @@ public class ColorExtruder : SingleExtensionApplication
                     if (index == -1)
                     {
                         colorList.Add(pixel);
-                        index = colorList.Count - 1; // Set index to the last added color
+                        index = colorList.Count - 1;
                     }
                     pixelList.Add(index);
                 }
@@ -167,13 +193,16 @@ public class ColorExtruder : SingleExtensionApplication
 
                 ColorArrayObject colorArrayObject =
                     new(textureWidth, textureHeight, hexStringColorList, pixelList);
-                string colorArrayObjectJson = SaveMessageHistoryToFile(colorArrayObject);
+                string colorArrayObjectJson = SaveColorArrayObjectToFile(colorArrayObject);
                 colorArrayOutput = colorArrayObjectJson;
             }
         }
     }
 
-    private string SaveMessageHistoryToFile(ColorArrayObject colorArrayObject)
+    /// <summary> Method that saves a color array object to a file as a json string. </summary>
+    /// <param name="colorArrayObject"> The color array object that should be saved to a file. </param>
+    /// <returns> The json string of the color array object. </returns>
+    private string SaveColorArrayObjectToFile(ColorArrayObject colorArrayObject)
     {
         string colorArrayObejctJson = FileManager<ColorArrayObject>.SaveJsonFileToDefaultPath(
             colorArrayObject,
@@ -182,6 +211,8 @@ public class ColorExtruder : SingleExtensionApplication
         return colorArrayObejctJson;
     }
 
+    /// <summary> Method that reads a color array string from a file and returns it as a color array object. </summary>
+    /// <returns> Returns the color array object that was read from the file or null if the file could not be read. </returns>
     public static ColorArrayObject ColorArrayObjectFromFile()
     {
         string userPath = AISettings.GetUserFilesFolderPathFromEditorPrefs();
@@ -198,6 +229,76 @@ public class ColorExtruder : SingleExtensionApplication
             return null;
     }
 
+    /// <summary> Method that renders the output script field. </summary>
+    private void RenderOutputScriptField()
+    {
+        bool scriptContentEmpty = string.IsNullOrEmpty(colorScriptContent);
+        if (!scriptContentEmpty)
+        {
+            AddDefaultSpace();
+            EditorGUILayout.BeginVertical();
+            try
+            {
+                GUIStyle codeStyle = CreateCodeStyle();
+                using (new EditorGUI.DisabledScope(true))
+                {
+                    GUILayout.TextArea(colorScriptContent, codeStyle, GUILayout.ExpandHeight(true));
+                }
+                using (new EditorGUI.DisabledScope(scriptContentEmpty))
+                {
+                    GUIStyle customButtonStyle = CreateHighlightButtonStyle();
+                    EditorGUILayout.BeginHorizontal();
+                    try
+                    {
+                        if (GUILayout.Button("Delete Content"))
+                        {
+                            colorScriptContent = "";
+                        }
+                        if (GUILayout.Button("Copy Content"))
+                        {
+                            EditorGUIUtility.systemCopyBuffer = colorScriptContent;
+                            string helpBoxMessage = "Copied script to clipboard.";
+                            helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
+                        }
+                        if (GUILayout.Button("Save Color Generation Script", customButtonStyle))
+                        {
+                            WriteColorScriptInFile();
+                        }
+                    }
+                    finally
+                    {
+                        EditorGUILayout.EndHorizontal();
+                    }
+                }
+            }
+            finally
+            {
+                EditorGUILayout.EndVertical();
+            }
+        }
+    }
+
+    /// <summary> Saves the generated script into a file inside the GenerateFolder </summary>
+    private void WriteColorScriptInFile()
+    {
+        string gptScriptClassName = ScriptUtil.ExtractNameAfterKeyWordFromScript(
+            colorScriptContent,
+            "class"
+        );
+        if (string.IsNullOrEmpty(gptScriptClassName))
+        {
+            string helpBoxMessage = "Could not extract class name from script.";
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            return;
+        }
+        string generatePath =
+            AISettings.GetGenerateFilesFolderPathFromEditorPrefs() + gptScriptClassName + ".cs";
+        FileManager<string>.CreateScriptAssetWithReflection(generatePath, colorScriptContent);
+        AssetDatabase.Refresh();
+        colorScriptContent = "";
+    }
+
+    /// <summary> Method that renders the output color array field. </summary>
     private void RenderOutputColorArrayField()
     {
         bool isColorArrayOutputEmpty = string.IsNullOrEmpty(colorArrayOutput);
@@ -256,6 +357,7 @@ public class ColorExtruder : SingleExtensionApplication
         ShowColorArrayContent,
     }
 
+    /// <summary> Dictionary that contains the keys for the editor prefs. </summary>
     private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
         new()
         {
@@ -264,6 +366,7 @@ public class ColorExtruder : SingleExtensionApplication
             { EditorPrefKey.ShowColorArrayContent, "ShowColorArrayContentKey" },
         };
 
+    /// <summary> Method that loads the editor prefs. </summary>
     private void LoadEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)
@@ -288,6 +391,7 @@ public class ColorExtruder : SingleExtensionApplication
         }
     }
 
+    /// <summary> Method that sets the editor prefs. </summary>
     private void SetEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)

@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class ColorSciptTest : MonoBehaviour
+public class ColorScriptDemo : MonoBehaviour
 {
+    /// <summary>
+    /// This class was written by GPT-3.5-Turbo
+    /// </summary>
     public static void GenerateColors()
     {
         ColorArrayObject colorArrayObject = ColorExtruder.ColorArrayObjectFromFile();

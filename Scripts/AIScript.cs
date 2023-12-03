@@ -3,52 +3,35 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-/// <summary>
-/// Single application for the AI extension. It is used to create new scripts or update existing ones.
-/// </summary>
+/// <summary> Single application for the AI extension. It is used to create new scripts or update existing ones </summary>
 public class AIScript : SingleExtensionApplication
 {
-    /// <summary>
-    /// The display name of the application.
-    /// </summary>
+    /// <summary> The display name of the application. </summary>
     public override string DisplayName => "AI Script";
 
-    /// <summary>
-    /// The input script that is used to update an existing script.
-    /// </summary>
+    /// <summary> The input script that is used to update an existing script. </summary>
     private MonoScript inputScript;
 
-    /// <summary>
-    /// The input text that is used to create a new script.
-    /// </summary>
+    /// <summary> The input text that is used to create a new script. </summary>
     private string inputText = "";
 
-    /// <summary>
-    /// The content of the new script that is generated.
-    /// </summary>
+    /// <summary> The content of the new script that is generated. </summary>
     private string newScriptContent;
 
-    /// <summary>
-    /// The scroll position of the input field.
-    /// </summary>
+    /// <summary> The scroll position of the input field. </summary>
     private Vector2 inputScrollPosition;
 
-    /// <summary>
-    ///
-    /// </summary>
+    /// <summary> Whether the application has been initialized. </summary>
     private bool HasInit { get; set; } = false;
 
-    /// <summary>
-    /// The list of prompts that are loaded from the JSON file.
-    /// </summary>
+    /// <summary> The list of prompts that are loaded from the JSON file. </summary>
     private static List<(string Title, string Content)> loadedPromptList = new();
     private int selectedPromptKey = 0;
 
     //TODO: Implement system that updates existing script and asks for confirmation
-    //private bool shouldUpdateExistingScript = false;
-    /// <summary>
-    /// GUI callback for rendering the AI Script extension.
-    /// </summary>
+    // private bool shouldUpdateExistingScript = false;
+
+    /// <summary> GUI callback for rendering the AI Script extension. </summary>
     public override void OnGUI()
     {
         EditorGUILayout.BeginVertical("Box");
@@ -80,9 +63,7 @@ public class AIScript : SingleExtensionApplication
         }
     }
 
-    /// <summary>
-    /// Renders the input field for the prompt.
-    /// </summary>
+    /// <summary> Renders the input field for the prompt. </summary>
     private void RenderInputField()
     {
         GUILayout.Label(
@@ -120,7 +101,9 @@ public class AIScript : SingleExtensionApplication
             {
                 try
                 {
-                    ProcessInputPrompt(inputText);
+                    // ProcessInputPrompt(inputText);
+                    ShowProgressBar(0.1f);
+                    GenerateScript(inputText, IsInputScriptSelected());
                 }
                 catch (System.Exception ex)
                 {
@@ -133,11 +116,16 @@ public class AIScript : SingleExtensionApplication
         GUILayout.EndHorizontal();
     }
 
-    /// <summary>
-    /// Renders the input script field.
-    /// </summary>
+    /// <summary> Renders the input script field. </summary>
     private void RenderInputScript()
     {
+        GUILayout.Label(
+            new GUIContent(
+                "Select a script to update.",
+                "Select a script that should be updated with the generated script. If no script is selected, a new script will be created without reference."
+            ),
+            EditorStyles.boldLabel
+        );
         inputScript = (MonoScript)
             EditorGUILayout.ObjectField(
                 inputScript,
@@ -147,9 +135,7 @@ public class AIScript : SingleExtensionApplication
             );
     }
 
-    /// <summary>
-    /// Renders the new script content (if there is any).
-    /// </summary>
+    /// <summary> Renders the new script content (if there is any). </summary>
     private void RenderNewScriptContent()
     {
         bool scriptContentEmpty = string.IsNullOrEmpty(newScriptContent);
@@ -198,31 +184,36 @@ public class AIScript : SingleExtensionApplication
         }
     }
 
-    /// <summary>
-    /// Saves the generated script into a file inside the GenerateFolder
-    /// </summary>
-    /// <returns>
-    /// Returns the content of the new script.
-    /// </returns>
-    private string SaveScriptIntoFile()
+    /// <summary> Saves the generated script into a file inside the GenerateFolder </summary>
+    private void SaveScriptIntoFile()
     {
         string gptScriptClassName = ScriptUtil.ExtractNameAfterKeyWordFromScript(
             newScriptContent,
             "class"
         );
+        if (string.IsNullOrEmpty(gptScriptClassName))
+        {
+            string helpBoxMessage = "Could not extract class name from script.";
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+            return;
+        }
         string generatePath =
             AISettings.GetGenerateFilesFolderPathFromEditorPrefs() + gptScriptClassName + ".cs";
         FileManager<string>.CreateScriptAssetWithReflection(generatePath, newScriptContent);
         AssetDatabase.Refresh();
         newScriptContent = "";
-        return newScriptContent;
     }
 
-    /// <summary>
-    /// Renders the popup field for the prompt list.
-    /// </summary>
+    /// <summary> Renders the popup field for the prompt list. </summary>
     private void RenderPopupField()
     {
+        GUILayout.Label(
+            new GUIContent(
+                "Select a prompt from PromptManager.",
+                "Select a prompt from the list that should be used to create a new script or to update an existing one."
+            ),
+            EditorStyles.boldLabel
+        );
         GUILayout.BeginHorizontal();
         try
         {
@@ -234,6 +225,7 @@ public class AIScript : SingleExtensionApplication
                 loadedPromptListArray,
                 GUILayout.MaxWidth(300)
             );
+            //TODO: Implement checkbox under the input field that allows to select if the prompt should be included or only the popup prompt
             if (GUILayout.Button("Execute Selected Prompt", GUILayout.ExpandWidth(true)))
             {
                 if (selectedPromptKey >= 0 && selectedPromptKey < loadedPromptList.Count)
@@ -241,10 +233,11 @@ public class AIScript : SingleExtensionApplication
                     string selectedPromptContent = loadedPromptList
                         .ElementAt(selectedPromptKey)
                         .Content;
-
                     string helpBoxMessage = "Executing Prompt: " + selectedPromptContent;
                     helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
-                    ProcessInputPrompt(selectedPromptContent);
+                    ShowProgressBar(0.1f);
+                    GenerateScript(selectedPromptContent, IsInputScriptSelected());
+                    ///ProcessInputPrompt(selectedPromptContent);
                 }
             }
         }
@@ -254,92 +247,66 @@ public class AIScript : SingleExtensionApplication
         }
     }
 
-    //TODO: Implement checkbox under the input field that allows to select if the prompt should be included
+    /// <summary> Processes the input prompt and creates a new script or updates an existing one./ </summary>
+    /// <param name="prompt"> The prompt that is used to create a new script or update an existing one. </param>
+    // private void ProcessInputPrompt(string prompt)
+    // {
+    //     ShowProgressBar(0.1f);
 
-    /// <summary>
-    /// Processes the input prompt and creates a new script or updates an existing one.
-    /// </summary>
-    /// <param name="prompt"></param>
-    private void ProcessInputPrompt(string prompt)
-    {
-        ShowProgressBar(0.1f);
-        if (IsInputScriptSelected())
-        {
-            CreateUpdatedScriptVersion(prompt);
-        }
-        else
-        {
-            CreateNewScript(prompt);
-        }
-    }
+    //     GenerateScript(prompt, IsInputScriptSelected());
+    //     if (IsInputScriptSelected())
+    //     {
+    //         CreateUpdatedScriptVersion(prompt);
+    //     }
+    //     else
+    //     {
+    //         CreateNewScript(prompt);
+    //     }
+    // }
 
-    /// <summary>
-    /// Sends the input prompt to the AI API and creates a new script.
-    /// </summary>
-    /// <param name="inputPrompt"></param>
-    private async void CreateNewScript(string inputPrompt)
+    /// <summary> Processes the input prompt and creates a new script or updates an existing one./ </summary>
+    /// <param name="inputScript"> The input script that is used to generate the Script </param>
+    /// <param name="isUpdate"> Whether a script should be used to update an existing script or not. </param>
+    private async void GenerateScript(string inputPrompt, bool isUpdate)
     {
         ShowProgressBar(0.2f);
         ClearInputAndResetKeyboardControl();
         string helpBoxMessage;
-        var messageListBuilder = new MessageListBuilder()
-            .AddMessage(OpenAiStandardPrompts.CreateNewScriptWithPrompt.Content, "system")
-            .AddMessage(OpenAiStandardPrompts.ScriptEndNote.Content, "system")
-            .AddMessage(inputPrompt);
-        ShowProgressBar(0.3f);
-
-        string gptScriptResponse = await OpenAiApiManager.RequestToGpt(messageListBuilder);
-        ShowProgressBar(0.8f);
-
-        if (string.IsNullOrEmpty(gptScriptResponse))
-        {
-            helpBoxMessage = "Generated Script was empty.";
-            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
-            FinishProgressBarWithDelay();
-            return;
-        }
-        else if (!ScriptUtil.IsValidScript(gptScriptResponse))
-        {
-            helpBoxMessage = "Generated Script was not valid.";
-            helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
-            FinishProgressBarWithDelay();
-            return;
-        }
-        string cleanedScriptContent = ScriptUtil.CleanScript(gptScriptResponse);
-        newScriptContent = cleanedScriptContent;
-        Repaint();
-    }
-
-    /// <summary>
-    /// Sends the input prompt to the AI API and updates the selected script.
-    /// </summary>
-    /// <param name="inputPrompt"></param>
-    private async void CreateUpdatedScriptVersion(string inputPrompt)
-    {
-        ShowProgressBar(0.2f);
-        ClearInputAndResetKeyboardControl();
-        string helpBoxMessage;
-        if (inputScript == null)
+        var messageListBuilder = new MessageListBuilder();
+        if (isUpdate && inputScript == null)
         {
             helpBoxMessage = "Please select a valid script.";
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
             return;
         }
-        // Read the content of the MonoScript asset
-        //TODO:
-        string scriptContent = inputScript.ToString();
-        helpBoxMessage = inputScript.name + " got read and sent to GPT.";
-        helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
-
-        //TODO: Test if this works
-        var messageListBuilder = new MessageListBuilder()
-            .AddMessage(OpenAiStandardPrompts.UpdateExistingScriptWithPrompt.Content, "system")
-            .AddMessage(OpenAiStandardPrompts.ScriptEndNote.Content, "system")
-            .AddMessage(inputPrompt)
-            .AddMessage(scriptContent);
-        ShowProgressBar(0.3f);
-
+        else if (isUpdate && inputScript != null)
+        {
+            // Read the content of the MonoScript asset
+            string scriptContent = inputScript.ToString();
+            helpBoxMessage = inputScript.name + " got read and sent to GPT.";
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
+            //TODO: Test if this works
+            messageListBuilder
+                .AddMessage(OpenAiStandardPrompts.UpdateExistingScriptWithPrompt.Content, "system")
+                .AddMessage(OpenAiStandardPrompts.ScriptEndNote.Content, "system")
+                .AddMessage(inputPrompt)
+                .AddMessage(scriptContent);
+            ShowProgressBar(0.3f);
+            for (int i = 0; i < messageListBuilder.GetMessageCount(); i++)
+            {
+                Debug.Log(messageListBuilder.GetMessageAt(i));
+            }
+        }
+        else if (!isUpdate)
+        {
+            messageListBuilder
+                .AddMessage(OpenAiStandardPrompts.CreateNewScriptWithPrompt.Content, "system")
+                .AddMessage(OpenAiStandardPrompts.ScriptEndNote.Content, "system")
+                .AddMessage(inputPrompt);
+            ShowProgressBar(0.3f);
+        }
         string gptScriptResponse = await OpenAiApiManager.RequestToGpt(messageListBuilder);
+        Debug.Log("gptScriptResponse: " + gptScriptResponse);
         ShowProgressBar(0.8f);
         if (string.IsNullOrEmpty(gptScriptResponse))
         {
@@ -361,27 +328,21 @@ public class AIScript : SingleExtensionApplication
         Repaint();
     }
 
-    /// <summary>
-    /// Clears the input field and resets the keyboard control.
-    /// </summary>
+    /// <summary> Clears the input field and resets the keyboard control. </summary>
     private void ClearInputAndResetKeyboardControl()
     {
         inputText = "";
         ResetKeyboardControl();
     }
 
-    /// <summary>
-    /// Reloads the prompt list from the JSON file.
-    /// </summary>
+    /// <summary> Reloads the prompt list from the JSON file. </summary>
     public static void ReloadPromptList()
     {
         loadedPromptList = PromptManager.LoadPromptListFromJson();
     }
 
-    /// <summary>
-    /// Checks if an input script is selected.
-    /// </summary>
-    /// <returns></returns>
+    /// <summary> Checks if an input script is selected. </summary>
+    /// <returns> Returns true if an input script is selected. </returns>
     private bool IsInputScriptSelected()
     {
         return inputScript != null;
@@ -395,9 +356,7 @@ public class AIScript : SingleExtensionApplication
         SelectedPrompt
     }
 
-    /// <summary>
-    /// The list of keys for the editor prefs.
-    /// </summary>
+    /// <summary> The list of keys for the editor prefs. </summary>
     private readonly Dictionary<EditorPrefKey, string> editorPrefKeys =
         new()
         {
@@ -407,9 +366,7 @@ public class AIScript : SingleExtensionApplication
             { EditorPrefKey.SelectedPrompt, "SelectedPromptKey" }
         };
 
-    /// <summary>
-    /// Loads the editor prefs.
-    /// </summary>
+    /// <summary> Loads the editor prefs. </summary>
     private void LoadEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)
@@ -439,9 +396,7 @@ public class AIScript : SingleExtensionApplication
         }
     }
 
-    /// <summary>
-    /// Sets the editor prefs.
-    /// </summary>
+    /// <summary> Sets the editor prefs. </summary>
     private void SetEditorPrefs()
     {
         foreach (var kvp in editorPrefKeys)

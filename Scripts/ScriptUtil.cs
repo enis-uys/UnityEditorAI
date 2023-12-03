@@ -2,12 +2,19 @@ using System.Text.RegularExpressions;
 
 using UnityEditor;
 
+/// <summary>
+/// The class that contains utility methods for script editing.
+/// </summary>
 public class ScriptUtil
 {
-    //TODO: check for csharp after the backticks
-
+    /// <summary> A const that will be used for scripts where the name was not found </summary>
     public const string NameNotFound = "NameNotFound";
 
+    /// <summary> Cleans the script string to remove unwanted characters.
+    /// Within the OpenAI Api these are backticks (```) and the term csharp as well as additional comments outside the code.
+    /// </summary>
+    /// <param name="inputString"> The script string to clean. </param>
+    /// <returns> Returns the cleaned script string. </returns>
     public static string CleanScript(string inputString)
     {
         if (string.IsNullOrEmpty(inputString))
@@ -59,11 +66,10 @@ public class ScriptUtil
         return outputString4;
     }
 
-    public string RemoveTagsFromScript()
-    {
-        return "";
-    }
-
+    /// <summary> Extracts the name after a keyword from a script. This is used for finding class names and function names. </summary>
+    /// <param name="scriptString"> The script string to extract the name from. </param>
+    /// <param name="keyword"> The keyword to find. </param>
+    /// <returns></returns>
     public static string ExtractNameAfterKeyWordFromScript(string scriptString, string keyword)
     {
         //checks for the word after the first void keyword and uses it as the function name
@@ -83,6 +89,9 @@ public class ScriptUtil
         }
     }
 
+    /// <summary> Returns the pattern for finding a word after a keyword </summary>
+    /// <param name="keyword"> The keyword to search for. </param>
+    /// <returns> Returns the regex pattern for finding a word after a keyword. </returns>
     private static string GetWordAfterKeyWordPattern(string keyword)
     {
         // Pattern: Find the keyword and match the word after it
@@ -93,11 +102,21 @@ public class ScriptUtil
         return @"\b" + keyword + @"\s+(\w+)\b";
     }
 
+    /// <summary>
+    /// Checks if the message is in the format "User: message" or "System: message"
+    /// </summary>
+    /// <param name="message"> The message to check. </param>
+    /// <returns> Returns true if the message is in the format "User: message" or "System: message", false otherwise.</returns>
     public static bool IsValidMessageFormat(string message)
     {
         return Regex.IsMatch(message, "^(User|System): .+$");
     }
 
+    /// <summary>
+    /// Checks if the script is valid. The scriptString will get cleaned first and is valid if it is not null or empty and contains a class name.
+    /// </summary>
+    /// <param name="scriptString"> The script string to check. </param>
+    /// <returns> Returns true if the script is valid, false otherwise. </returns>
     public static bool IsValidScript(string scriptString)
     {
         // Clean the script string to remove unwanted characters

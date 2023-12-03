@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// This script is only for demonstration of code improvements.
+/// </summary>
 public class TestScript : MonoBehaviour
 {
     //TODO: write better use cases and bad behaviors that can be improved
