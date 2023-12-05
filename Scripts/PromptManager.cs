@@ -129,7 +129,7 @@ public class PromptManager : SingleExtensionApplication
             int itemToRemove = -1; // Track the item to remove from the list
             for (int i = 0; i < CustomPromptList.Count; i++)
             {
-                GUILayout.BeginVertical();
+                EditorGUILayout.BeginVertical();
 
                 try
                 {
@@ -143,7 +143,7 @@ public class PromptManager : SingleExtensionApplication
                         );
                     }
 
-                    GUILayout.BeginHorizontal();
+                    EditorGUILayout.BeginHorizontal();
                     try
                     {
                         using (new EditorGUI.DisabledScope(selectedIndex != i))
@@ -191,12 +191,12 @@ public class PromptManager : SingleExtensionApplication
                     }
                     finally
                     {
-                        GUILayout.EndHorizontal();
+                        EditorGUILayout.EndHorizontal();
                     }
                 }
                 finally
                 {
-                    GUILayout.EndVertical();
+                    EditorGUILayout.EndVertical();
                 }
             }
             // Remove marked items from the list in reverse order to avoid index issues
@@ -218,7 +218,7 @@ public class PromptManager : SingleExtensionApplication
         );
         for (int i = 0; i < defaultPromptList.Count; i++)
         {
-            GUILayout.BeginVertical();
+            EditorGUILayout.BeginVertical();
             try
             {
                 AddDefaultSpace();
@@ -230,7 +230,7 @@ public class PromptManager : SingleExtensionApplication
             }
             finally
             {
-                GUILayout.EndVertical();
+                EditorGUILayout.EndVertical();
             }
             if (GUILayout.Button("Copy", GUILayout.ExpandWidth(true)))
             {
@@ -323,7 +323,7 @@ public class PromptManager : SingleExtensionApplication
                     "New Prompt Content",
                     newPromptContent
                 );
-                GUILayout.BeginHorizontal();
+                EditorGUILayout.BeginHorizontal();
 
                 if (GUILayout.Button("Add"))
                 {
@@ -347,7 +347,7 @@ public class PromptManager : SingleExtensionApplication
                         Repaint();
                     }
                 }
-                GUILayout.EndHorizontal();
+                EditorGUILayout.EndHorizontal();
             }
         }
     }

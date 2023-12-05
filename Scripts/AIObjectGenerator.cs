@@ -86,7 +86,7 @@ public class AIObjectGenerator : SingleExtensionApplication
         );
         inputText = EditorGUILayout.TextArea(inputText, GUILayout.ExpandHeight(true));
         EditorGUILayout.EndScrollView();
-        GUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Clear"))
         {
             csPrefab = null;
@@ -115,7 +115,7 @@ public class AIObjectGenerator : SingleExtensionApplication
                 }
             }
         }
-        GUILayout.EndHorizontal();
+        EditorGUILayout.EndHorizontal();
     }
 
     /// <summary> Renders the prompt popup field. </summary>
@@ -128,7 +128,7 @@ public class AIObjectGenerator : SingleExtensionApplication
             ),
             EditorStyles.boldLabel
         );
-        GUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal();
         try
         {
             string[] loadedPromptListArray = loadedPromptList
@@ -164,7 +164,7 @@ public class AIObjectGenerator : SingleExtensionApplication
         }
         finally
         {
-            GUILayout.EndHorizontal();
+            EditorGUILayout.EndHorizontal();
         }
     }
 
@@ -181,7 +181,7 @@ public class AIObjectGenerator : SingleExtensionApplication
                 GUIStyle codeStyle = CreateCodeStyle();
                 using (new EditorGUI.DisabledScope(true))
                 {
-                    GUILayout.TextArea(
+                    EditorGUILayout.TextArea(
                         doTaskScriptContent,
                         codeStyle,
                         GUILayout.ExpandHeight(true)
@@ -267,7 +267,7 @@ public class AIObjectGenerator : SingleExtensionApplication
         doTaskPath = AISettings.GetGenerateFilesFolderPathFromEditorPrefs() + DoTaskTemp + ".cs";
         helpBoxMessage = "Successfully wrote script to file.";
         helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
-        FileManager<string>.CreateScriptAssetWithReflection(doTaskPath, doTaskScriptContent);
+        ReflectiveMethods.CreateScriptAssetWithReflection(doTaskPath, doTaskScriptContent);
         doTaskScriptContent = "";
         helpBoxMessage = "Successfully activated the script. Refreshing AssetDatabase now.";
         helpBox.UpdateMessage(helpBoxMessage, MessageType.Warning);
@@ -299,7 +299,7 @@ public class AIObjectGenerator : SingleExtensionApplication
             Debug.Log("Class or method name is null or empty.");
             return;
         }
-        FileManager<string>.InvokeFunction(className, methodName);
+        ReflectiveMethods.InvokeFunction(className, methodName);
         AssetDatabase.DeleteAsset(doTaskPath);
     }
 

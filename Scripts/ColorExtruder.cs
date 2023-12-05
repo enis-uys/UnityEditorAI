@@ -59,7 +59,7 @@ public class ColorExtruder : SingleExtensionApplication
     {
         GUILayout.Label("Input an Image to get the color array", EditorStyles.boldLabel);
         EditorGUIUtility.labelWidth = 50;
-        GUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal();
         try
         {
             imageSprite =
@@ -76,13 +76,13 @@ public class ColorExtruder : SingleExtensionApplication
             );
             using (new EditorGUI.DisabledScope(true))
             {
-                GUILayout.TextArea(OpenAiStandardPrompts.ColorImageGenerationPrompt.Content);
+                EditorGUILayout.TextArea(OpenAiStandardPrompts.ColorImageGenerationPrompt.Content);
             }
         }
         finally
         {
             EditorGUILayout.EndScrollView();
-            GUILayout.EndHorizontal();
+            EditorGUILayout.EndHorizontal();
         }
         AddDefaultSpace();
 
@@ -92,7 +92,7 @@ public class ColorExtruder : SingleExtensionApplication
     /// <summary> Method that renders the action buttons of the color extruder. </summary>
     private void RenderActionButtons()
     {
-        GUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal();
         try
         {
             if (GUILayout.Button("Clear"))
@@ -120,7 +120,7 @@ public class ColorExtruder : SingleExtensionApplication
         }
         finally
         {
-            GUILayout.EndHorizontal();
+            EditorGUILayout.EndHorizontal();
         }
     }
 
@@ -242,7 +242,11 @@ public class ColorExtruder : SingleExtensionApplication
                 GUIStyle codeStyle = CreateCodeStyle();
                 using (new EditorGUI.DisabledScope(true))
                 {
-                    GUILayout.TextArea(colorScriptContent, codeStyle, GUILayout.ExpandHeight(true));
+                    EditorGUILayout.TextArea(
+                        colorScriptContent,
+                        codeStyle,
+                        GUILayout.ExpandHeight(true)
+                    );
                 }
                 using (new EditorGUI.DisabledScope(scriptContentEmpty))
                 {
@@ -293,7 +297,7 @@ public class ColorExtruder : SingleExtensionApplication
         }
         string generatePath =
             AISettings.GetGenerateFilesFolderPathFromEditorPrefs() + gptScriptClassName + ".cs";
-        FileManager<string>.CreateScriptAssetWithReflection(generatePath, colorScriptContent);
+        ReflectiveMethods.CreateScriptAssetWithReflection(generatePath, colorScriptContent);
         AssetDatabase.Refresh();
         colorScriptContent = "";
     }
@@ -313,7 +317,7 @@ public class ColorExtruder : SingleExtensionApplication
                     GUIStyle codeStyle = CreateCodeStyle();
                     using (new EditorGUI.DisabledScope(true))
                     {
-                        GUILayout.TextArea(
+                        EditorGUILayout.TextArea(
                             colorArrayOutput,
                             codeStyle,
                             GUILayout.ExpandHeight(true)

@@ -1,21 +1,18 @@
 using UnityEngine;
 
-/// <summary>
-/// This script is only for demonstration of code improvements.
-/// </summary>
+/// <summary> This script is an intentional demonstration of bad coding practices. </summary>
 public class TestScript : MonoBehaviour
 {
     //TODO: write better use cases and bad behaviors that can be improved
 
-    // Some variables (may seem unnecessary or poorly structured)
-    private int x = 5;
-    private int y = 10;
-    private int z = 15;
+    // Poorly named and structured variables
+    private int a = 5;
+    private int b = 10;
+    private int c = 15;
 
     //    private bool neverUsed = false;
     private bool isMoving = false;
 
-    // Some debug logs (may clutter the console)
     private void Start()
     {
         Debug.Log("Start function called!");
@@ -28,38 +25,41 @@ public class TestScript : MonoBehaviour
             Debug.Log("Object is moving!");
         }
 
-        if (x < 0)
+        if (a < 0)
         {
             Debug.Log("X is negative!");
         }
     }
 
-    // A function with poor naming and unnecessary comments
-    private void FunctionA()
+    // Poorly named function with redundant code
+    private int Func1()
     {
-        // Some unnecessary comment here
-        int temp = x + y;
-        Debug.Log("Function A: " + temp);
+        // Adding a and b
+        int sum = a + b;
+        return a + b;
     }
 
-    // Another function with unclear purpose
-    private void FunctionB()
+    // Unclear function purpose without return value
+    private void Func2()
     {
-        int result = y - z;
-        Debug.Log("Function B: " + result);
+        int result = b - c;
+        Debug.Log("Func2: " + result);
+        return;
     }
 
-    // Function with incorrect parameter naming
-    private void FunctionC(int x, int y)
+    // Incorrect parameter naming that contains class fields
+    private int Func3(int a, int b)
     {
-        int sum = x + y;
-        Debug.Log("Function C: " + sum);
+        int sum = a + b;
+        Debug.Log("Func3: " + sum);
+        return sum;
     }
 
     // Function with hard-coded values
-    private void FunctionD()
+    private int Func4(int number)
     {
-        int result = 20;
-        Debug.Log("Function D: " + result);
+        int value = 20;
+        Debug.Log("Func4: " + value);
+        return value;
     }
 }

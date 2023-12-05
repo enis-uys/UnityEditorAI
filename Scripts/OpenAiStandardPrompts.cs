@@ -49,7 +49,6 @@ public class OpenAiStandardPrompts
     );
 
     //End of adapted part from Kenjiro AICommand.
-
     /// <summary> The prompt for the user to generate a new script that the user can check before saving it. </summary>
     public static readonly (string Title, string Content) CreateNewScriptWithPrompt = (
         "Create New Script With Prompt",

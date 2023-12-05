@@ -29,14 +29,17 @@ public class AISettingsFileManager
     /// <summary> The ai models available. </summary>
     public static readonly string Gpt35Turbo = "gpt-3.5-turbo",
         Gpt35Turbo16k = "gpt-3.5-turbo-16k",
-        TextDavinci003 = "text-davinci-003",
+        UpdatedGpt35Turbo = "gpt-3.5-turbo-1106",
+        // deprecated CodeDavinci003 = "code-davinci-003",
+        Gpt35TurboInstruct = "gpt-3.5-turbo-instruct",
+        Gpt4Turbo = "gpt-4-1106-preview",
         Gpt4 = "gpt-4",
         GptDefault = Gpt35Turbo;
 
     /// <summary> The list of ai models available. </summary>
 
     public static readonly List<string> gptModels =
-        new() { Gpt35Turbo, Gpt35Turbo16k, TextDavinci003, Gpt4 };
+        new() { Gpt35Turbo, Gpt35Turbo16k, UpdatedGpt35Turbo, Gpt35TurboInstruct, Gpt4Turbo, Gpt4 };
 
     /// <summary> The list of ai models available as an array (for the dropdown menu) </summary>
     public string[] gptModelsArray = gptModels.ToArray();
@@ -165,6 +168,11 @@ public class AISettingsFileManager
                 helpBoxMessage = "Error loading settings from file: " + ex.Message;
                 helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
             }
+        }
+        else
+        {
+            helpBoxMessage = "No File Selected!";
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Warning);
         }
     }
 

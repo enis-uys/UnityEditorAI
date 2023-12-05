@@ -71,17 +71,19 @@ public class AIAssistant : SingleExtensionApplication
         EditorGUILayout.EndScrollView();
         try
         {
-            GUILayout.BeginHorizontal();
+            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Clear"))
             {
                 ResetKeyboardControl();
                 inputText = "";
             }
-            if (
-                GUILayout.Button("Send", GUILayout.ExpandWidth(true))
-                && !string.IsNullOrEmpty(inputText)
-            )
+            if (GUILayout.Button("Send", GUILayout.ExpandWidth(true)))
             {
+                if (string.IsNullOrEmpty(inputText))
+                {
+                    helpBox.UpdateMessage("Please enter a message.", MessageType.Warning);
+                    return;
+                }
                 try
                 {
                     ReadInputAndSendToGPT(inputText);
@@ -97,7 +99,7 @@ public class AIAssistant : SingleExtensionApplication
         }
         finally
         {
-            GUILayout.EndHorizontal();
+            EditorGUILayout.EndHorizontal();
         }
     }
 
@@ -125,7 +127,7 @@ public class AIAssistant : SingleExtensionApplication
         {
             EditorGUILayout.EndScrollView();
         }
-        GUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal();
         try
         {
             if (GUILayout.Button("Clear"))
@@ -147,7 +149,7 @@ public class AIAssistant : SingleExtensionApplication
         }
         finally
         {
-            GUILayout.EndHorizontal();
+            EditorGUILayout.EndHorizontal();
         }
     }
 

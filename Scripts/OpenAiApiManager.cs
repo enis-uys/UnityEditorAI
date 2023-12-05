@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 /// <Title> UniTask GitHub Repository </Title>
-/// <Author> Yoshifumi Kawai / Cysharp, Inc. (Cysharp   ) </Author>
+/// <Author> Yoshifumi Kawai / Cysharp, Inc. (Cysharp) </Author>
 /// <Release Date> 01.11.2022 </Release Date>
 /// <Access Date> 10.09.2023 </Access Date>
 /// <Code version> 2.3.3 </Code version>
@@ -27,7 +27,7 @@ public class OpenAiApiManager
 
     const string chatEndpoint = "https://api.openai.com/v1/chat/completions";
 
-    /// <summary> The endpoint for the completion model. (Davinci) </summary>
+    /// <summary> The endpoint for the completion model. (Davinci and Gpt Instruct) </summary>
     const string completionsEndpoint = "https://api.openai.com/v1/completions";
 
     /// <summary> The singleton instance of the settings file manager that contains the settings for the AI. </summary>
@@ -107,9 +107,10 @@ public class OpenAiApiManager
             );
             HelpBox.GetInstance().UpdateIntendedProgress(0.5f);
 
+            Debug.Log("Response: " + jsonResponse);
             string responseResult = ParseOpenApiResponse(
                 jsonResponse,
-                gptModel.Contains("davinci")
+                gptModel.Contains("davinci") || gptModel.Contains("instruct")
             );
             return responseResult;
         }
@@ -131,7 +132,7 @@ public class OpenAiApiManager
         float? temperature
     )
     {
-        if (gptModel.Contains("davinci"))
+        if (gptModel.Contains("davinci") || gptModel.Contains("instruct"))
         {
             int messageListCount = messageListBuilder.GetMessageCount();
             var requestBody = new OpenAiInputBuilder.RequestBuilder()
@@ -152,16 +153,6 @@ public class OpenAiApiManager
         }
     }
 
-    //Parts of this method are inspired from AICommand
-    /// <Author> Keijiro Takahashi (keijiro) </Author>
-    /// <Release Date> 20.03.2023 </Release Date>
-    /// <Access Date> 10.09.2023 </Access Date>
-    /// <Availability> https://github.com/keijiro/AICommand/blob/main/Assets/Editor/OpenAIUtil.cs </Availability>
-    /// <Usecase> Proof-of-Concept Integration of the GPT API into Unity Editor </Usecase>
-    /// <License> Unlicense (Public Domain) View LICENSE.md to see the license and information. </License>
-    /// <Description>
-    /// AICommand is a proof-of-concept integration of ChatGPT into Unity Editor. It allows controlling the Editor using natural language prompts.
-    /// </Description>
     /// <summary> Sends a request to the OpenAI API and returns the response. </summary>
     /// <param name="apiKey"> The API key that should be used to send the request. </param>
     /// <param name="endpoint"> The endpoint that should be used to send the request. </param>
@@ -178,7 +169,6 @@ public class OpenAiApiManager
             post.timeout = timeoutInSeconds;
             post.SetRequestHeader("Authorization", "Bearer " + apiKey);
             var req = post.SendWebRequest();
-            // The await keyword will yield control back to the caller while the request is being processed.
             await req;
             if (
                 post.result == UnityWebRequest.Result.ConnectionError
@@ -235,7 +225,7 @@ public class OpenAiApiManager
     /// <returns> The endpoint for the GPT model. </returns>
     private static string GetEndPoint(string gptModel)
     {
-        if (gptModel.Contains("davinci"))
+        if (gptModel.Contains("davinci") || gptModel.Contains("instruct"))
         {
             return completionsEndpoint;
         }

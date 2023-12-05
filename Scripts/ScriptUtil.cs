@@ -34,7 +34,7 @@ public class ScriptUtil
         );
 
         // Step 2: Remove text before backticks
-        // Pattern: Match two or more backticks at the start or end and remove before the start and after the end backticks
+        // Pattern: Match two or more backticks at the start or end and remove before the start of the backticks
         string pattern2 = @"^[\s\S]*?(`{2,}[\s\S]*?`{2,})";
         string replacement2 = "$1";
 
@@ -107,6 +107,7 @@ public class ScriptUtil
     /// </summary>
     /// <param name="message"> The message to check. </param>
     /// <returns> Returns true if the message is in the format "User: message" or "System: message", false otherwise.</returns>
+    /// NOTE: This method is not used anymore, but is kept for future use.
     public static bool IsValidMessageFormat(string message)
     {
         return Regex.IsMatch(message, "^(User|System): .+$");

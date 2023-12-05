@@ -80,7 +80,7 @@ public class AIScript : SingleExtensionApplication
         );
         inputText = EditorGUILayout.TextArea(inputText, GUILayout.ExpandHeight(true));
         EditorGUILayout.EndScrollView();
-        GUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Clear"))
         {
             inputScript = null;
@@ -113,7 +113,7 @@ public class AIScript : SingleExtensionApplication
             }
         }
 
-        GUILayout.EndHorizontal();
+        EditorGUILayout.EndHorizontal();
     }
 
     /// <summary> Renders the input script field. </summary>
@@ -148,7 +148,11 @@ public class AIScript : SingleExtensionApplication
                 GUIStyle codeStyle = CreateCodeStyle();
                 using (new EditorGUI.DisabledScope(true))
                 {
-                    GUILayout.TextArea(newScriptContent, codeStyle, GUILayout.ExpandHeight(true));
+                    EditorGUILayout.TextArea(
+                        newScriptContent,
+                        codeStyle,
+                        GUILayout.ExpandHeight(true)
+                    );
                 }
                 using (new EditorGUI.DisabledScope(scriptContentEmpty))
                 {
@@ -199,7 +203,7 @@ public class AIScript : SingleExtensionApplication
         }
         string generatePath =
             AISettings.GetGenerateFilesFolderPathFromEditorPrefs() + gptScriptClassName + ".cs";
-        FileManager<string>.CreateScriptAssetWithReflection(generatePath, newScriptContent);
+        ReflectiveMethods.CreateScriptAssetWithReflection(generatePath, newScriptContent);
         AssetDatabase.Refresh();
         newScriptContent = "";
     }
@@ -214,7 +218,7 @@ public class AIScript : SingleExtensionApplication
             ),
             EditorStyles.boldLabel
         );
-        GUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal();
         try
         {
             string[] loadedPromptListArray = loadedPromptList
@@ -243,26 +247,9 @@ public class AIScript : SingleExtensionApplication
         }
         finally
         {
-            GUILayout.EndHorizontal();
+            EditorGUILayout.EndHorizontal();
         }
     }
-
-    /// <summary> Processes the input prompt and creates a new script or updates an existing one./ </summary>
-    /// <param name="prompt"> The prompt that is used to create a new script or update an existing one. </param>
-    // private void ProcessInputPrompt(string prompt)
-    // {
-    //     ShowProgressBar(0.1f);
-
-    //     GenerateScript(prompt, IsInputScriptSelected());
-    //     if (IsInputScriptSelected())
-    //     {
-    //         CreateUpdatedScriptVersion(prompt);
-    //     }
-    //     else
-    //     {
-    //         CreateNewScript(prompt);
-    //     }
-    // }
 
     /// <summary> Processes the input prompt and creates a new script or updates an existing one./ </summary>
     /// <param name="inputScript"> The input script that is used to generate the Script </param>

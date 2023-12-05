@@ -236,7 +236,7 @@ public class AISettings : SingleExtensionApplication
     /// <summary> Renders the Action Buttons. </summary>
     private void RenderActionButtons()
     {
-        GUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal();
         try
         {
             if (GUILayout.Button("Test API"))
@@ -262,7 +262,7 @@ public class AISettings : SingleExtensionApplication
         }
         finally
         {
-            GUILayout.EndHorizontal();
+            EditorGUILayout.EndHorizontal();
         }
     }
 

@@ -47,7 +47,7 @@ public abstract class SingleExtensionApplication : ScriptableObject
     /// <returns> Returns a GUIStyle that can be used to display colored text. </returns>
     protected GUIStyle CreateRichTextStyle()
     {
-        return new GUIStyle(GUI.skin.textArea) { richText = true, wordWrap = true, };
+        return new GUIStyle(EditorStyles.textArea) { richText = true, wordWrap = true, };
     }
 
     /// <summary> Method that creates a code style for displaying code. </summary>
@@ -108,7 +108,7 @@ public abstract class SingleExtensionApplication : ScriptableObject
 
     /// <summary> Method that finishes the progress bar of the help box and closes it after a delay. </summary>
     /// <param name="milliSeconds"> The delay in milliseconds. </param>
-    protected void FinishProgressBarWithDelay(int milliSeconds = 1500)
+    protected void FinishProgressBarWithDelay(int milliSeconds = 700)
     {
         helpBox.FinishProgressBarWithDelay(milliSeconds);
         EditorApplication.update -= helpBox.UpdateProgressBar;
