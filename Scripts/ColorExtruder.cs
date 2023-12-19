@@ -41,7 +41,7 @@ public class ColorExtruder : SingleExtensionApplication
             }
             RenderImageField();
             AddDefaultSpace();
-            AddDefaultSpace();
+            RenderActionButtons();
             RenderOutputScriptField();
             RenderOutputColorArrayField();
             AddDefaultSpace();
@@ -57,7 +57,7 @@ public class ColorExtruder : SingleExtensionApplication
     /// <summary> Method that renders the ImageField and a prompt that is used for "Let AI Generate Color Generation Code". </summary>
     private void RenderImageField()
     {
-        GUILayout.Label("Input an Image to get the color array", EditorStyles.boldLabel);
+        GUILayout.Label("Insert an Image to get the color array", EditorStyles.boldLabel);
         EditorGUIUtility.labelWidth = 50;
         EditorGUILayout.BeginHorizontal();
         try
@@ -84,9 +84,6 @@ public class ColorExtruder : SingleExtensionApplication
             EditorGUILayout.EndScrollView();
             EditorGUILayout.EndHorizontal();
         }
-        AddDefaultSpace();
-
-        RenderActionButtons();
     }
 
     /// <summary> Method that renders the action buttons of the color extruder. </summary>
@@ -98,6 +95,8 @@ public class ColorExtruder : SingleExtensionApplication
             if (GUILayout.Button("Clear"))
             {
                 imageSprite = null;
+                colorArrayOutput = "";
+                colorScriptContent = "";
                 ResetKeyboardControl();
             }
             else if (GUILayout.Button("Show/Hide Color Array Content"))
@@ -115,13 +114,25 @@ public class ColorExtruder : SingleExtensionApplication
             }
             else if (GUILayout.Button("Use Existing Color Generation Code"))
             {
-                ColorScriptDemo.GenerateColors();
+                if (ColorArrayObjectFromFile() != null)
+                {
+                    ColorScriptDemo.GenerateColors();
+                }
+                else
+                {
+                    string helpBoxMessage =
+                        "Could not find a color array object file. Please generate a color array object first.";
+                    helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+                }
             }
         }
         finally
         {
             EditorGUILayout.EndHorizontal();
         }
+        EditorGUILayout.LabelField(
+            "Please note that the image should not have more than 100.000 pixels."
+        );
     }
 
     /// <summary> Method that sends the color array prompt to the OpenAI API. </summary>
@@ -170,10 +181,21 @@ public class ColorExtruder : SingleExtensionApplication
                 AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(texture));
                 int textureWidth = texture.width;
                 int textureHeight = texture.height;
+                int texturePixelsCount = textureWidth * textureHeight;
+                if (texturePixelsCount >= 100000)
+                {
+                    string helpBoxMessage =
+                        "The image has "
+                        + texturePixelsCount
+                        + " pixels. This is too big. Please use an image with less than 100.000 pixels.";
+                    helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
+                    return;
+                }
                 var texture2D = texture;
                 var texturePixels = texture2D.GetPixels();
                 var pixelList = new List<int>();
                 var colorList = new List<Color>();
+
                 foreach (var pixel in texturePixels)
                 {
                     // Check if color is already in colorList

@@ -246,16 +246,17 @@ public class PromptManager : SingleExtensionApplication
     public static List<(string Title, string Content)> LoadPromptListFromJson()
     {
         List<(string Title, string Content)> loadedPromptList = new();
+        string helpBoxMessage;
         try
         {
             string filePath =
                 AISettingsFileManager.GetInstance().UserFilesFolderPath + promptListFileName;
-
             // Create the file if it doesn't exist and saves it
-            if (
-                !FileManager<List<(string Title, string Content)>>.CreateFileIfNotExisting(filePath)
-            )
+            if (!FileManager<string>.CreateFileIfNotExisting(filePath))
             {
+                helpBoxMessage = "No custom prompt list found. Creating default prompt list.";
+                helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
+                Debug.Log("No custom prompt list found. Creating default prompt list.");
                 loadedPromptList = defaultCustomPrompts;
                 FileManager<List<(string, string)>>.SaveToJsonFileWithPath(
                     loadedPromptList,
@@ -270,8 +271,7 @@ public class PromptManager : SingleExtensionApplication
         }
         catch (Newtonsoft.Json.JsonException jsonEx)
         {
-            string helpBoxMessage =
-                "JSON data does not match expected type." + "\n" + jsonEx.Message;
+            helpBoxMessage = "JSON data does not match expected type." + "\n" + jsonEx.Message;
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
         }
         catch (SystemException e)

@@ -67,6 +67,7 @@ public abstract class SingleExtensionApplication : ScriptableObject
 
     /// <summary> Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (HighlightButton.guiskin) </summary>
     /// <returns> Returns a GUIStyle that can be used to display buttons. </returns>
+    /// This method is only included for testing of GUISkin usage.
     protected GUIStyle CreateHighlightButtonStyle()
     {
         GUISkin highightButtonSkin = Resources.Load<GUISkin>(HighlightButtonRessourcePath);

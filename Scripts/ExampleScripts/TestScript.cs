@@ -31,7 +31,7 @@ public class TestScript : MonoBehaviour
         }
     }
 
-    // Poorly named function with redundant code
+    // Bad named function with redundant code
     private int Func1()
     {
         // Adding a and b

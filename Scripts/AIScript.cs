@@ -103,6 +103,8 @@ public class AIScript : SingleExtensionApplication
                 {
                     // ProcessInputPrompt(inputText);
                     ShowProgressBar(0.1f);
+                    helpBoxMessage = "Executing Prompt: " + inputText;
+                    helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
                     GenerateScript(inputText, IsInputScriptSelected());
                 }
                 catch (System.Exception ex)
@@ -272,17 +274,12 @@ public class AIScript : SingleExtensionApplication
             string scriptContent = inputScript.ToString();
             helpBoxMessage = inputScript.name + " got read and sent to GPT.";
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
-            //TODO: Test if this works
             messageListBuilder
                 .AddMessage(OpenAiStandardPrompts.UpdateExistingScriptWithPrompt.Content, "system")
                 .AddMessage(OpenAiStandardPrompts.ScriptEndNote.Content, "system")
                 .AddMessage(inputPrompt)
                 .AddMessage(scriptContent);
             ShowProgressBar(0.3f);
-            for (int i = 0; i < messageListBuilder.GetMessageCount(); i++)
-            {
-                Debug.Log(messageListBuilder.GetMessageAt(i));
-            }
         }
         else if (!isUpdate)
         {
@@ -292,8 +289,8 @@ public class AIScript : SingleExtensionApplication
                 .AddMessage(inputPrompt);
             ShowProgressBar(0.3f);
         }
+        inputScript = null;
         string gptScriptResponse = await OpenAiApiManager.RequestToGpt(messageListBuilder);
-        Debug.Log("gptScriptResponse: " + gptScriptResponse);
         ShowProgressBar(0.8f);
         if (string.IsNullOrEmpty(gptScriptResponse))
         {
@@ -304,7 +301,7 @@ public class AIScript : SingleExtensionApplication
         }
         else if (!ScriptUtil.IsValidScript(gptScriptResponse))
         {
-            helpBoxMessage = "Generated Script was not valid.";
+            helpBoxMessage = "Generated Script was not valid.\n" + gptScriptResponse;
             helpBox.UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
             FinishProgressBarWithDelay();
             return;

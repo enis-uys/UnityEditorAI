@@ -195,6 +195,13 @@ public class FileManager<T>
         bool fileExists = File.Exists(filePath);
         if (!fileExists)
         {
+            string folderPath = Path.GetDirectoryName(filePath);
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
             string helpBoxMessage = "File does not exist, creating file at: " + filePath;
             HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Info, true);
             using StreamWriter sw = File.CreateText(filePath);

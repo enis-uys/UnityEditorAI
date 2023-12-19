@@ -70,6 +70,7 @@ public class ExtensionTabs : EditorWindow
         try
         {
             Initialize();
+            EditorStyles.textField.wordWrap = true;
             EditorGUILayout.LabelField("Choose a tool", EditorStyles.boldLabel);
             EditorGUILayout.Space();
             var prevApplication = currentApplication;

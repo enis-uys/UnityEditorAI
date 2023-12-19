@@ -94,7 +94,7 @@ public class AIObjectGenerator : SingleExtensionApplication
             inputText = "";
         }
 
-        if (GUILayout.Button("Send Input"))
+        if (GUILayout.Button("Send Prompt"))
         {
             if (string.IsNullOrEmpty(inputText))
             {
@@ -105,6 +105,8 @@ public class AIObjectGenerator : SingleExtensionApplication
             {
                 try
                 {
+                    string helpBoxMessage = "Executing Prompt: " + inputText;
+                    helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
                     ProcessInputPromptForGenerate(inputText);
                 }
                 catch (System.Exception ex)

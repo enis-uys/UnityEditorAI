@@ -107,7 +107,6 @@ public class OpenAiApiManager
             );
             HelpBox.GetInstance().UpdateIntendedProgress(0.5f);
 
-            Debug.Log("Response: " + jsonResponse);
             string responseResult = ParseOpenApiResponse(
                 jsonResponse,
                 gptModel.Contains("davinci") || gptModel.Contains("instruct")
