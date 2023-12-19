@@ -22,7 +22,7 @@ public class OpenAiStandardPrompts
         3. All variables used within the method must be initialized within the method itself.
         4. Do not use MenuItem, WindowItem or EditorWindow, Serializable or other custom attributes . Only write the static method inside the class.
         5. Do not use GameObject.Find* functions and do not rely on selected objects. Instead, find game objects manually within the method.
-        7. I only need the script body. Don’t add any explanation.
+        7. I only need the script body. Do not add any explanation.
         8. Ensure that the script stays to the single-class, single-method format and fully initializes all variables.
         9. If no explicit values for variables are provided, use values that are commonly used in Unity.
         10. I give you an example of a task and the expected output:

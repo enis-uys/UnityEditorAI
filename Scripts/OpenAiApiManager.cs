@@ -164,23 +164,26 @@ public class OpenAiApiManager
     {
         try
         {
-            using var post = UnityWebRequest.Post(endpoint, requestBody, "application/json");
-            post.timeout = timeoutInSeconds;
-            post.SetRequestHeader("Authorization", "Bearer " + apiKey);
-            var req = post.SendWebRequest();
-            await req;
+            using UnityWebRequest request = UnityWebRequest.Post(
+                endpoint,
+                requestBody,
+                "application/json"
+            );
+            request.SetRequestHeader("Authorization", "Bearer " + apiKey);
+            request.timeout = timeoutInSeconds;
+            await request.SendWebRequest();
             if (
-                post.result == UnityWebRequest.Result.ConnectionError
-                || post.result == UnityWebRequest.Result.ProtocolError
+                request.result == UnityWebRequest.Result.ConnectionError
+                || request.result == UnityWebRequest.Result.ProtocolError
             )
             {
-                string helpBoxMessage = "Error while sending async message to GPT " + post.error;
+                string helpBoxMessage = "Error while sending async message to GPT " + request.error;
                 HelpBox.GetInstance().UpdateMessage(helpBoxMessage, MessageType.Error, false, true);
                 return null;
             }
 
-            var jsonResponse = post.downloadHandler.text;
-            return jsonResponse;
+            string responseJson = request.downloadHandler.text;
+            return responseJson;
         }
         catch (Exception)
         {
@@ -206,13 +209,15 @@ public class OpenAiApiManager
     {
         if (isCompletion)
         {
-            var data = JsonUtility.FromJson<GptCompletionResponse>(jsonResponse);
-            return data.choices[0].text;
+            GptCompletionResponse gptResponse = JsonUtility.FromJson<GptCompletionResponse>(
+                jsonResponse
+            );
+            return gptResponse.choices[0].text.Trim();
         }
         else
         {
-            var data = JsonUtility.FromJson<GptResponse>(jsonResponse);
-            string responseResult = data.choices[0].message.content.Trim();
+            GptResponse gptResponse = JsonUtility.FromJson<GptResponse>(jsonResponse);
+            string responseResult = gptResponse.choices[0].message.content.Trim();
             return responseResult;
         }
     }

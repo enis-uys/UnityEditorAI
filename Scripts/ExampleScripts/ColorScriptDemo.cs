@@ -24,7 +24,7 @@ public class ColorScriptDemo : MonoBehaviour
 
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.transform.position = position;
-            sphere.transform.localScale = Vector3.one; // Slightly smaller to create gaps between spheres
+            sphere.transform.localScale = Vector3.one;
             sphere.transform.parent = imageParent.transform;
             int colorIndex = colorArrayObject.pixels[i];
             Color newColor;
