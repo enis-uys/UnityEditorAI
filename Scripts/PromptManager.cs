@@ -256,7 +256,6 @@ public class PromptManager : SingleExtensionApplication
             {
                 helpBoxMessage = "No custom prompt list found. Creating default prompt list.";
                 helpBox.UpdateMessage(helpBoxMessage, MessageType.Info);
-                Debug.Log("No custom prompt list found. Creating default prompt list.");
                 loadedPromptList = defaultCustomPrompts;
                 FileManager<List<(string, string)>>.SaveToJsonFileWithPath(
                     loadedPromptList,
@@ -264,10 +263,12 @@ public class PromptManager : SingleExtensionApplication
                 );
                 return loadedPromptList;
             }
-
+            else {
             loadedPromptList = FileManager<
                 List<(string Title, string Content)>
             >.LoadDeserializedJsonFromPath(filePath);
+            }
+
         }
         catch (Newtonsoft.Json.JsonException jsonEx)
         {

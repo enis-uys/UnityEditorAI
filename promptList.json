@@ -1,0 +1,38 @@
+[
+  {
+    "Item1": "Improve/Improve script",
+    "Item2": "Improve the script by adding comments and removing unused variables."
+  },
+  {
+    "Item1": "Improve/Write Comments",
+    "Item2": "Write comments for the script.\r\n        The comments should be useful and explain the code.\r\n        The comments should be written in English."
+  },
+  {
+    "Item1": "Improve/Remove unused variables",
+    "Item2": "Remove unused variables from the script."
+  },
+  {
+    "Item1": "Improve/Remove Debug Logs",
+    "Item2": "Remove all Debug.Log() calls from the script."
+  },
+  {
+    "Item1": "Improve/Auto-Generate Serialization",
+    "Item2": "Auto-generate serialization for the script."
+  },
+  {
+    "Item1": "Improve/Generate a rotation script",
+    "Item2": "Generate a script that rotates a game object over time."
+  },
+  {
+    "Item1": "Generate/Generate Particle System",
+    "Item2": "Generate a Unity script that creates new game objects with particle systems. Do not use any prefabs."
+  },
+  {
+    "Item1": "Generate/Generate Lights",
+    "Item2": "Generate a Unity script that spawns directional lights at specified positions in the scene. Do not use any prefabs."
+  },
+  {
+    "Item1": "Generation/Sphere Generation",
+    "Item2": "Generate a purple sphere "
+  }
+]

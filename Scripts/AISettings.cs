@@ -310,7 +310,15 @@ public class AISettings : SingleExtensionApplication
         if (string.IsNullOrEmpty(generatedPath))
         {
             //Default path
-            return "Assets/UnityEditorAI/Generated/";
+            generatedPath = "Assets/UnityEditorAI/Generated/";
+        }
+        string folderPath = System.IO.Path.GetDirectoryName(generatedPath);
+        if (!System.IO.Directory.Exists(folderPath))
+        {
+            string helpBoxMessage =
+                "Directory does not exist, creating directory at: " + folderPath;
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Info, true);
+            System.IO.Directory.CreateDirectory(folderPath);
         }
         return generatedPath;
     }
@@ -325,8 +333,17 @@ public class AISettings : SingleExtensionApplication
         if (string.IsNullOrEmpty(userFilesPath))
         {
             //Default path
-            return "Assets/UnityEditorAI/UserFiles/";
+            userFilesPath = "Assets/UnityEditorAI/UserFiles/";
         }
+        string folderPath = System.IO.Path.GetDirectoryName(userFilesPath);
+        if (!System.IO.Directory.Exists(folderPath))
+        {
+            string helpBoxMessage =
+                "Directory does not exist, creating directory at: " + folderPath;
+            helpBox.UpdateMessage(helpBoxMessage, MessageType.Info, true);
+            System.IO.Directory.CreateDirectory(folderPath);
+        }
+
         return userFilesPath;
     }
 
