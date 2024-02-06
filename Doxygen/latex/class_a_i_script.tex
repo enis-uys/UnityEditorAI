@@ -1,0 +1,422 @@
+\doxysection{AIScript Class Reference}
+\hypertarget{class_a_i_script}{}\label{class_a_i_script}\index{AIScript@{AIScript}}
+
+
+Single application for the AI extension. It is used to create new scripts or update existing ones.  
+
+
+
+
+Inheritance diagram for AIScript\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_a_i_script__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for AIScript\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_a_i_script__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_a_i_script_ae1ed3114e9035eb84646334831049c68}{Editor\+Pref\+Key}} \{ \mbox{\hyperlink{class_a_i_script_ae1ed3114e9035eb84646334831049c68a1fd9417ee0e56b4ae0b1b0eafa4ab6c1}{Input\+Script\+GUID}}
+, \mbox{\hyperlink{class_a_i_script_ae1ed3114e9035eb84646334831049c68a377bd9ce64679d624b7a6012e27f4de9}{Input\+Script\+Text}}
+, \mbox{\hyperlink{class_a_i_script_ae1ed3114e9035eb84646334831049c68a880a32db73366af8390153c3c9ae5e48}{New\+Script\+Content}}
+, \mbox{\hyperlink{class_a_i_script_ae1ed3114e9035eb84646334831049c68a56eb40e1e4f91e64bd81691e15f64502}{Selected\+Prompt}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override void \mbox{\hyperlink{class_a_i_script_a2820e71108cad8dfefca31842d0ed588}{On\+GUI}} ()
+\begin{DoxyCompactList}\small\item\em GUI callback for rendering the AI Script extension. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_single_extension_application_ad4c53dc687f77685921ecbc18952eed8}{Initialize}} (Editor\+Window \mbox{\hyperlink{class_single_extension_application_aed64f61e6f6d5d8ba0ccaabd9fc3b7fe}{window}})
+\begin{DoxyCompactList}\small\item\em Initializes the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_aa51a43317f0bbf7265cf8cc1113f6150}{On\+GUI}} ()
+\begin{DoxyCompactList}\small\item\em Abstract method that renders the GUI of the application. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_single_extension_application_a6a4b4a85bfcd37cc26515d9bf290717f}{On\+Enable}} ()
+\begin{DoxyCompactList}\small\item\em Abstract method that is called when the application is enabled. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_aa1cd2c244df403bc0cd4ed3130ff60b7}{Repaint}} ()
+\begin{DoxyCompactList}\small\item\em Method that repaints the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ac790580eb6b04325403418919ae004a2}{Focus}} ()
+\begin{DoxyCompactList}\small\item\em Method that focuses the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_af7566e21f700c97714206139bc8b3fa8}{Show}} ()
+\begin{DoxyCompactList}\small\item\em Method that shows the window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_single_extension_application_a70cd16b4dcbc26cf2b270333c3d5a3ba}{Get\+Help\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a1891a14e184b830a220f00f730facf30}{Close}} ()
+\begin{DoxyCompactList}\small\item\em Method that closes the window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_a_i_script_a8fa012b3c5da0832770f7aa9fbe87518}{Reload\+Prompt\+List}} ()
+\begin{DoxyCompactList}\small\item\em Reloads the prompt list from the JSON file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+override string \mbox{\hyperlink{class_a_i_script_a389932b06748af51e5d0b0ec23fea906}{Display\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The display name of the application. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_a_i_script_a0ad22ca0246c670875f87556028055a5}{Has\+Init}} = false\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Whether the application has been initialized. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_single_extension_application_ae12cba99589c5a8b18cd4fa02033ef3b}{Display\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The display name of a single application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_a_i_script_a385495cc9c14a94c8c8ed75a628e8f83}{Render\+Input\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Renders the input field for the prompt. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_script_aca0d3edc89d88804bc5a0c46f5e7e48c}{Render\+Input\+Script}} ()
+\begin{DoxyCompactList}\small\item\em Renders the input script field. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_script_a689e840c008b1dbb53e5ebc1efaa73ba}{Render\+New\+Script\+Content}} ()
+\begin{DoxyCompactList}\small\item\em Renders the new script content (if there is any). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_script_adf9efecaf2157cf7768e5773c0d1cfbb}{Save\+Script\+Into\+File}} ()
+\begin{DoxyCompactList}\small\item\em Saves the generated script into a file inside the Generate\+Folder. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_script_a6b2b136678417aa972c9c63a477e1be4}{Render\+Popup\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Renders the popup field for the prompt list. \end{DoxyCompactList}\item 
+async void \mbox{\hyperlink{class_a_i_script_af93a9f192f1b56e43627fa8f39185064}{Generate\+Script}} (string input\+Prompt, bool is\+Update)
+\begin{DoxyCompactList}\small\item\em Processes the input prompt and creates a new script or updates an existing one./. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_script_ae14038c8a2b51cf58b52372b76dd640a}{Clear\+Input\+And\+Reset\+Keyboard\+Control}} ()
+\begin{DoxyCompactList}\small\item\em Clears the input field and resets the keyboard control. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_a_i_script_a6202d679f97cc3e224c5d5b64c74e711}{Is\+Input\+Script\+Selected}} ()
+\begin{DoxyCompactList}\small\item\em Checks if an input script is selected. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_script_ab5e0226f9988469abd6f32c1aca01104}{Load\+Editor\+Prefs}} ()
+\begin{DoxyCompactList}\small\item\em Loads the editor prefs. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_script_ab3bd93fc94b805a67f7f7630a4e06556}{Set\+Editor\+Prefs}} ()
+\begin{DoxyCompactList}\small\item\em Sets the editor prefs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Mono\+Script \mbox{\hyperlink{class_a_i_script_a067997c3e93e32dccb8184eaa0384288}{input\+Script}}
+\begin{DoxyCompactList}\small\item\em The input script that is used to update an existing script. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_a_i_script_a8f0676d33bf4ba752d4764793ca5c1ff}{input\+Text}} = "{}"{}
+\begin{DoxyCompactList}\small\item\em The input text that is used to create a new script. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_a_i_script_ac97dbf7a7ee77eac2b8932f443425b0f}{new\+Script\+Content}}
+\begin{DoxyCompactList}\small\item\em The content of the new script that is generated. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{class_a_i_script_a2efe5564a8c41304ef3bd852b7dc051a}{input\+Scroll\+Position}}
+\begin{DoxyCompactList}\small\item\em The scroll position of the input field. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_a_i_script_aa430942f85dc8d9d62094cf687c64fe8}{selected\+Prompt\+Key}} = 0
+\item 
+readonly Dictionary$<$ \mbox{\hyperlink{class_a_i_script_ae1ed3114e9035eb84646334831049c68}{Editor\+Pref\+Key}}, string $>$ \mbox{\hyperlink{class_a_i_script_afab1886b88d885fe39a54b0d454439bf}{editor\+Pref\+Keys}}
+\begin{DoxyCompactList}\small\item\em The list of keys for the editor prefs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static List$<$(string Title, string Content)$>$ \mbox{\hyperlink{class_a_i_script_a23abce900bb3870c66e4e664f2a456d4}{loaded\+Prompt\+List}} = new()
+\begin{DoxyCompactList}\small\item\em The list of prompts that are loaded from the JSON file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_a5c8eb26811e8e8be2adef8de8ce9e9cc}{Create\+Rich\+Text\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a rich text style for colored text. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_aaf0f5f643db07bf144406930febd6825}{Create\+Code\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a code style for displaying code. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_a10fbb10372723562264b8450fb97d8bd}{Create\+Highlight\+Button\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ae44d34c95f1d6d1b639397672061d642}{Render\+Help\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Method that renders the help box of the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ac7196ccc94638a9c937835e929ba8149}{Show\+Progress\+Bar}} (float progress)
+\begin{DoxyCompactList}\small\item\em Method that renders the help box of the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_af44fba8eb1f4e67690bb9125ef8c695c}{Finish\+Progress\+Bar\+With\+Delay}} (int milli\+Seconds=700)
+\begin{DoxyCompactList}\small\item\em Method that finishes the progress bar of the help box and closes it after a delay. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a227b21fbcd7615885b5942123a496d09}{Add\+Default\+Space}} ()
+\begin{DoxyCompactList}\small\item\em Method to add a default space between GUI elements. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a00d19da43cb9c34bb4fb9256c0fba86a}{Reset\+Keyboard\+Control}} ()
+\begin{DoxyCompactList}\small\item\em Method to Reset the keyboard control. It is used, if a user should focus out of a textfield. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_single_extension_application_a542a28ee031c28c77091b8684ed972e4}{default\+Space}} = 10
+\begin{DoxyCompactList}\small\item\em The default space between GUI elements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_single_extension_application_abd98e67099069da3b0fccbd439d8edf2}{help\+Box}} = \mbox{\hyperlink{class_help_box_a37157adbf2d543c032e06cf87be2c63f}{Help\+Box.\+Get\+Instance}}()
+\begin{DoxyCompactList}\small\item\em The help box of a single application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Single application for the AI extension. It is used to create new scripts or update existing ones. 
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_a_i_script_ae1ed3114e9035eb84646334831049c68}\label{class_a_i_script_ae1ed3114e9035eb84646334831049c68} 
+\index{AIScript@{AIScript}!EditorPrefKey@{EditorPrefKey}}
+\index{EditorPrefKey@{EditorPrefKey}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{EditorPrefKey}{EditorPrefKey}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_a_i_script_ae1ed3114e9035eb84646334831049c68}{AIScript.\+Editor\+Pref\+Key}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{InputScriptGUID@{InputScriptGUID}!AIScript@{AIScript}}\index{AIScript@{AIScript}!InputScriptGUID@{InputScriptGUID}}}\Hypertarget{class_a_i_script_ae1ed3114e9035eb84646334831049c68a1fd9417ee0e56b4ae0b1b0eafa4ab6c1}\label{class_a_i_script_ae1ed3114e9035eb84646334831049c68a1fd9417ee0e56b4ae0b1b0eafa4ab6c1} 
+Input\+Script\+GUID&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{InputScriptText@{InputScriptText}!AIScript@{AIScript}}\index{AIScript@{AIScript}!InputScriptText@{InputScriptText}}}\Hypertarget{class_a_i_script_ae1ed3114e9035eb84646334831049c68a377bd9ce64679d624b7a6012e27f4de9}\label{class_a_i_script_ae1ed3114e9035eb84646334831049c68a377bd9ce64679d624b7a6012e27f4de9} 
+Input\+Script\+Text&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NewScriptContent@{NewScriptContent}!AIScript@{AIScript}}\index{AIScript@{AIScript}!NewScriptContent@{NewScriptContent}}}\Hypertarget{class_a_i_script_ae1ed3114e9035eb84646334831049c68a880a32db73366af8390153c3c9ae5e48}\label{class_a_i_script_ae1ed3114e9035eb84646334831049c68a880a32db73366af8390153c3c9ae5e48} 
+New\+Script\+Content&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SelectedPrompt@{SelectedPrompt}!AIScript@{AIScript}}\index{AIScript@{AIScript}!SelectedPrompt@{SelectedPrompt}}}\Hypertarget{class_a_i_script_ae1ed3114e9035eb84646334831049c68a56eb40e1e4f91e64bd81691e15f64502}\label{class_a_i_script_ae1ed3114e9035eb84646334831049c68a56eb40e1e4f91e64bd81691e15f64502} 
+Selected\+Prompt&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_i_script_ae14038c8a2b51cf58b52372b76dd640a}\label{class_a_i_script_ae14038c8a2b51cf58b52372b76dd640a} 
+\index{AIScript@{AIScript}!ClearInputAndResetKeyboardControl@{ClearInputAndResetKeyboardControl}}
+\index{ClearInputAndResetKeyboardControl@{ClearInputAndResetKeyboardControl}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{ClearInputAndResetKeyboardControl()}{ClearInputAndResetKeyboardControl()}}
+{\footnotesize\ttfamily void AIScript.\+Clear\+Input\+And\+Reset\+Keyboard\+Control (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Clears the input field and resets the keyboard control. 
+
+\Hypertarget{class_a_i_script_af93a9f192f1b56e43627fa8f39185064}\label{class_a_i_script_af93a9f192f1b56e43627fa8f39185064} 
+\index{AIScript@{AIScript}!GenerateScript@{GenerateScript}}
+\index{GenerateScript@{GenerateScript}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{GenerateScript()}{GenerateScript()}}
+{\footnotesize\ttfamily async void AIScript.\+Generate\+Script (\begin{DoxyParamCaption}\item[{string}]{input\+Prompt,  }\item[{bool}]{is\+Update }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Processes the input prompt and creates a new script or updates an existing one./. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Script} & The input script that is used to generate the Script \\
+\hline
+{\em is\+Update} & Whether a script should be used to update an existing script or not. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_i_script_a6202d679f97cc3e224c5d5b64c74e711}\label{class_a_i_script_a6202d679f97cc3e224c5d5b64c74e711} 
+\index{AIScript@{AIScript}!IsInputScriptSelected@{IsInputScriptSelected}}
+\index{IsInputScriptSelected@{IsInputScriptSelected}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{IsInputScriptSelected()}{IsInputScriptSelected()}}
+{\footnotesize\ttfamily bool AIScript.\+Is\+Input\+Script\+Selected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Checks if an input script is selected. 
+
+\begin{DoxyReturn}{Returns}
+Returns true if an input script is selected. 
+\end{DoxyReturn}
+\Hypertarget{class_a_i_script_ab5e0226f9988469abd6f32c1aca01104}\label{class_a_i_script_ab5e0226f9988469abd6f32c1aca01104} 
+\index{AIScript@{AIScript}!LoadEditorPrefs@{LoadEditorPrefs}}
+\index{LoadEditorPrefs@{LoadEditorPrefs}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{LoadEditorPrefs()}{LoadEditorPrefs()}}
+{\footnotesize\ttfamily void AIScript.\+Load\+Editor\+Prefs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Loads the editor prefs. 
+
+\Hypertarget{class_a_i_script_a2820e71108cad8dfefca31842d0ed588}\label{class_a_i_script_a2820e71108cad8dfefca31842d0ed588} 
+\index{AIScript@{AIScript}!OnGUI@{OnGUI}}
+\index{OnGUI@{OnGUI}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{OnGUI()}{OnGUI()}}
+{\footnotesize\ttfamily override void AIScript.\+On\+GUI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+GUI callback for rendering the AI Script extension. 
+
+\Hypertarget{class_a_i_script_a8fa012b3c5da0832770f7aa9fbe87518}\label{class_a_i_script_a8fa012b3c5da0832770f7aa9fbe87518} 
+\index{AIScript@{AIScript}!ReloadPromptList@{ReloadPromptList}}
+\index{ReloadPromptList@{ReloadPromptList}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{ReloadPromptList()}{ReloadPromptList()}}
+{\footnotesize\ttfamily static void AIScript.\+Reload\+Prompt\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Reloads the prompt list from the JSON file. 
+
+\Hypertarget{class_a_i_script_a385495cc9c14a94c8c8ed75a628e8f83}\label{class_a_i_script_a385495cc9c14a94c8c8ed75a628e8f83} 
+\index{AIScript@{AIScript}!RenderInputField@{RenderInputField}}
+\index{RenderInputField@{RenderInputField}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{RenderInputField()}{RenderInputField()}}
+{\footnotesize\ttfamily void AIScript.\+Render\+Input\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the input field for the prompt. 
+
+\Hypertarget{class_a_i_script_aca0d3edc89d88804bc5a0c46f5e7e48c}\label{class_a_i_script_aca0d3edc89d88804bc5a0c46f5e7e48c} 
+\index{AIScript@{AIScript}!RenderInputScript@{RenderInputScript}}
+\index{RenderInputScript@{RenderInputScript}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{RenderInputScript()}{RenderInputScript()}}
+{\footnotesize\ttfamily void AIScript.\+Render\+Input\+Script (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the input script field. 
+
+\Hypertarget{class_a_i_script_a689e840c008b1dbb53e5ebc1efaa73ba}\label{class_a_i_script_a689e840c008b1dbb53e5ebc1efaa73ba} 
+\index{AIScript@{AIScript}!RenderNewScriptContent@{RenderNewScriptContent}}
+\index{RenderNewScriptContent@{RenderNewScriptContent}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{RenderNewScriptContent()}{RenderNewScriptContent()}}
+{\footnotesize\ttfamily void AIScript.\+Render\+New\+Script\+Content (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the new script content (if there is any). 
+
+\Hypertarget{class_a_i_script_a6b2b136678417aa972c9c63a477e1be4}\label{class_a_i_script_a6b2b136678417aa972c9c63a477e1be4} 
+\index{AIScript@{AIScript}!RenderPopupField@{RenderPopupField}}
+\index{RenderPopupField@{RenderPopupField}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{RenderPopupField()}{RenderPopupField()}}
+{\footnotesize\ttfamily void AIScript.\+Render\+Popup\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the popup field for the prompt list. 
+
+Process\+Input\+Prompt(selected\+Prompt\+Content);\Hypertarget{class_a_i_script_adf9efecaf2157cf7768e5773c0d1cfbb}\label{class_a_i_script_adf9efecaf2157cf7768e5773c0d1cfbb} 
+\index{AIScript@{AIScript}!SaveScriptIntoFile@{SaveScriptIntoFile}}
+\index{SaveScriptIntoFile@{SaveScriptIntoFile}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{SaveScriptIntoFile()}{SaveScriptIntoFile()}}
+{\footnotesize\ttfamily void AIScript.\+Save\+Script\+Into\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Saves the generated script into a file inside the Generate\+Folder. 
+
+\Hypertarget{class_a_i_script_ab3bd93fc94b805a67f7f7630a4e06556}\label{class_a_i_script_ab3bd93fc94b805a67f7f7630a4e06556} 
+\index{AIScript@{AIScript}!SetEditorPrefs@{SetEditorPrefs}}
+\index{SetEditorPrefs@{SetEditorPrefs}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{SetEditorPrefs()}{SetEditorPrefs()}}
+{\footnotesize\ttfamily void AIScript.\+Set\+Editor\+Prefs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sets the editor prefs. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_a_i_script_afab1886b88d885fe39a54b0d454439bf}\label{class_a_i_script_afab1886b88d885fe39a54b0d454439bf} 
+\index{AIScript@{AIScript}!editorPrefKeys@{editorPrefKeys}}
+\index{editorPrefKeys@{editorPrefKeys}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{editorPrefKeys}{editorPrefKeys}}
+{\footnotesize\ttfamily readonly Dictionary$<$\mbox{\hyperlink{class_a_i_script_ae1ed3114e9035eb84646334831049c68}{Editor\+Pref\+Key}}, string$>$ AIScript.\+editor\+Pref\+Keys\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{new}()}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_a_i_script_ae1ed3114e9035eb84646334831049c68}{EditorPrefKey}}.InputScriptGUID,\ \textcolor{stringliteral}{"{}InputScriptGUIDKey"{}}\ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_a_i_script_ae1ed3114e9035eb84646334831049c68}{EditorPrefKey}}.InputScriptText,\ \textcolor{stringliteral}{"{}InputScriptTextKey"{}}\ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_a_i_script_ae1ed3114e9035eb84646334831049c68}{EditorPrefKey}}.NewScriptContent,\ \textcolor{stringliteral}{"{}NewScriptContentKey"{}}\ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_a_i_script_ae1ed3114e9035eb84646334831049c68}{EditorPrefKey}}.SelectedPrompt,\ \textcolor{stringliteral}{"{}SelectedPromptKey"{}}\ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The list of keys for the editor prefs. 
+
+\Hypertarget{class_a_i_script_a067997c3e93e32dccb8184eaa0384288}\label{class_a_i_script_a067997c3e93e32dccb8184eaa0384288} 
+\index{AIScript@{AIScript}!inputScript@{inputScript}}
+\index{inputScript@{inputScript}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{inputScript}{inputScript}}
+{\footnotesize\ttfamily Mono\+Script AIScript.\+input\+Script\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The input script that is used to update an existing script. 
+
+\Hypertarget{class_a_i_script_a2efe5564a8c41304ef3bd852b7dc051a}\label{class_a_i_script_a2efe5564a8c41304ef3bd852b7dc051a} 
+\index{AIScript@{AIScript}!inputScrollPosition@{inputScrollPosition}}
+\index{inputScrollPosition@{inputScrollPosition}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{inputScrollPosition}{inputScrollPosition}}
+{\footnotesize\ttfamily Vector2 AIScript.\+input\+Scroll\+Position\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The scroll position of the input field. 
+
+\Hypertarget{class_a_i_script_a8f0676d33bf4ba752d4764793ca5c1ff}\label{class_a_i_script_a8f0676d33bf4ba752d4764793ca5c1ff} 
+\index{AIScript@{AIScript}!inputText@{inputText}}
+\index{inputText@{inputText}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{inputText}{inputText}}
+{\footnotesize\ttfamily string AIScript.\+input\+Text = "{}"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The input text that is used to create a new script. 
+
+\Hypertarget{class_a_i_script_a23abce900bb3870c66e4e664f2a456d4}\label{class_a_i_script_a23abce900bb3870c66e4e664f2a456d4} 
+\index{AIScript@{AIScript}!loadedPromptList@{loadedPromptList}}
+\index{loadedPromptList@{loadedPromptList}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{loadedPromptList}{loadedPromptList}}
+{\footnotesize\ttfamily List$<$(string Title, string Content)$>$ AIScript.\+loaded\+Prompt\+List = new()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The list of prompts that are loaded from the JSON file. 
+
+\Hypertarget{class_a_i_script_ac97dbf7a7ee77eac2b8932f443425b0f}\label{class_a_i_script_ac97dbf7a7ee77eac2b8932f443425b0f} 
+\index{AIScript@{AIScript}!newScriptContent@{newScriptContent}}
+\index{newScriptContent@{newScriptContent}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{newScriptContent}{newScriptContent}}
+{\footnotesize\ttfamily string AIScript.\+new\+Script\+Content\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The content of the new script that is generated. 
+
+\Hypertarget{class_a_i_script_aa430942f85dc8d9d62094cf687c64fe8}\label{class_a_i_script_aa430942f85dc8d9d62094cf687c64fe8} 
+\index{AIScript@{AIScript}!selectedPromptKey@{selectedPromptKey}}
+\index{selectedPromptKey@{selectedPromptKey}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{selectedPromptKey}{selectedPromptKey}}
+{\footnotesize\ttfamily int AIScript.\+selected\+Prompt\+Key = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_a_i_script_a389932b06748af51e5d0b0ec23fea906}\label{class_a_i_script_a389932b06748af51e5d0b0ec23fea906} 
+\index{AIScript@{AIScript}!DisplayName@{DisplayName}}
+\index{DisplayName@{DisplayName}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{DisplayName}{DisplayName}}
+{\footnotesize\ttfamily override string AIScript.\+Display\+Name\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+The display name of the application. 
+
+\Hypertarget{class_a_i_script_a0ad22ca0246c670875f87556028055a5}\label{class_a_i_script_a0ad22ca0246c670875f87556028055a5} 
+\index{AIScript@{AIScript}!HasInit@{HasInit}}
+\index{HasInit@{HasInit}!AIScript@{AIScript}}
+\doxysubsubsection{\texorpdfstring{HasInit}{HasInit}}
+{\footnotesize\ttfamily bool AIScript.\+Has\+Init = false\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [private]}}
+
+
+
+Whether the application has been initialized. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_a_i_script_8cs}{AIScript.\+cs}}\end{DoxyCompactItemize}

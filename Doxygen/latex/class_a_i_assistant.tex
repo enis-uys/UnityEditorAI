@@ -1,0 +1,398 @@
+\doxysection{AIAssistant Class Reference}
+\hypertarget{class_a_i_assistant}{}\label{class_a_i_assistant}\index{AIAssistant@{AIAssistant}}
+
+
+Single application for the AI extension. It is used to chat with the AI model.  
+
+
+
+
+Inheritance diagram for AIAssistant\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_a_i_assistant__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for AIAssistant\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_a_i_assistant__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bf}{Editor\+Pref\+Key}} \{ \mbox{\hyperlink{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bfa00a4e38dc612f355302803836c12f9a2}{Input\+Text}}
+, \mbox{\hyperlink{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bfa7a51acbb46c9af580c961d6b7f31b84c}{Message\+History\+List\+Json}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override void \mbox{\hyperlink{class_a_i_assistant_a65f283a8890f7d69a7214091b65b7017}{On\+GUI}} ()
+\begin{DoxyCompactList}\small\item\em GUI callback for rendering the AI Assistant extension. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_single_extension_application_ad4c53dc687f77685921ecbc18952eed8}{Initialize}} (Editor\+Window \mbox{\hyperlink{class_single_extension_application_aed64f61e6f6d5d8ba0ccaabd9fc3b7fe}{window}})
+\begin{DoxyCompactList}\small\item\em Initializes the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_aa51a43317f0bbf7265cf8cc1113f6150}{On\+GUI}} ()
+\begin{DoxyCompactList}\small\item\em Abstract method that renders the GUI of the application. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_single_extension_application_a6a4b4a85bfcd37cc26515d9bf290717f}{On\+Enable}} ()
+\begin{DoxyCompactList}\small\item\em Abstract method that is called when the application is enabled. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_aa1cd2c244df403bc0cd4ed3130ff60b7}{Repaint}} ()
+\begin{DoxyCompactList}\small\item\em Method that repaints the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ac790580eb6b04325403418919ae004a2}{Focus}} ()
+\begin{DoxyCompactList}\small\item\em Method that focuses the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_af7566e21f700c97714206139bc8b3fa8}{Show}} ()
+\begin{DoxyCompactList}\small\item\em Method that shows the window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_single_extension_application_a70cd16b4dcbc26cf2b270333c3d5a3ba}{Get\+Help\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a1891a14e184b830a220f00f730facf30}{Close}} ()
+\begin{DoxyCompactList}\small\item\em Method that closes the window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+override string \mbox{\hyperlink{class_a_i_assistant_a4064224002b741ff77bae111f7d1da6f}{Display\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The display name of the AI Assistant extension. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_a_i_assistant_aaa4aad01a4cb7b4bbd58c3e95594d130}{Has\+Init}} = false\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The help box for displaying messages to the user. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_single_extension_application_ae12cba99589c5a8b18cd4fa02033ef3b}{Display\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The display name of a single application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_a_i_assistant_acf46b850bf73c4661f6afda0b8ef887f}{Render\+Input\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Renders the input field for user input. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_assistant_a9cd9c9b1dcba7357f049b473d7248710}{Render\+Conversation\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Renders the output field for displaying the chat history. \end{DoxyCompactList}\item 
+async void \mbox{\hyperlink{class_a_i_assistant_a05aa3b621467770b37e0141871ad7287}{Read\+Input\+And\+Send\+To\+GPT}} (string input)
+\begin{DoxyCompactList}\small\item\em Sends the user input to the AI model for processing. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_a_i_assistant_a709a1448de304f20fa94a5f6f06ea8cb}{Message\+History\+List\+To\+Formated\+String}} (\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} message\+List\+Builder)
+\begin{DoxyCompactList}\small\item\em Creates a readable string from the message history list that is formatted for the output field. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_assistant_a97976564725a41a922fd9821226938b5}{Load\+Message\+History\+From\+File}} ()
+\begin{DoxyCompactList}\small\item\em Loads the message history from the file panel and adds it to the message history list. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_assistant_a6de9a93c6a845b24386ec3a498f2f77a}{Save\+Message\+History\+To\+File}} ()
+\begin{DoxyCompactList}\small\item\em Saves the message history to a file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_assistant_a32601e2968805f73328f2f00a3f2740e}{Clear\+Message\+History}} ()
+\begin{DoxyCompactList}\small\item\em Clears the message history. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_assistant_a3ee4961fb3a1ed36400901eee7ff2100}{Set\+Editor\+Prefs}} ()
+\begin{DoxyCompactList}\small\item\em Sets the Editor\+Prefs. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_assistant_abda3c4ac921c7cf7779edcf8344a03f9}{Load\+Editor\+Prefs}} ()
+\begin{DoxyCompactList}\small\item\em Loads the Editor\+Prefs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_a_i_assistant_aa2b81c77f71ea24b5b2803308e12f5c0}{input\+Text}} = "{}"{}
+\begin{DoxyCompactList}\small\item\em The input text of the user. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_a_i_assistant_a666f14d80578dd69b238a41839384ac9}{rich\+Text\+Style}}
+\item 
+string \mbox{\hyperlink{class_a_i_assistant_abf1dccc68e81f600119fbebe9be5f4a5}{message\+History\+Output\+Field}} = "{}"{}
+\begin{DoxyCompactList}\small\item\em The output field for displaying the chat history. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{class_a_i_assistant_a9c226a82081ae66aae3a2d7592c3cb47}{input\+Scroll\+Position}}
+\begin{DoxyCompactList}\small\item\em The scroll position of the input field. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{class_a_i_assistant_ad2b1bb938cf8c5a47006c1a094def666}{output\+Scroll\+Position}}
+\begin{DoxyCompactList}\small\item\em The scroll position of the output field. \end{DoxyCompactList}\item 
+readonly \mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} \mbox{\hyperlink{class_a_i_assistant_a5c24ab6ad0a203874b5d88b8f7542dd1}{message\+History\+List\+Builder}} = new()
+\begin{DoxyCompactList}\small\item\em The list of messages in the conversation. \end{DoxyCompactList}\item 
+readonly Dictionary$<$ \mbox{\hyperlink{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bf}{Editor\+Pref\+Key}}, string $>$ \mbox{\hyperlink{class_a_i_assistant_a39307c8911b947f1fc07cdb78264ea8e}{editor\+Pref\+Keys}}
+\begin{DoxyCompactList}\small\item\em The keys for the Editor\+Prefs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const string \mbox{\hyperlink{class_a_i_assistant_a654101c967e878782dcc7ad390f7c29b}{message\+History\+File\+Name}} = "{}message\+History.\+json"{}
+\begin{DoxyCompactList}\small\item\em The name of the file to save the message history to. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_a5c8eb26811e8e8be2adef8de8ce9e9cc}{Create\+Rich\+Text\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a rich text style for colored text. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_aaf0f5f643db07bf144406930febd6825}{Create\+Code\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a code style for displaying code. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_a10fbb10372723562264b8450fb97d8bd}{Create\+Highlight\+Button\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ae44d34c95f1d6d1b639397672061d642}{Render\+Help\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Method that renders the help box of the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ac7196ccc94638a9c937835e929ba8149}{Show\+Progress\+Bar}} (float progress)
+\begin{DoxyCompactList}\small\item\em Method that renders the help box of the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_af44fba8eb1f4e67690bb9125ef8c695c}{Finish\+Progress\+Bar\+With\+Delay}} (int milli\+Seconds=700)
+\begin{DoxyCompactList}\small\item\em Method that finishes the progress bar of the help box and closes it after a delay. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a227b21fbcd7615885b5942123a496d09}{Add\+Default\+Space}} ()
+\begin{DoxyCompactList}\small\item\em Method to add a default space between GUI elements. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a00d19da43cb9c34bb4fb9256c0fba86a}{Reset\+Keyboard\+Control}} ()
+\begin{DoxyCompactList}\small\item\em Method to Reset the keyboard control. It is used, if a user should focus out of a textfield. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_single_extension_application_a542a28ee031c28c77091b8684ed972e4}{default\+Space}} = 10
+\begin{DoxyCompactList}\small\item\em The default space between GUI elements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_single_extension_application_abd98e67099069da3b0fccbd439d8edf2}{help\+Box}} = \mbox{\hyperlink{class_help_box_a37157adbf2d543c032e06cf87be2c63f}{Help\+Box.\+Get\+Instance}}()
+\begin{DoxyCompactList}\small\item\em The help box of a single application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Single application for the AI extension. It is used to chat with the AI model. 
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bf}\label{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bf} 
+\index{AIAssistant@{AIAssistant}!EditorPrefKey@{EditorPrefKey}}
+\index{EditorPrefKey@{EditorPrefKey}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{EditorPrefKey}{EditorPrefKey}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bf}{AIAssistant.\+Editor\+Pref\+Key}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{InputText@{InputText}!AIAssistant@{AIAssistant}}\index{AIAssistant@{AIAssistant}!InputText@{InputText}}}\Hypertarget{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bfa00a4e38dc612f355302803836c12f9a2}\label{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bfa00a4e38dc612f355302803836c12f9a2} 
+Input\+Text&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MessageHistoryListJson@{MessageHistoryListJson}!AIAssistant@{AIAssistant}}\index{AIAssistant@{AIAssistant}!MessageHistoryListJson@{MessageHistoryListJson}}}\Hypertarget{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bfa7a51acbb46c9af580c961d6b7f31b84c}\label{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bfa7a51acbb46c9af580c961d6b7f31b84c} 
+Message\+History\+List\+Json&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_i_assistant_a32601e2968805f73328f2f00a3f2740e}\label{class_a_i_assistant_a32601e2968805f73328f2f00a3f2740e} 
+\index{AIAssistant@{AIAssistant}!ClearMessageHistory@{ClearMessageHistory}}
+\index{ClearMessageHistory@{ClearMessageHistory}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{ClearMessageHistory()}{ClearMessageHistory()}}
+{\footnotesize\ttfamily void AIAssistant.\+Clear\+Message\+History (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Clears the message history. 
+
+\Hypertarget{class_a_i_assistant_abda3c4ac921c7cf7779edcf8344a03f9}\label{class_a_i_assistant_abda3c4ac921c7cf7779edcf8344a03f9} 
+\index{AIAssistant@{AIAssistant}!LoadEditorPrefs@{LoadEditorPrefs}}
+\index{LoadEditorPrefs@{LoadEditorPrefs}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{LoadEditorPrefs()}{LoadEditorPrefs()}}
+{\footnotesize\ttfamily void AIAssistant.\+Load\+Editor\+Prefs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Loads the Editor\+Prefs. 
+
+\Hypertarget{class_a_i_assistant_a97976564725a41a922fd9821226938b5}\label{class_a_i_assistant_a97976564725a41a922fd9821226938b5} 
+\index{AIAssistant@{AIAssistant}!LoadMessageHistoryFromFile@{LoadMessageHistoryFromFile}}
+\index{LoadMessageHistoryFromFile@{LoadMessageHistoryFromFile}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{LoadMessageHistoryFromFile()}{LoadMessageHistoryFromFile()}}
+{\footnotesize\ttfamily void AIAssistant.\+Load\+Message\+History\+From\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Loads the message history from the file panel and adds it to the message history list. 
+
+\Hypertarget{class_a_i_assistant_a709a1448de304f20fa94a5f6f06ea8cb}\label{class_a_i_assistant_a709a1448de304f20fa94a5f6f06ea8cb} 
+\index{AIAssistant@{AIAssistant}!MessageHistoryListToFormatedString@{MessageHistoryListToFormatedString}}
+\index{MessageHistoryListToFormatedString@{MessageHistoryListToFormatedString}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{MessageHistoryListToFormatedString()}{MessageHistoryListToFormatedString()}}
+{\footnotesize\ttfamily string AIAssistant.\+Message\+History\+List\+To\+Formated\+String (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}}}]{message\+List\+Builder }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Creates a readable string from the message history list that is formatted for the output field. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message\+List\+Builder} & Contains the messages to display in the conversation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The formatted message list as a string. 
+\end{DoxyReturn}
+\Hypertarget{class_a_i_assistant_a65f283a8890f7d69a7214091b65b7017}\label{class_a_i_assistant_a65f283a8890f7d69a7214091b65b7017} 
+\index{AIAssistant@{AIAssistant}!OnGUI@{OnGUI}}
+\index{OnGUI@{OnGUI}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{OnGUI()}{OnGUI()}}
+{\footnotesize\ttfamily override void AIAssistant.\+On\+GUI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+GUI callback for rendering the AI Assistant extension. 
+
+\Hypertarget{class_a_i_assistant_a05aa3b621467770b37e0141871ad7287}\label{class_a_i_assistant_a05aa3b621467770b37e0141871ad7287} 
+\index{AIAssistant@{AIAssistant}!ReadInputAndSendToGPT@{ReadInputAndSendToGPT}}
+\index{ReadInputAndSendToGPT@{ReadInputAndSendToGPT}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{ReadInputAndSendToGPT()}{ReadInputAndSendToGPT()}}
+{\footnotesize\ttfamily async void AIAssistant.\+Read\+Input\+And\+Send\+To\+GPT (\begin{DoxyParamCaption}\item[{string}]{input }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sends the user input to the AI model for processing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & The user input message.\\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_i_assistant_a9cd9c9b1dcba7357f049b473d7248710}\label{class_a_i_assistant_a9cd9c9b1dcba7357f049b473d7248710} 
+\index{AIAssistant@{AIAssistant}!RenderConversationField@{RenderConversationField}}
+\index{RenderConversationField@{RenderConversationField}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{RenderConversationField()}{RenderConversationField()}}
+{\footnotesize\ttfamily void AIAssistant.\+Render\+Conversation\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the output field for displaying the chat history. 
+
+\Hypertarget{class_a_i_assistant_acf46b850bf73c4661f6afda0b8ef887f}\label{class_a_i_assistant_acf46b850bf73c4661f6afda0b8ef887f} 
+\index{AIAssistant@{AIAssistant}!RenderInputField@{RenderInputField}}
+\index{RenderInputField@{RenderInputField}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{RenderInputField()}{RenderInputField()}}
+{\footnotesize\ttfamily void AIAssistant.\+Render\+Input\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the input field for user input. 
+
+\Hypertarget{class_a_i_assistant_a6de9a93c6a845b24386ec3a498f2f77a}\label{class_a_i_assistant_a6de9a93c6a845b24386ec3a498f2f77a} 
+\index{AIAssistant@{AIAssistant}!SaveMessageHistoryToFile@{SaveMessageHistoryToFile}}
+\index{SaveMessageHistoryToFile@{SaveMessageHistoryToFile}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{SaveMessageHistoryToFile()}{SaveMessageHistoryToFile()}}
+{\footnotesize\ttfamily void AIAssistant.\+Save\+Message\+History\+To\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Saves the message history to a file. 
+
+\Hypertarget{class_a_i_assistant_a3ee4961fb3a1ed36400901eee7ff2100}\label{class_a_i_assistant_a3ee4961fb3a1ed36400901eee7ff2100} 
+\index{AIAssistant@{AIAssistant}!SetEditorPrefs@{SetEditorPrefs}}
+\index{SetEditorPrefs@{SetEditorPrefs}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{SetEditorPrefs()}{SetEditorPrefs()}}
+{\footnotesize\ttfamily void AIAssistant.\+Set\+Editor\+Prefs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sets the Editor\+Prefs. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_a_i_assistant_a39307c8911b947f1fc07cdb78264ea8e}\label{class_a_i_assistant_a39307c8911b947f1fc07cdb78264ea8e} 
+\index{AIAssistant@{AIAssistant}!editorPrefKeys@{editorPrefKeys}}
+\index{editorPrefKeys@{editorPrefKeys}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{editorPrefKeys}{editorPrefKeys}}
+{\footnotesize\ttfamily readonly Dictionary$<$\mbox{\hyperlink{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bf}{Editor\+Pref\+Key}}, string$>$ AIAssistant.\+editor\+Pref\+Keys\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{new}()}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bf}{EditorPrefKey}}.InputText,\ \textcolor{stringliteral}{"{}InputTextKey"{}}\ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_a_i_assistant_a61cc3a1997f8037056b752bfd56986bf}{EditorPrefKey}}.MessageHistoryListJson,\ \textcolor{stringliteral}{"{}MessageHistoryListJsonKey"{}}\ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The keys for the Editor\+Prefs. 
+
+\Hypertarget{class_a_i_assistant_a9c226a82081ae66aae3a2d7592c3cb47}\label{class_a_i_assistant_a9c226a82081ae66aae3a2d7592c3cb47} 
+\index{AIAssistant@{AIAssistant}!inputScrollPosition@{inputScrollPosition}}
+\index{inputScrollPosition@{inputScrollPosition}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{inputScrollPosition}{inputScrollPosition}}
+{\footnotesize\ttfamily Vector2 AIAssistant.\+input\+Scroll\+Position\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The scroll position of the input field. 
+
+\Hypertarget{class_a_i_assistant_aa2b81c77f71ea24b5b2803308e12f5c0}\label{class_a_i_assistant_aa2b81c77f71ea24b5b2803308e12f5c0} 
+\index{AIAssistant@{AIAssistant}!inputText@{inputText}}
+\index{inputText@{inputText}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{inputText}{inputText}}
+{\footnotesize\ttfamily string AIAssistant.\+input\+Text = "{}"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The input text of the user. 
+
+\Hypertarget{class_a_i_assistant_a654101c967e878782dcc7ad390f7c29b}\label{class_a_i_assistant_a654101c967e878782dcc7ad390f7c29b} 
+\index{AIAssistant@{AIAssistant}!messageHistoryFileName@{messageHistoryFileName}}
+\index{messageHistoryFileName@{messageHistoryFileName}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{messageHistoryFileName}{messageHistoryFileName}}
+{\footnotesize\ttfamily const string AIAssistant.\+message\+History\+File\+Name = "{}message\+History.\+json"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The name of the file to save the message history to. 
+
+\Hypertarget{class_a_i_assistant_a5c24ab6ad0a203874b5d88b8f7542dd1}\label{class_a_i_assistant_a5c24ab6ad0a203874b5d88b8f7542dd1} 
+\index{AIAssistant@{AIAssistant}!messageHistoryListBuilder@{messageHistoryListBuilder}}
+\index{messageHistoryListBuilder@{messageHistoryListBuilder}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{messageHistoryListBuilder}{messageHistoryListBuilder}}
+{\footnotesize\ttfamily readonly \mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} AIAssistant.\+message\+History\+List\+Builder = new()\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The list of messages in the conversation. 
+
+\Hypertarget{class_a_i_assistant_abf1dccc68e81f600119fbebe9be5f4a5}\label{class_a_i_assistant_abf1dccc68e81f600119fbebe9be5f4a5} 
+\index{AIAssistant@{AIAssistant}!messageHistoryOutputField@{messageHistoryOutputField}}
+\index{messageHistoryOutputField@{messageHistoryOutputField}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{messageHistoryOutputField}{messageHistoryOutputField}}
+{\footnotesize\ttfamily string AIAssistant.\+message\+History\+Output\+Field = "{}"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The output field for displaying the chat history. 
+
+\Hypertarget{class_a_i_assistant_ad2b1bb938cf8c5a47006c1a094def666}\label{class_a_i_assistant_ad2b1bb938cf8c5a47006c1a094def666} 
+\index{AIAssistant@{AIAssistant}!outputScrollPosition@{outputScrollPosition}}
+\index{outputScrollPosition@{outputScrollPosition}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{outputScrollPosition}{outputScrollPosition}}
+{\footnotesize\ttfamily Vector2 AIAssistant.\+output\+Scroll\+Position\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The scroll position of the output field. 
+
+\Hypertarget{class_a_i_assistant_a666f14d80578dd69b238a41839384ac9}\label{class_a_i_assistant_a666f14d80578dd69b238a41839384ac9} 
+\index{AIAssistant@{AIAssistant}!richTextStyle@{richTextStyle}}
+\index{richTextStyle@{richTextStyle}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{richTextStyle}{richTextStyle}}
+{\footnotesize\ttfamily GUIStyle AIAssistant.\+rich\+Text\+Style\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_a_i_assistant_a4064224002b741ff77bae111f7d1da6f}\label{class_a_i_assistant_a4064224002b741ff77bae111f7d1da6f} 
+\index{AIAssistant@{AIAssistant}!DisplayName@{DisplayName}}
+\index{DisplayName@{DisplayName}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{DisplayName}{DisplayName}}
+{\footnotesize\ttfamily override string AIAssistant.\+Display\+Name\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+The display name of the AI Assistant extension. 
+
+\Hypertarget{class_a_i_assistant_aaa4aad01a4cb7b4bbd58c3e95594d130}\label{class_a_i_assistant_aaa4aad01a4cb7b4bbd58c3e95594d130} 
+\index{AIAssistant@{AIAssistant}!HasInit@{HasInit}}
+\index{HasInit@{HasInit}!AIAssistant@{AIAssistant}}
+\doxysubsubsection{\texorpdfstring{HasInit}{HasInit}}
+{\footnotesize\ttfamily bool AIAssistant.\+Has\+Init = false\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The help box for displaying messages to the user. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_a_i_assistant_8cs}{AIAssistant.\+cs}}\end{DoxyCompactItemize}

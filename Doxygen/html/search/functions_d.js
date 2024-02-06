@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['savecolorarrayobjecttofile_0',['SaveColorArrayObjectToFile',['../class_color_extruder.html#a8d5a56e741eb2d7a5e9b6da340f9f969',1,'ColorExtruder']]],
+  ['savejsonfiletodefaultpath_1',['SaveJsonFileToDefaultPath',['../class_file_manager.html#a360dfa6ef7897294bc595ae077ce82a1',1,'FileManager']]],
+  ['savemessagehistorytofile_2',['SaveMessageHistoryToFile',['../class_a_i_assistant.html#a6de9a93c6a845b24386ec3a498f2f77a',1,'AIAssistant']]],
+  ['savepromptlistinjson_3',['SavePromptListInJson',['../class_prompt_manager.html#a2ca98575db713d066e7cc35457f71d78',1,'PromptManager']]],
+  ['savescriptintofile_4',['SaveScriptIntoFile',['../class_a_i_script.html#adf9efecaf2157cf7768e5773c0d1cfbb',1,'AIScript']]],
+  ['savetojsonfilewithpath_5',['SaveToJsonFileWithPath',['../class_file_manager.html#adfa6bafed45b40ce691595575ad54bc7',1,'FileManager']]],
+  ['selectedgptmodelint_6',['SelectedGptModelInt',['../class_a_i_settings_file_manager.html#aa9d5933356d3200fcc814f8ba1c1ce26',1,'AISettingsFileManager']]],
+  ['sendaicolorarrayprompt_7',['SendAIColorArrayPrompt',['../class_color_extruder.html#a76326dc709be9c57abd15efb780b6627',1,'ColorExtruder']]],
+  ['sendgptapirequestasync_8',['SendGptApiRequestAsync',['../class_open_ai_api_manager.html#a213b4975a68d1e4b652dfc1d1ad4d4bd',1,'OpenAiApiManager']]],
+  ['sendmessagestogpt_9',['SendMessagesToGpt',['../class_open_ai_api_manager.html#aa641c8d73182be5a200ecf3747f18d42',1,'OpenAiApiManager']]],
+  ['serializedatatojson_10',['SerializeDataToJson',['../class_file_manager.html#a23ca47bae2b6b96b42c3fd173fb10467',1,'FileManager']]],
+  ['seteditorprefs_11',['seteditorprefs',['../class_a_i_assistant.html#a3ee4961fb3a1ed36400901eee7ff2100',1,'AIAssistant.SetEditorPrefs()'],['../class_a_i_object_generator.html#ac693360c8d007a06202ff274f8f994d8',1,'AIObjectGenerator.SetEditorPrefs()'],['../class_a_i_script.html#ab3bd93fc94b805a67f7f7630a4e06556',1,'AIScript.SetEditorPrefs()'],['../class_a_i_settings.html#aa225dc37d9c832ee4bceacd886809562',1,'AISettings.SetEditorPrefs()'],['../class_color_extruder.html#a8575692896973d5806206f93fb156c66',1,'ColorExtruder.SetEditorPrefs()']]],
+  ['setprogressbaractive_12',['SetProgressBarActive',['../class_help_box.html#afa1e1a6a3afa7bd648857d64490e83f6',1,'HelpBox']]],
+  ['setprogressbarprogress_13',['SetProgressBarProgress',['../class_help_box.html#ae6efdace28d85a9f66d823649746ea1d',1,'HelpBox']]],
+  ['setsettingsfromserializable_14',['SetSettingsFromSerializable',['../class_a_i_settings_file_manager.html#aab8b0916690c01df785cb277fec4cf5e',1,'AISettingsFileManager']]],
+  ['settingsfilefrompath_15',['SettingsFileFromPath',['../class_a_i_settings_file_manager.html#abba90fab264c4a5726a0ea1050937b91',1,'AISettingsFileManager']]],
+  ['show_16',['Show',['../class_single_extension_application.html#af7566e21f700c97714206139bc8b3fa8',1,'SingleExtensionApplication']]],
+  ['showprogressbar_17',['ShowProgressBar',['../class_single_extension_application.html#ac7196ccc94638a9c937835e929ba8149',1,'SingleExtensionApplication']]],
+  ['showwindow_18',['ShowWindow',['../class_extension_tabs.html#afed4ef09ae18ad63407e81edaa63bbaa',1,'ExtensionTabs']]],
+  ['start_19',['Start',['../class_test_script.html#a076dff449812dfec509adbe377393b0d',1,'TestScript']]]
+];

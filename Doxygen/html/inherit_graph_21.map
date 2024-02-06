@@ -1,0 +1,17 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,132,123,159"/>
+<area shape="rect" id="Node000001" href="$class_single_extension_application.html" title="The abstract class for a single application in the extension." alt="" coords="171,132,350,159"/>
+<area shape="poly" id="edge4_Node000000_Node000001" title=" " alt="" coords="138,143,170,143,170,148,138,148"/>
+<area shape="rect" id="Node000002" href="$class_a_i_assistant.html" title="Single application for the AI extension. It is used to chat with the AI model." alt="" coords="418,5,506,32"/>
+<area shape="poly" id="edge5_Node000001_Node000002" title=" " alt="" coords="287,120,337,81,397,42,421,30,423,35,399,46,340,85,291,124"/>
+<area shape="rect" id="Node000003" href="$class_a_i_object_generator.html" title="Single application for the AI extension. It is used to generate new GameObjects inside a Unity Scene." alt="" coords="398,56,526,83"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="311,123,423,81,425,86,313,128"/>
+<area shape="rect" id="Node000004" href="$class_a_i_script.html" title="Single application for the AI extension. It is used to create new scripts or update existing ones." alt="" coords="429,107,496,133"/>
+<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="365,130,428,122,428,127,365,135"/>
+<area shape="rect" id="Node000005" href="$class_a_i_settings.html" title="The AI Settings application." alt="" coords="422,157,503,184"/>
+<area shape="poly" id="edge8_Node000001_Node000005" title=" " alt="" coords="366,156,421,163,421,168,365,161"/>
+<area shape="rect" id="Node000006" href="$class_color_extruder.html" title="The color extruder, that extracts the colors of an image and saves them as a color array object." alt="" coords="412,208,512,235"/>
+<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="313,162,425,205,423,210,311,167"/>
+<area shape="rect" id="Node000007" href="$class_prompt_manager.html" title="The prompt manager is used to manage custom prompts and display pre&#45;defined prompts." alt="" coords="406,259,519,285"/>
+<area shape="poly" id="edge10_Node000001_Node000007" title=" " alt="" coords="291,167,340,205,399,244,423,256,421,261,397,249,337,210,287,171"/>
+</map>

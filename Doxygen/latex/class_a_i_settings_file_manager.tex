@@ -1,0 +1,456 @@
+\doxysection{AISettings\+File\+Manager Class Reference}
+\hypertarget{class_a_i_settings_file_manager}{}\label{class_a_i_settings_file_manager}\index{AISettingsFileManager@{AISettingsFileManager}}
+
+
+The file manager for the AI settings.  
+
+
+
+
+Collaboration diagram for AISettings\+File\+Manager\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_a_i_settings_file_manager__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_a_i_settings_file_manager_aa9d5933356d3200fcc814f8ba1c1ce26}{Selected\+Gpt\+Model\+Int}} ()
+\begin{DoxyCompactList}\small\item\em The index of the selected ai model. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_settings_file_manager_aa5aa4c32b226a5971f39be2f1c5c8e2e}{Load\+Custom\+Settings}} (string path=null)
+\begin{DoxyCompactList}\small\item\em Loads the settings from a file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_settings_file_manager_aab8b0916690c01df785cb277fec4cf5e}{Set\+Settings\+From\+Serializable}} (\mbox{\hyperlink{class_a_i_settings_serializable}{AISettings\+Serializable}} settings, bool is\+Default=false)
+\begin{DoxyCompactList}\small\item\em Sets the settings from a serializable object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_settings_file_manager_a46ca60e201dc201ec93122d05a9c25b8}{Load\+Settings\+From\+File\+Panel}} ()
+\begin{DoxyCompactList}\small\item\em Saves the settings from file panel. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_a_i_settings_serializable}{AISettings\+Serializable}} \mbox{\hyperlink{class_a_i_settings_file_manager_a084387266455b1bb8798d6ec81552991}{Default\+Settings\+File}} ()
+\begin{DoxyCompactList}\small\item\em Saves the settings to file panel. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_a_i_settings_serializable}{AISettings\+Serializable}} \mbox{\hyperlink{class_a_i_settings_file_manager_abba90fab264c4a5726a0ea1050937b91}{Settings\+File\+From\+Path}} (string settings\+Path=null)
+\begin{DoxyCompactList}\small\item\em Loads the settings from a file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_settings_file_manager_a4d567157ef12a6385a24caf3c5554a1b}{Write\+Settings\+In\+Json}} (string path=null)
+\begin{DoxyCompactList}\small\item\em Writes the settings to a json file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_a_i_settings_file_manager}{AISettings\+File\+Manager}} \mbox{\hyperlink{class_a_i_settings_file_manager_a332ab7f3e4bc0505ae71ecfff98a4cc2}{Get\+Instance}} ()
+\begin{DoxyCompactList}\small\item\em Gets the singleton instance of the file manager. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{class_a_i_settings_file_manager_ab7f42b5f2aab418395bb1b17f7e5fcaa}{gpt\+Models\+Array}} = gpt\+Models.\+To\+Array()
+\begin{DoxyCompactList}\small\item\em The list of ai models available as an array (for the dropdown menu) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static readonly string \mbox{\hyperlink{class_a_i_settings_file_manager_a368483cd05538f236151bb614717dcf8}{Gpt35\+Turbo}} = "{}gpt-\/3.\+5-\/turbo"{}
+\begin{DoxyCompactList}\small\item\em The ai models available. \end{DoxyCompactList}\item 
+static readonly string \mbox{\hyperlink{class_a_i_settings_file_manager_ae210cc111bdb13259e7e91a0ee3b2d67}{Gpt35\+Turbo16k}} = "{}gpt-\/3.\+5-\/turbo-\/16k"{}
+\item 
+static readonly string \mbox{\hyperlink{class_a_i_settings_file_manager_ae5e2912abb6f3e836b01b958e595191f}{Updated\+Gpt35\+Turbo}} = "{}gpt-\/3.\+5-\/turbo-\/1106"{}
+\item 
+static readonly string \mbox{\hyperlink{class_a_i_settings_file_manager_a4dde4f22a3159e0003fdb707114f6153}{Gpt35\+Turbo\+Instruct}} = "{}gpt-\/3.\+5-\/turbo-\/instruct"{}
+\item 
+static readonly string \mbox{\hyperlink{class_a_i_settings_file_manager_af562a342af6f8c713c89f0af3ff20a07}{Gpt4\+Turbo}} = "{}gpt-\/4-\/1106-\/preview"{}
+\item 
+static readonly string \mbox{\hyperlink{class_a_i_settings_file_manager_a37bbeca396974076af60fe5069159c2a}{Gpt4}} = "{}gpt-\/4"{}
+\item 
+static readonly string \mbox{\hyperlink{class_a_i_settings_file_manager_ac4bce3849e53608c77a14556a785f89c}{Gpt\+Default}} = \mbox{\hyperlink{class_a_i_settings_file_manager_a368483cd05538f236151bb614717dcf8}{Gpt35\+Turbo}}
+\item 
+static readonly List$<$ string $>$ \mbox{\hyperlink{class_a_i_settings_file_manager_aff420eac26d41ff13ff451845ed1460a}{gpt\+Models}}
+\begin{DoxyCompactList}\small\item\em The list of ai models available. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_a_i_settings_file_manager_a673f1509d110b1629c373728687520e3}{help\+Box}} = \mbox{\hyperlink{class_help_box_a37157adbf2d543c032e06cf87be2c63f}{Help\+Box.\+Get\+Instance}}()
+\begin{DoxyCompactList}\small\item\em Access to the help box. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_a_i_settings_file_manager_a38709716ba565016659e4cf4e20ca125}{Api\+Key}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The API Key to use for the AI. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_a_i_settings_file_manager_afa5484344d0a467058ea432182a206f9}{User\+Files\+Folder\+Path}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The path to the user files folder. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_a_i_settings_file_manager_a0f603853b01faf07c42947ebb73fba39}{Settings\+File\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The name of the settings file. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_a_i_settings_file_manager_a0c6c9e13a82e55fc60f3cf90f7106169}{Generated\+Files\+Folder\+Path}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The path to the generated files folder. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_a_i_settings_file_manager_a962a10935de2c4ba91e78478a873bcf0}{Last\+Messages\+To\+Send}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The number of messages to send to the AI. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_a_i_settings_file_manager_a16f17de3d1fc284b3666b7ff9de6387e}{Temperature}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Temperature of the AI. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_a_i_settings_file_manager_ac7ba613cb4159558df215c631a647de8}{Timeout\+In\+Seconds}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Timeout in seconds for the AI after which it will stop the request. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_a_i_settings_file_manager_ae36395b176072504940b460cd1c588d1}{Selected\+Gpt\+Model}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The selected GPT model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_a_i_settings_file_manager_ae2541b09f2f87270de0e5745eb8acc13}{Trim\+Path\+To\+Assets}} (string full\+Path, string project\+Path)
+\begin{DoxyCompactList}\small\item\em Trims the path to the assets folder, so there is no long path shown in the inspector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+readonly string \mbox{\hyperlink{class_a_i_settings_file_manager_a5170b4f49524efc77c8b24960a24b3d4}{default\+Settings\+File\+Name}} = "{}default\+Settings.\+json"{}
+\begin{DoxyCompactList}\small\item\em The default settings file name. \end{DoxyCompactList}\item 
+readonly string \mbox{\hyperlink{class_a_i_settings_file_manager_a89b47a42c15f3de1e2d02e91709115e1}{default\+User\+Files\+Folder\+Path}} = "{}Assets\textbackslash{}\textbackslash{}\+Unity\+Editor\+AI\textbackslash{}\textbackslash{}\+User\+Files\textbackslash{}\textbackslash{}"{}
+\begin{DoxyCompactList}\small\item\em The default user files folder path. \end{DoxyCompactList}\item 
+readonly string \mbox{\hyperlink{class_a_i_settings_file_manager_ac5798dd1e4119a67d139ed120889cb9d}{default\+Generated\+Files\+Folder\+Path}} = "{}Assets\textbackslash{}\textbackslash{}\+Unity\+Editor\+AI\textbackslash{}\textbackslash{}\+Generated\textbackslash{}\textbackslash{}"{}
+\begin{DoxyCompactList}\small\item\em The default generated files folder path. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_a_i_settings_file_manager}{AISettings\+File\+Manager}} \mbox{\hyperlink{class_a_i_settings_file_manager_a5f1ed3989004f520fded38905923523b}{instance}}
+\begin{DoxyCompactList}\small\item\em The singleton instance of the file manager. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The file manager for the AI settings. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_i_settings_file_manager_a084387266455b1bb8798d6ec81552991}\label{class_a_i_settings_file_manager_a084387266455b1bb8798d6ec81552991} 
+\index{AISettingsFileManager@{AISettingsFileManager}!DefaultSettingsFile@{DefaultSettingsFile}}
+\index{DefaultSettingsFile@{DefaultSettingsFile}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{DefaultSettingsFile()}{DefaultSettingsFile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_a_i_settings_serializable}{AISettings\+Serializable}} AISettings\+File\+Manager.\+Default\+Settings\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Saves the settings to file panel. 
+
+\begin{DoxyReturn}{Returns}
+Returns the path to the settings file. 
+\end{DoxyReturn}
+\Hypertarget{class_a_i_settings_file_manager_a332ab7f3e4bc0505ae71ecfff98a4cc2}\label{class_a_i_settings_file_manager_a332ab7f3e4bc0505ae71ecfff98a4cc2} 
+\index{AISettingsFileManager@{AISettingsFileManager}!GetInstance@{GetInstance}}
+\index{GetInstance@{GetInstance}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{GetInstance()}{GetInstance()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_a_i_settings_file_manager}{AISettings\+File\+Manager}} AISettings\+File\+Manager.\+Get\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the singleton instance of the file manager. 
+
+\begin{DoxyReturn}{Returns}
+Returns the instance of the file manager. 
+\end{DoxyReturn}
+\Hypertarget{class_a_i_settings_file_manager_aa5aa4c32b226a5971f39be2f1c5c8e2e}\label{class_a_i_settings_file_manager_aa5aa4c32b226a5971f39be2f1c5c8e2e} 
+\index{AISettingsFileManager@{AISettingsFileManager}!LoadCustomSettings@{LoadCustomSettings}}
+\index{LoadCustomSettings@{LoadCustomSettings}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{LoadCustomSettings()}{LoadCustomSettings()}}
+{\footnotesize\ttfamily void AISettings\+File\+Manager.\+Load\+Custom\+Settings (\begin{DoxyParamCaption}\item[{string}]{path = {\ttfamily null} }\end{DoxyParamCaption})}
+
+
+
+Loads the settings from a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The path to the settings file. If null, the default path is used. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_i_settings_file_manager_a46ca60e201dc201ec93122d05a9c25b8}\label{class_a_i_settings_file_manager_a46ca60e201dc201ec93122d05a9c25b8} 
+\index{AISettingsFileManager@{AISettingsFileManager}!LoadSettingsFromFilePanel@{LoadSettingsFromFilePanel}}
+\index{LoadSettingsFromFilePanel@{LoadSettingsFromFilePanel}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{LoadSettingsFromFilePanel()}{LoadSettingsFromFilePanel()}}
+{\footnotesize\ttfamily void AISettings\+File\+Manager.\+Load\+Settings\+From\+File\+Panel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Saves the settings from file panel. 
+
+\Hypertarget{class_a_i_settings_file_manager_aa9d5933356d3200fcc814f8ba1c1ce26}\label{class_a_i_settings_file_manager_aa9d5933356d3200fcc814f8ba1c1ce26} 
+\index{AISettingsFileManager@{AISettingsFileManager}!SelectedGptModelInt@{SelectedGptModelInt}}
+\index{SelectedGptModelInt@{SelectedGptModelInt}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{SelectedGptModelInt()}{SelectedGptModelInt()}}
+{\footnotesize\ttfamily int AISettings\+File\+Manager.\+Selected\+Gpt\+Model\+Int (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The index of the selected ai model. 
+
+\begin{DoxyReturn}{Returns}
+Returns the index of the selected ai model.
+\end{DoxyReturn}
+\Hypertarget{class_a_i_settings_file_manager_aab8b0916690c01df785cb277fec4cf5e}\label{class_a_i_settings_file_manager_aab8b0916690c01df785cb277fec4cf5e} 
+\index{AISettingsFileManager@{AISettingsFileManager}!SetSettingsFromSerializable@{SetSettingsFromSerializable}}
+\index{SetSettingsFromSerializable@{SetSettingsFromSerializable}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{SetSettingsFromSerializable()}{SetSettingsFromSerializable()}}
+{\footnotesize\ttfamily void AISettings\+File\+Manager.\+Set\+Settings\+From\+Serializable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_a_i_settings_serializable}{AISettings\+Serializable}}}]{settings,  }\item[{bool}]{is\+Default = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Sets the settings from a serializable object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em settings} & The serializable settings object to set the settings from. \\
+\hline
+{\em is\+Default} & Whether the settings are default settings. If true, the API Key is not set, so the api key is not overwritten. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_i_settings_file_manager_abba90fab264c4a5726a0ea1050937b91}\label{class_a_i_settings_file_manager_abba90fab264c4a5726a0ea1050937b91} 
+\index{AISettingsFileManager@{AISettingsFileManager}!SettingsFileFromPath@{SettingsFileFromPath}}
+\index{SettingsFileFromPath@{SettingsFileFromPath}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{SettingsFileFromPath()}{SettingsFileFromPath()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_a_i_settings_serializable}{AISettings\+Serializable}} AISettings\+File\+Manager.\+Settings\+File\+From\+Path (\begin{DoxyParamCaption}\item[{string}]{settings\+Path = {\ttfamily null} }\end{DoxyParamCaption})}
+
+
+
+Loads the settings from a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em settings\+Path} & The path to the settings file. If null, the default path is used. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the settings from the file.
+\end{DoxyReturn}
+\Hypertarget{class_a_i_settings_file_manager_ae2541b09f2f87270de0e5745eb8acc13}\label{class_a_i_settings_file_manager_ae2541b09f2f87270de0e5745eb8acc13} 
+\index{AISettingsFileManager@{AISettingsFileManager}!TrimPathToAssets@{TrimPathToAssets}}
+\index{TrimPathToAssets@{TrimPathToAssets}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{TrimPathToAssets()}{TrimPathToAssets()}}
+{\footnotesize\ttfamily string AISettings\+File\+Manager.\+Trim\+Path\+To\+Assets (\begin{DoxyParamCaption}\item[{string}]{full\+Path,  }\item[{string}]{project\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Trims the path to the assets folder, so there is no long path shown in the inspector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em full\+Path} & The full path to trim. \\
+\hline
+{\em project\+Path} & The path to the project. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns the trimmed path that starts with "{}\+Assets"{}. 
+\end{DoxyReturn}
+\Hypertarget{class_a_i_settings_file_manager_a4d567157ef12a6385a24caf3c5554a1b}\label{class_a_i_settings_file_manager_a4d567157ef12a6385a24caf3c5554a1b} 
+\index{AISettingsFileManager@{AISettingsFileManager}!WriteSettingsInJson@{WriteSettingsInJson}}
+\index{WriteSettingsInJson@{WriteSettingsInJson}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{WriteSettingsInJson()}{WriteSettingsInJson()}}
+{\footnotesize\ttfamily void AISettings\+File\+Manager.\+Write\+Settings\+In\+Json (\begin{DoxyParamCaption}\item[{string}]{path = {\ttfamily null} }\end{DoxyParamCaption})}
+
+
+
+Writes the settings to a json file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The path to the settings file. If null, the default path is used. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_a_i_settings_file_manager_ac5798dd1e4119a67d139ed120889cb9d}\label{class_a_i_settings_file_manager_ac5798dd1e4119a67d139ed120889cb9d} 
+\index{AISettingsFileManager@{AISettingsFileManager}!defaultGeneratedFilesFolderPath@{defaultGeneratedFilesFolderPath}}
+\index{defaultGeneratedFilesFolderPath@{defaultGeneratedFilesFolderPath}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{defaultGeneratedFilesFolderPath}{defaultGeneratedFilesFolderPath}}
+{\footnotesize\ttfamily readonly string AISettings\+File\+Manager.\+default\+Generated\+Files\+Folder\+Path = "{}Assets\textbackslash{}\textbackslash{}\+Unity\+Editor\+AI\textbackslash{}\textbackslash{}\+Generated\textbackslash{}\textbackslash{}"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The default generated files folder path. 
+
+\Hypertarget{class_a_i_settings_file_manager_a5170b4f49524efc77c8b24960a24b3d4}\label{class_a_i_settings_file_manager_a5170b4f49524efc77c8b24960a24b3d4} 
+\index{AISettingsFileManager@{AISettingsFileManager}!defaultSettingsFileName@{defaultSettingsFileName}}
+\index{defaultSettingsFileName@{defaultSettingsFileName}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{defaultSettingsFileName}{defaultSettingsFileName}}
+{\footnotesize\ttfamily readonly string AISettings\+File\+Manager.\+default\+Settings\+File\+Name = "{}default\+Settings.\+json"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The default settings file name. 
+
+\Hypertarget{class_a_i_settings_file_manager_a89b47a42c15f3de1e2d02e91709115e1}\label{class_a_i_settings_file_manager_a89b47a42c15f3de1e2d02e91709115e1} 
+\index{AISettingsFileManager@{AISettingsFileManager}!defaultUserFilesFolderPath@{defaultUserFilesFolderPath}}
+\index{defaultUserFilesFolderPath@{defaultUserFilesFolderPath}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{defaultUserFilesFolderPath}{defaultUserFilesFolderPath}}
+{\footnotesize\ttfamily readonly string AISettings\+File\+Manager.\+default\+User\+Files\+Folder\+Path = "{}Assets\textbackslash{}\textbackslash{}\+Unity\+Editor\+AI\textbackslash{}\textbackslash{}\+User\+Files\textbackslash{}\textbackslash{}"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The default user files folder path. 
+
+\Hypertarget{class_a_i_settings_file_manager_a368483cd05538f236151bb614717dcf8}\label{class_a_i_settings_file_manager_a368483cd05538f236151bb614717dcf8} 
+\index{AISettingsFileManager@{AISettingsFileManager}!Gpt35Turbo@{Gpt35Turbo}}
+\index{Gpt35Turbo@{Gpt35Turbo}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{Gpt35Turbo}{Gpt35Turbo}}
+{\footnotesize\ttfamily readonly string AISettings\+File\+Manager.\+Gpt35\+Turbo = "{}gpt-\/3.\+5-\/turbo"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The ai models available. 
+
+\Hypertarget{class_a_i_settings_file_manager_ae210cc111bdb13259e7e91a0ee3b2d67}\label{class_a_i_settings_file_manager_ae210cc111bdb13259e7e91a0ee3b2d67} 
+\index{AISettingsFileManager@{AISettingsFileManager}!Gpt35Turbo16k@{Gpt35Turbo16k}}
+\index{Gpt35Turbo16k@{Gpt35Turbo16k}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{Gpt35Turbo16k}{Gpt35Turbo16k}}
+{\footnotesize\ttfamily readonly string AISettings\+File\+Manager.\+Gpt35\+Turbo16k = "{}gpt-\/3.\+5-\/turbo-\/16k"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_a_i_settings_file_manager_a4dde4f22a3159e0003fdb707114f6153}\label{class_a_i_settings_file_manager_a4dde4f22a3159e0003fdb707114f6153} 
+\index{AISettingsFileManager@{AISettingsFileManager}!Gpt35TurboInstruct@{Gpt35TurboInstruct}}
+\index{Gpt35TurboInstruct@{Gpt35TurboInstruct}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{Gpt35TurboInstruct}{Gpt35TurboInstruct}}
+{\footnotesize\ttfamily readonly string AISettings\+File\+Manager.\+Gpt35\+Turbo\+Instruct = "{}gpt-\/3.\+5-\/turbo-\/instruct"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_a_i_settings_file_manager_a37bbeca396974076af60fe5069159c2a}\label{class_a_i_settings_file_manager_a37bbeca396974076af60fe5069159c2a} 
+\index{AISettingsFileManager@{AISettingsFileManager}!Gpt4@{Gpt4}}
+\index{Gpt4@{Gpt4}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{Gpt4}{Gpt4}}
+{\footnotesize\ttfamily readonly string AISettings\+File\+Manager.\+Gpt4 = "{}gpt-\/4"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_a_i_settings_file_manager_af562a342af6f8c713c89f0af3ff20a07}\label{class_a_i_settings_file_manager_af562a342af6f8c713c89f0af3ff20a07} 
+\index{AISettingsFileManager@{AISettingsFileManager}!Gpt4Turbo@{Gpt4Turbo}}
+\index{Gpt4Turbo@{Gpt4Turbo}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{Gpt4Turbo}{Gpt4Turbo}}
+{\footnotesize\ttfamily readonly string AISettings\+File\+Manager.\+Gpt4\+Turbo = "{}gpt-\/4-\/1106-\/preview"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_a_i_settings_file_manager_ac4bce3849e53608c77a14556a785f89c}\label{class_a_i_settings_file_manager_ac4bce3849e53608c77a14556a785f89c} 
+\index{AISettingsFileManager@{AISettingsFileManager}!GptDefault@{GptDefault}}
+\index{GptDefault@{GptDefault}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{GptDefault}{GptDefault}}
+{\footnotesize\ttfamily readonly string AISettings\+File\+Manager.\+Gpt\+Default = \mbox{\hyperlink{class_a_i_settings_file_manager_a368483cd05538f236151bb614717dcf8}{Gpt35\+Turbo}}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_a_i_settings_file_manager_aff420eac26d41ff13ff451845ed1460a}\label{class_a_i_settings_file_manager_aff420eac26d41ff13ff451845ed1460a} 
+\index{AISettingsFileManager@{AISettingsFileManager}!gptModels@{gptModels}}
+\index{gptModels@{gptModels}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{gptModels}{gptModels}}
+{\footnotesize\ttfamily readonly List$<$string$>$ AISettings\+File\+Manager.\+gpt\+Models\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{new}()\ \{\ \mbox{\hyperlink{class_a_i_settings_file_manager_a368483cd05538f236151bb614717dcf8}{Gpt35Turbo}},\ \mbox{\hyperlink{class_a_i_settings_file_manager_ae210cc111bdb13259e7e91a0ee3b2d67}{Gpt35Turbo16k}},\ \mbox{\hyperlink{class_a_i_settings_file_manager_ae5e2912abb6f3e836b01b958e595191f}{UpdatedGpt35Turbo}},\ \mbox{\hyperlink{class_a_i_settings_file_manager_a4dde4f22a3159e0003fdb707114f6153}{Gpt35TurboInstruct}},\ \mbox{\hyperlink{class_a_i_settings_file_manager_af562a342af6f8c713c89f0af3ff20a07}{Gpt4Turbo}},\ \mbox{\hyperlink{class_a_i_settings_file_manager_a37bbeca396974076af60fe5069159c2a}{Gpt4}}\ \}}
+
+\end{DoxyCode}
+
+
+The list of ai models available. 
+
+\Hypertarget{class_a_i_settings_file_manager_ab7f42b5f2aab418395bb1b17f7e5fcaa}\label{class_a_i_settings_file_manager_ab7f42b5f2aab418395bb1b17f7e5fcaa} 
+\index{AISettingsFileManager@{AISettingsFileManager}!gptModelsArray@{gptModelsArray}}
+\index{gptModelsArray@{gptModelsArray}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{gptModelsArray}{gptModelsArray}}
+{\footnotesize\ttfamily string \mbox{[}$\,$\mbox{]} AISettings\+File\+Manager.\+gpt\+Models\+Array = gpt\+Models.\+To\+Array()}
+
+
+
+The list of ai models available as an array (for the dropdown menu) 
+
+\Hypertarget{class_a_i_settings_file_manager_a673f1509d110b1629c373728687520e3}\label{class_a_i_settings_file_manager_a673f1509d110b1629c373728687520e3} 
+\index{AISettingsFileManager@{AISettingsFileManager}!helpBox@{helpBox}}
+\index{helpBox@{helpBox}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{helpBox}{helpBox}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_help_box}{Help\+Box}} AISettings\+File\+Manager.\+help\+Box = \mbox{\hyperlink{class_help_box_a37157adbf2d543c032e06cf87be2c63f}{Help\+Box.\+Get\+Instance}}()\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Access to the help box. 
+
+\Hypertarget{class_a_i_settings_file_manager_a5f1ed3989004f520fded38905923523b}\label{class_a_i_settings_file_manager_a5f1ed3989004f520fded38905923523b} 
+\index{AISettingsFileManager@{AISettingsFileManager}!instance@{instance}}
+\index{instance@{instance}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{instance}{instance}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_a_i_settings_file_manager}{AISettings\+File\+Manager}} AISettings\+File\+Manager.\+instance\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The singleton instance of the file manager. 
+
+\Hypertarget{class_a_i_settings_file_manager_ae5e2912abb6f3e836b01b958e595191f}\label{class_a_i_settings_file_manager_ae5e2912abb6f3e836b01b958e595191f} 
+\index{AISettingsFileManager@{AISettingsFileManager}!UpdatedGpt35Turbo@{UpdatedGpt35Turbo}}
+\index{UpdatedGpt35Turbo@{UpdatedGpt35Turbo}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{UpdatedGpt35Turbo}{UpdatedGpt35Turbo}}
+{\footnotesize\ttfamily readonly string AISettings\+File\+Manager.\+Updated\+Gpt35\+Turbo = "{}gpt-\/3.\+5-\/turbo-\/1106"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_a_i_settings_file_manager_a38709716ba565016659e4cf4e20ca125}\label{class_a_i_settings_file_manager_a38709716ba565016659e4cf4e20ca125} 
+\index{AISettingsFileManager@{AISettingsFileManager}!ApiKey@{ApiKey}}
+\index{ApiKey@{ApiKey}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{ApiKey}{ApiKey}}
+{\footnotesize\ttfamily string AISettings\+File\+Manager.\+Api\+Key\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The API Key to use for the AI. 
+
+\Hypertarget{class_a_i_settings_file_manager_a0c6c9e13a82e55fc60f3cf90f7106169}\label{class_a_i_settings_file_manager_a0c6c9e13a82e55fc60f3cf90f7106169} 
+\index{AISettingsFileManager@{AISettingsFileManager}!GeneratedFilesFolderPath@{GeneratedFilesFolderPath}}
+\index{GeneratedFilesFolderPath@{GeneratedFilesFolderPath}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{GeneratedFilesFolderPath}{GeneratedFilesFolderPath}}
+{\footnotesize\ttfamily string AISettings\+File\+Manager.\+Generated\+Files\+Folder\+Path\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The path to the generated files folder. 
+
+\Hypertarget{class_a_i_settings_file_manager_a962a10935de2c4ba91e78478a873bcf0}\label{class_a_i_settings_file_manager_a962a10935de2c4ba91e78478a873bcf0} 
+\index{AISettingsFileManager@{AISettingsFileManager}!LastMessagesToSend@{LastMessagesToSend}}
+\index{LastMessagesToSend@{LastMessagesToSend}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{LastMessagesToSend}{LastMessagesToSend}}
+{\footnotesize\ttfamily int AISettings\+File\+Manager.\+Last\+Messages\+To\+Send\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The number of messages to send to the AI. 
+
+\Hypertarget{class_a_i_settings_file_manager_ae36395b176072504940b460cd1c588d1}\label{class_a_i_settings_file_manager_ae36395b176072504940b460cd1c588d1} 
+\index{AISettingsFileManager@{AISettingsFileManager}!SelectedGptModel@{SelectedGptModel}}
+\index{SelectedGptModel@{SelectedGptModel}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{SelectedGptModel}{SelectedGptModel}}
+{\footnotesize\ttfamily string AISettings\+File\+Manager.\+Selected\+Gpt\+Model\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The selected GPT model. 
+
+\Hypertarget{class_a_i_settings_file_manager_a0f603853b01faf07c42947ebb73fba39}\label{class_a_i_settings_file_manager_a0f603853b01faf07c42947ebb73fba39} 
+\index{AISettingsFileManager@{AISettingsFileManager}!SettingsFileName@{SettingsFileName}}
+\index{SettingsFileName@{SettingsFileName}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{SettingsFileName}{SettingsFileName}}
+{\footnotesize\ttfamily string AISettings\+File\+Manager.\+Settings\+File\+Name\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The name of the settings file. 
+
+\Hypertarget{class_a_i_settings_file_manager_a16f17de3d1fc284b3666b7ff9de6387e}\label{class_a_i_settings_file_manager_a16f17de3d1fc284b3666b7ff9de6387e} 
+\index{AISettingsFileManager@{AISettingsFileManager}!Temperature@{Temperature}}
+\index{Temperature@{Temperature}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{Temperature}{Temperature}}
+{\footnotesize\ttfamily float AISettings\+File\+Manager.\+Temperature\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Temperature of the AI. 
+
+\Hypertarget{class_a_i_settings_file_manager_ac7ba613cb4159558df215c631a647de8}\label{class_a_i_settings_file_manager_ac7ba613cb4159558df215c631a647de8} 
+\index{AISettingsFileManager@{AISettingsFileManager}!TimeoutInSeconds@{TimeoutInSeconds}}
+\index{TimeoutInSeconds@{TimeoutInSeconds}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{TimeoutInSeconds}{TimeoutInSeconds}}
+{\footnotesize\ttfamily int AISettings\+File\+Manager.\+Timeout\+In\+Seconds\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Timeout in seconds for the AI after which it will stop the request. 
+
+\Hypertarget{class_a_i_settings_file_manager_afa5484344d0a467058ea432182a206f9}\label{class_a_i_settings_file_manager_afa5484344d0a467058ea432182a206f9} 
+\index{AISettingsFileManager@{AISettingsFileManager}!UserFilesFolderPath@{UserFilesFolderPath}}
+\index{UserFilesFolderPath@{UserFilesFolderPath}!AISettingsFileManager@{AISettingsFileManager}}
+\doxysubsubsection{\texorpdfstring{UserFilesFolderPath}{UserFilesFolderPath}}
+{\footnotesize\ttfamily string AISettings\+File\+Manager.\+User\+Files\+Folder\+Path\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The path to the user files folder. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_a_i_settings_file_manager_8cs}{AISettings\+File\+Manager.\+cs}}\end{DoxyCompactItemize}

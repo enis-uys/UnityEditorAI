@@ -1,0 +1,392 @@
+\doxysection{Help\+Box Class Reference}
+\hypertarget{class_help_box}{}\label{class_help_box}\index{HelpBox@{HelpBox}}
+
+
+The help box class that is used to display messages and progress bars to the user.  
+
+
+
+
+Collaboration diagram for Help\+Box\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=328pt]{class_help_box__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_help_box_a5a629703bfc1a6b7ab3e9bcf482798f8}{Update\+Message}} (string message, Message\+Type? Update\+Message\+Type, bool should\+Append=false, bool debug\+Message=false)
+\begin{DoxyCompactList}\small\item\em Updates the message of the help box. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_help_box_ad05ac670e2c977321eceb31b7084372d}{Remove\+Message}} (int milli\+Seconds)
+\begin{DoxyCompactList}\small\item\em Removes the message of the help box after a certain amount of time. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_help_box_ae6efdace28d85a9f66d823649746ea1d}{Set\+Progress\+Bar\+Progress}} (float progress)
+\begin{DoxyCompactList}\small\item\em Sets the progress bar progress. It will be displayed if it is not already active. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_help_box_afa1e1a6a3afa7bd648857d64490e83f6}{Set\+Progress\+Bar\+Active}} (bool is\+Active)
+\begin{DoxyCompactList}\small\item\em Sets the progress bar active or inactive. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_help_box_a66f0fe8ab70036acb792e6fa52b05cf2}{Update\+Intended\+Progress}} (float progress)
+\begin{DoxyCompactList}\small\item\em Updates the intended progress of the progress bar. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_help_box_afafeae1af94b9247cc917f201fbeb62d}{Finish\+Progress\+Bar\+With\+Delay}} (int delay\+In\+Milliseconds)
+\begin{DoxyCompactList}\small\item\em Finishes the progress bar after a certain amount of time. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_help_box_a04d144c567fe42c3510c18d4435f31c7}{Render\+Progress\+Bar}} ()
+\begin{DoxyCompactList}\small\item\em Renders the progress bar. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_help_box_a397154d31dc718f36af59b814a8bc92d}{Update\+Progress\+Bar}} ()
+\begin{DoxyCompactList}\small\item\em Updates the progress bar. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_help_box_ad2178101498a73acc478a811f52c9ec6}{Debug\+Message\+If\+Should}} (string custom\+Message, Message\+Type message\+Type\+To\+Log)
+\begin{DoxyCompactList}\small\item\em Method that debugs a message if the should\+Debug\+Log parameter is true. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_help_box_a37157adbf2d543c032e06cf87be2c63f}{Get\+Instance}} ()
+\begin{DoxyCompactList}\small\item\em The singleton constructor of the help box. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+Message\+Type \mbox{\hyperlink{class_help_box_a82a6569498c63ed9db38452862704d6c}{HBMessage\+Type}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The message type of the help box. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_help_box_a651e35f9b3618967a46abf0c907b99fc}{HBMessage}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The message of the help box. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_help_box_a79cb165a11188f4364762df17bf12e38}{Intended\+Progress}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The progress of the progress bar. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_help_box_aa8fe9e2cf6905dfff53b7b18a6d85679}{Progress\+Bar\+Delay\+In\+Milliseconds}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The delay in milliseconds for the progress bar to disappear. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_help_box_a24f5f9701f1c65d0c758c6c64f032aaa}{Update\+Last\+Function\+Calltime}} ()
+\begin{DoxyCompactList}\small\item\em Updates the time of the last function call. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_help_box_a9d13f3d84be8fa2ea8c57c22413ab112}{Time\+Since\+Last\+Function\+In\+Milliseconds}} ()
+\begin{DoxyCompactList}\small\item\em Returns the time since the last function call in milliseconds. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_help_box_ad6360fa16f4ef0e205304ce23dd062c9}{Timer\+Delay\+In\+Milliseconds}} ()
+\begin{DoxyCompactList}\small\item\em Returns the delay in milliseconds for the timer. This is used to show messages for a certain amount of time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Date\+Time \mbox{\hyperlink{class_help_box_a5bcf8908c345136339e2be31729c1dfd}{last\+Function\+Call\+Time}}
+\begin{DoxyCompactList}\small\item\em The time of the last function call. \end{DoxyCompactList}\item 
+readonly int \mbox{\hyperlink{class_help_box_a7d6e781f79541cb88c766bc9e8e517ff}{timer\+Threshold\+In\+Milliseconds}} = 600
+\begin{DoxyCompactList}\small\item\em The threshold in milliseconds for the timer. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_help_box_ac6f28faadfb3d7c431e789828dc9f1d5}{pogress\+Bar\+Progress}} = 0f
+\begin{DoxyCompactList}\small\item\em The current progress of the progress bar. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_help_box_ab62f5386784b59bd3c343e9722a78a3c}{intended\+Progress}} = 1f
+\begin{DoxyCompactList}\small\item\em The intended progress of the progress bar. This is the progress, the progressbar will steadily move towards. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_help_box_ab5db8d15fcff4f8af2ecd3b3ee49f865}{is\+Progress\+Bar\+Active}} = false
+\begin{DoxyCompactList}\small\item\em Whether the progress bar is active. \end{DoxyCompactList}\item 
+readonly int \mbox{\hyperlink{class_help_box_aa480c0d6c74c23814549f3d12a30d73a}{progress\+Bar\+Delay\+In\+Milliseconds}} = 1500
+\begin{DoxyCompactList}\small\item\em The delay in milliseconds for the progress bar to disappear. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_help_box_a89b7c87486e72c44923fbd70c2136d86}{instance}}
+\begin{DoxyCompactList}\small\item\em The instance of the help box. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The help box class that is used to display messages and progress bars to the user. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_help_box_ad2178101498a73acc478a811f52c9ec6}\label{class_help_box_ad2178101498a73acc478a811f52c9ec6} 
+\index{HelpBox@{HelpBox}!DebugMessageIfShould@{DebugMessageIfShould}}
+\index{DebugMessageIfShould@{DebugMessageIfShould}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{DebugMessageIfShould()}{DebugMessageIfShould()}}
+{\footnotesize\ttfamily void Help\+Box.\+Debug\+Message\+If\+Should (\begin{DoxyParamCaption}\item[{string}]{custom\+Message,  }\item[{Message\+Type}]{message\+Type\+To\+Log }\end{DoxyParamCaption})}
+
+
+
+Method that debugs a message if the should\+Debug\+Log parameter is true. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em custom\+Message} & The message to log. \\
+\hline
+{\em message\+Type\+To\+Log} & The message type of the message. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_help_box_afafeae1af94b9247cc917f201fbeb62d}\label{class_help_box_afafeae1af94b9247cc917f201fbeb62d} 
+\index{HelpBox@{HelpBox}!FinishProgressBarWithDelay@{FinishProgressBarWithDelay}}
+\index{FinishProgressBarWithDelay@{FinishProgressBarWithDelay}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{FinishProgressBarWithDelay()}{FinishProgressBarWithDelay()}}
+{\footnotesize\ttfamily void Help\+Box.\+Finish\+Progress\+Bar\+With\+Delay (\begin{DoxyParamCaption}\item[{int}]{delay\+In\+Milliseconds }\end{DoxyParamCaption})}
+
+
+
+Finishes the progress bar after a certain amount of time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delay\+In\+Milliseconds} & The amount of time in milliseconds to wait before finishing the progress bar. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_help_box_a37157adbf2d543c032e06cf87be2c63f}\label{class_help_box_a37157adbf2d543c032e06cf87be2c63f} 
+\index{HelpBox@{HelpBox}!GetInstance@{GetInstance}}
+\index{GetInstance@{GetInstance}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{GetInstance()}{GetInstance()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_help_box}{Help\+Box}} Help\+Box.\+Get\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The singleton constructor of the help box. 
+
+\begin{DoxyReturn}{Returns}
+Returns the instance of the help box. 
+\end{DoxyReturn}
+\Hypertarget{class_help_box_ad05ac670e2c977321eceb31b7084372d}\label{class_help_box_ad05ac670e2c977321eceb31b7084372d} 
+\index{HelpBox@{HelpBox}!RemoveMessage@{RemoveMessage}}
+\index{RemoveMessage@{RemoveMessage}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{RemoveMessage()}{RemoveMessage()}}
+{\footnotesize\ttfamily void Help\+Box.\+Remove\+Message (\begin{DoxyParamCaption}\item[{int}]{milli\+Seconds }\end{DoxyParamCaption})}
+
+
+
+Removes the message of the help box after a certain amount of time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em milli\+Seconds} & The amount of time in milliseconds to wait before removing the message. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_help_box_a04d144c567fe42c3510c18d4435f31c7}\label{class_help_box_a04d144c567fe42c3510c18d4435f31c7} 
+\index{HelpBox@{HelpBox}!RenderProgressBar@{RenderProgressBar}}
+\index{RenderProgressBar@{RenderProgressBar}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{RenderProgressBar()}{RenderProgressBar()}}
+{\footnotesize\ttfamily void Help\+Box.\+Render\+Progress\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Renders the progress bar. 
+
+\Hypertarget{class_help_box_afa1e1a6a3afa7bd648857d64490e83f6}\label{class_help_box_afa1e1a6a3afa7bd648857d64490e83f6} 
+\index{HelpBox@{HelpBox}!SetProgressBarActive@{SetProgressBarActive}}
+\index{SetProgressBarActive@{SetProgressBarActive}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{SetProgressBarActive()}{SetProgressBarActive()}}
+{\footnotesize\ttfamily void Help\+Box.\+Set\+Progress\+Bar\+Active (\begin{DoxyParamCaption}\item[{bool}]{is\+Active }\end{DoxyParamCaption})}
+
+
+
+Sets the progress bar active or inactive. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em is\+Active} & Whether the progress bar should be active. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_help_box_ae6efdace28d85a9f66d823649746ea1d}\label{class_help_box_ae6efdace28d85a9f66d823649746ea1d} 
+\index{HelpBox@{HelpBox}!SetProgressBarProgress@{SetProgressBarProgress}}
+\index{SetProgressBarProgress@{SetProgressBarProgress}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{SetProgressBarProgress()}{SetProgressBarProgress()}}
+{\footnotesize\ttfamily void Help\+Box.\+Set\+Progress\+Bar\+Progress (\begin{DoxyParamCaption}\item[{float}]{progress }\end{DoxyParamCaption})}
+
+
+
+Sets the progress bar progress. It will be displayed if it is not already active. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em progress} & The progress to set the progress bar to. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_help_box_ad6360fa16f4ef0e205304ce23dd062c9}\label{class_help_box_ad6360fa16f4ef0e205304ce23dd062c9} 
+\index{HelpBox@{HelpBox}!TimerDelayInMilliseconds@{TimerDelayInMilliseconds}}
+\index{TimerDelayInMilliseconds@{TimerDelayInMilliseconds}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{TimerDelayInMilliseconds()}{TimerDelayInMilliseconds()}}
+{\footnotesize\ttfamily int Help\+Box.\+Timer\+Delay\+In\+Milliseconds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Returns the delay in milliseconds for the timer. This is used to show messages for a certain amount of time. 
+
+\begin{DoxyReturn}{Returns}
+Returns the delay in milliseconds for the timer. 
+\end{DoxyReturn}
+\Hypertarget{class_help_box_a9d13f3d84be8fa2ea8c57c22413ab112}\label{class_help_box_a9d13f3d84be8fa2ea8c57c22413ab112} 
+\index{HelpBox@{HelpBox}!TimeSinceLastFunctionInMilliseconds@{TimeSinceLastFunctionInMilliseconds}}
+\index{TimeSinceLastFunctionInMilliseconds@{TimeSinceLastFunctionInMilliseconds}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{TimeSinceLastFunctionInMilliseconds()}{TimeSinceLastFunctionInMilliseconds()}}
+{\footnotesize\ttfamily double Help\+Box.\+Time\+Since\+Last\+Function\+In\+Milliseconds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Returns the time since the last function call in milliseconds. 
+
+\begin{DoxyReturn}{Returns}
+Returns the time since the last function call in milliseconds. 
+\end{DoxyReturn}
+\Hypertarget{class_help_box_a66f0fe8ab70036acb792e6fa52b05cf2}\label{class_help_box_a66f0fe8ab70036acb792e6fa52b05cf2} 
+\index{HelpBox@{HelpBox}!UpdateIntendedProgress@{UpdateIntendedProgress}}
+\index{UpdateIntendedProgress@{UpdateIntendedProgress}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{UpdateIntendedProgress()}{UpdateIntendedProgress()}}
+{\footnotesize\ttfamily void Help\+Box.\+Update\+Intended\+Progress (\begin{DoxyParamCaption}\item[{float}]{progress }\end{DoxyParamCaption})}
+
+
+
+Updates the intended progress of the progress bar. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em progress} & The intended progress of the progress bar. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_help_box_a24f5f9701f1c65d0c758c6c64f032aaa}\label{class_help_box_a24f5f9701f1c65d0c758c6c64f032aaa} 
+\index{HelpBox@{HelpBox}!UpdateLastFunctionCalltime@{UpdateLastFunctionCalltime}}
+\index{UpdateLastFunctionCalltime@{UpdateLastFunctionCalltime}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{UpdateLastFunctionCalltime()}{UpdateLastFunctionCalltime()}}
+{\footnotesize\ttfamily void Help\+Box.\+Update\+Last\+Function\+Calltime (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Updates the time of the last function call. 
+
+\Hypertarget{class_help_box_a5a629703bfc1a6b7ab3e9bcf482798f8}\label{class_help_box_a5a629703bfc1a6b7ab3e9bcf482798f8} 
+\index{HelpBox@{HelpBox}!UpdateMessage@{UpdateMessage}}
+\index{UpdateMessage@{UpdateMessage}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{UpdateMessage()}{UpdateMessage()}}
+{\footnotesize\ttfamily void Help\+Box.\+Update\+Message (\begin{DoxyParamCaption}\item[{string}]{message,  }\item[{Message\+Type?}]{Update\+Message\+Type,  }\item[{bool}]{should\+Append = {\ttfamily false},  }\item[{bool}]{debug\+Message = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Updates the message of the help box. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to display. \\
+\hline
+{\em Update\+Message\+Type} & The message type of the message. All parameters including this and the following are optional. \\
+\hline
+{\em should\+Append} & Whether the message should be appended to the current message. Default is false. \\
+\hline
+{\em debug\+Message} & Whether the message should also be logged to the console. Default is false. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_help_box_a397154d31dc718f36af59b814a8bc92d}\label{class_help_box_a397154d31dc718f36af59b814a8bc92d} 
+\index{HelpBox@{HelpBox}!UpdateProgressBar@{UpdateProgressBar}}
+\index{UpdateProgressBar@{UpdateProgressBar}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{UpdateProgressBar()}{UpdateProgressBar()}}
+{\footnotesize\ttfamily void Help\+Box.\+Update\+Progress\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Updates the progress bar. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_help_box_a89b7c87486e72c44923fbd70c2136d86}\label{class_help_box_a89b7c87486e72c44923fbd70c2136d86} 
+\index{HelpBox@{HelpBox}!instance@{instance}}
+\index{instance@{instance}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{instance}{instance}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_help_box}{Help\+Box}} Help\+Box.\+instance\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The instance of the help box. 
+
+\Hypertarget{class_help_box_ab62f5386784b59bd3c343e9722a78a3c}\label{class_help_box_ab62f5386784b59bd3c343e9722a78a3c} 
+\index{HelpBox@{HelpBox}!intendedProgress@{intendedProgress}}
+\index{intendedProgress@{intendedProgress}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{intendedProgress}{intendedProgress}}
+{\footnotesize\ttfamily float Help\+Box.\+intended\+Progress = 1f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The intended progress of the progress bar. This is the progress, the progressbar will steadily move towards. 
+
+\Hypertarget{class_help_box_ab5db8d15fcff4f8af2ecd3b3ee49f865}\label{class_help_box_ab5db8d15fcff4f8af2ecd3b3ee49f865} 
+\index{HelpBox@{HelpBox}!isProgressBarActive@{isProgressBarActive}}
+\index{isProgressBarActive@{isProgressBarActive}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{isProgressBarActive}{isProgressBarActive}}
+{\footnotesize\ttfamily bool Help\+Box.\+is\+Progress\+Bar\+Active = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Whether the progress bar is active. 
+
+\Hypertarget{class_help_box_a5bcf8908c345136339e2be31729c1dfd}\label{class_help_box_a5bcf8908c345136339e2be31729c1dfd} 
+\index{HelpBox@{HelpBox}!lastFunctionCallTime@{lastFunctionCallTime}}
+\index{lastFunctionCallTime@{lastFunctionCallTime}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{lastFunctionCallTime}{lastFunctionCallTime}}
+{\footnotesize\ttfamily Date\+Time Help\+Box.\+last\+Function\+Call\+Time\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The time of the last function call. 
+
+\Hypertarget{class_help_box_ac6f28faadfb3d7c431e789828dc9f1d5}\label{class_help_box_ac6f28faadfb3d7c431e789828dc9f1d5} 
+\index{HelpBox@{HelpBox}!pogressBarProgress@{pogressBarProgress}}
+\index{pogressBarProgress@{pogressBarProgress}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{pogressBarProgress}{pogressBarProgress}}
+{\footnotesize\ttfamily float Help\+Box.\+pogress\+Bar\+Progress = 0f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The current progress of the progress bar. 
+
+\Hypertarget{class_help_box_aa480c0d6c74c23814549f3d12a30d73a}\label{class_help_box_aa480c0d6c74c23814549f3d12a30d73a} 
+\index{HelpBox@{HelpBox}!progressBarDelayInMilliseconds@{progressBarDelayInMilliseconds}}
+\index{progressBarDelayInMilliseconds@{progressBarDelayInMilliseconds}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{progressBarDelayInMilliseconds}{progressBarDelayInMilliseconds}}
+{\footnotesize\ttfamily readonly int Help\+Box.\+progress\+Bar\+Delay\+In\+Milliseconds = 1500\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The delay in milliseconds for the progress bar to disappear. 
+
+\Hypertarget{class_help_box_a7d6e781f79541cb88c766bc9e8e517ff}\label{class_help_box_a7d6e781f79541cb88c766bc9e8e517ff} 
+\index{HelpBox@{HelpBox}!timerThresholdInMilliseconds@{timerThresholdInMilliseconds}}
+\index{timerThresholdInMilliseconds@{timerThresholdInMilliseconds}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{timerThresholdInMilliseconds}{timerThresholdInMilliseconds}}
+{\footnotesize\ttfamily readonly int Help\+Box.\+timer\+Threshold\+In\+Milliseconds = 600\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The threshold in milliseconds for the timer. 
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_help_box_a651e35f9b3618967a46abf0c907b99fc}\label{class_help_box_a651e35f9b3618967a46abf0c907b99fc} 
+\index{HelpBox@{HelpBox}!HBMessage@{HBMessage}}
+\index{HBMessage@{HBMessage}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{HBMessage}{HBMessage}}
+{\footnotesize\ttfamily string Help\+Box.\+HBMessage\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The message of the help box. 
+
+\Hypertarget{class_help_box_a82a6569498c63ed9db38452862704d6c}\label{class_help_box_a82a6569498c63ed9db38452862704d6c} 
+\index{HelpBox@{HelpBox}!HBMessageType@{HBMessageType}}
+\index{HBMessageType@{HBMessageType}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{HBMessageType}{HBMessageType}}
+{\footnotesize\ttfamily Message\+Type Help\+Box.\+HBMessage\+Type\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The message type of the help box. 
+
+\Hypertarget{class_help_box_a79cb165a11188f4364762df17bf12e38}\label{class_help_box_a79cb165a11188f4364762df17bf12e38} 
+\index{HelpBox@{HelpBox}!IntendedProgress@{IntendedProgress}}
+\index{IntendedProgress@{IntendedProgress}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{IntendedProgress}{IntendedProgress}}
+{\footnotesize\ttfamily float Help\+Box.\+Intended\+Progress\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The progress of the progress bar. 
+
+\Hypertarget{class_help_box_aa8fe9e2cf6905dfff53b7b18a6d85679}\label{class_help_box_aa8fe9e2cf6905dfff53b7b18a6d85679} 
+\index{HelpBox@{HelpBox}!ProgressBarDelayInMilliseconds@{ProgressBarDelayInMilliseconds}}
+\index{ProgressBarDelayInMilliseconds@{ProgressBarDelayInMilliseconds}!HelpBox@{HelpBox}}
+\doxysubsubsection{\texorpdfstring{ProgressBarDelayInMilliseconds}{ProgressBarDelayInMilliseconds}}
+{\footnotesize\ttfamily int Help\+Box.\+Progress\+Bar\+Delay\+In\+Milliseconds\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+The delay in milliseconds for the progress bar to disappear. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_help_box_8cs}{Help\+Box.\+cs}}\end{DoxyCompactItemize}

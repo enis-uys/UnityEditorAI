@@ -1,0 +1,246 @@
+\doxysection{Open\+Ai\+Api\+Manager Class Reference}
+\hypertarget{class_open_ai_api_manager}{}\label{class_open_ai_api_manager}\index{OpenAiApiManager@{OpenAiApiManager}}
+
+
+The response class that contains the id and choices.  
+
+
+
+
+Collaboration diagram for Open\+Ai\+Api\+Manager\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_open_ai_api_manager__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static async Uni\+Task$<$ string $>$ \mbox{\hyperlink{class_open_ai_api_manager_a29cdbddf8169f82f0064e0f18d055148}{Request\+To\+Gpt}} (string request\+Message)
+\begin{DoxyCompactList}\small\item\em Sends a single message to the GPT model and returns the response. \end{DoxyCompactList}\item 
+static async Uni\+Task$<$ string $>$ \mbox{\hyperlink{class_open_ai_api_manager_a99ce2123c25e5d1307e5762f0c1a9a2e}{Request\+To\+Gpt}} (\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} message\+List\+Builder)
+\begin{DoxyCompactList}\small\item\em Sends a list of messages to the GPT model and returns the response. \end{DoxyCompactList}\item 
+static async Uni\+Task$<$ string $>$ \mbox{\hyperlink{class_open_ai_api_manager_aa641c8d73182be5a200ecf3747f18d42}{Send\+Messages\+To\+Gpt}} (string api\+Key, \mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} message\+List\+Builder, string gpt\+Model, float? temperature, int timeout\+In\+Seconds)
+\begin{DoxyCompactList}\small\item\em Sends a list of messages to the GPT model and returns the response. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static string \mbox{\hyperlink{class_open_ai_api_manager_ab5b446ec4a9ebbdb2ba4baabcd55c711}{Build\+Open\+Api\+Request}} (string gpt\+Model, \mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} message\+List\+Builder, float? temperature)
+\begin{DoxyCompactList}\small\item\em Builds the request body for the Open\+AI API. \end{DoxyCompactList}\item 
+static async Uni\+Task$<$ string $>$ \mbox{\hyperlink{class_open_ai_api_manager_a213b4975a68d1e4b652dfc1d1ad4d4bd}{Send\+Gpt\+Api\+Request\+Async}} (string api\+Key, string endpoint, string request\+Body, int timeout\+In\+Seconds=20)
+\begin{DoxyCompactList}\small\item\em Sends a request to the Open\+AI API and returns the response. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_open_ai_api_manager_a281d65921627e304211cef0321e9185b}{Error\+Message}} (Exception e)
+\begin{DoxyCompactList}\small\item\em Updates the help box with an error message. Recommends a higher timeout. \end{DoxyCompactList}\item 
+static string \mbox{\hyperlink{class_open_ai_api_manager_a6476ee332ad2ed0c25c3199e83ee2e47}{Parse\+Open\+Api\+Response}} (string json\+Response, bool is\+Completion=false)
+\begin{DoxyCompactList}\small\item\em Parses the response of the Open\+AI API and returns the response as a string. \end{DoxyCompactList}\item 
+static string \mbox{\hyperlink{class_open_ai_api_manager_a91b2492834104b6cd28cbc9c9cf89f2d}{Get\+End\+Point}} (string gpt\+Model)
+\begin{DoxyCompactList}\small\item\em Returns the endpoint for the GPT model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const string \mbox{\hyperlink{class_open_ai_api_manager_a5f6e921fa3f25409f361712f4d1e704e}{chat\+Endpoint}} = "{}https\+://api.\+openai.\+com/v1/chat/completions"{}
+\begin{DoxyCompactList}\small\item\em The endpoint for the chat model. \end{DoxyCompactList}\item 
+const string \mbox{\hyperlink{class_open_ai_api_manager_a130890b4d401dba0a2fe2e864eb1221e}{completions\+Endpoint}} = "{}https\+://api.\+openai.\+com/v1/completions"{}
+\begin{DoxyCompactList}\small\item\em The endpoint for the completion model. (Davinci and Gpt Instruct) \end{DoxyCompactList}\item 
+static readonly \mbox{\hyperlink{class_a_i_settings_file_manager}{AISettings\+File\+Manager}} \mbox{\hyperlink{class_open_ai_api_manager_ab8ebb958a31576c98334a370303d4c5b}{settings\+FM}} = \mbox{\hyperlink{class_a_i_settings_file_manager_a332ab7f3e4bc0505ae71ecfff98a4cc2}{AISettings\+File\+Manager.\+Get\+Instance}}()
+\begin{DoxyCompactList}\small\item\em The singleton instance of the settings file manager that contains the settings for the AI. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The response class that contains the id and choices. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_open_ai_api_manager_ab5b446ec4a9ebbdb2ba4baabcd55c711}\label{class_open_ai_api_manager_ab5b446ec4a9ebbdb2ba4baabcd55c711} 
+\index{OpenAiApiManager@{OpenAiApiManager}!BuildOpenApiRequest@{BuildOpenApiRequest}}
+\index{BuildOpenApiRequest@{BuildOpenApiRequest}!OpenAiApiManager@{OpenAiApiManager}}
+\doxysubsubsection{\texorpdfstring{BuildOpenApiRequest()}{BuildOpenApiRequest()}}
+{\footnotesize\ttfamily static string Open\+Ai\+Api\+Manager.\+Build\+Open\+Api\+Request (\begin{DoxyParamCaption}\item[{string}]{gpt\+Model,  }\item[{\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}}}]{message\+List\+Builder,  }\item[{float?}]{temperature }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Builds the request body for the Open\+AI API. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gpt\+Model} & The GPT model that should be used to send the request. \\
+\hline
+{\em message\+List\+Builder} & The message list builder that contains the messages that should be sent to the GPT model. \\
+\hline
+{\em temperature} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The request body as a string for the Open\+AI API. 
+\end{DoxyReturn}
+\Hypertarget{class_open_ai_api_manager_a281d65921627e304211cef0321e9185b}\label{class_open_ai_api_manager_a281d65921627e304211cef0321e9185b} 
+\index{OpenAiApiManager@{OpenAiApiManager}!ErrorMessage@{ErrorMessage}}
+\index{ErrorMessage@{ErrorMessage}!OpenAiApiManager@{OpenAiApiManager}}
+\doxysubsubsection{\texorpdfstring{ErrorMessage()}{ErrorMessage()}}
+{\footnotesize\ttfamily static void Open\+Ai\+Api\+Manager.\+Error\+Message (\begin{DoxyParamCaption}\item[{Exception}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Updates the help box with an error message. Recommends a higher timeout. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & The exception that should be used to update the help box. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_open_ai_api_manager_a91b2492834104b6cd28cbc9c9cf89f2d}\label{class_open_ai_api_manager_a91b2492834104b6cd28cbc9c9cf89f2d} 
+\index{OpenAiApiManager@{OpenAiApiManager}!GetEndPoint@{GetEndPoint}}
+\index{GetEndPoint@{GetEndPoint}!OpenAiApiManager@{OpenAiApiManager}}
+\doxysubsubsection{\texorpdfstring{GetEndPoint()}{GetEndPoint()}}
+{\footnotesize\ttfamily static string Open\+Ai\+Api\+Manager.\+Get\+End\+Point (\begin{DoxyParamCaption}\item[{string}]{gpt\+Model }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Returns the endpoint for the GPT model. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gpt\+Model} & The GPT model that should be used to send the request. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The endpoint for the GPT model. 
+\end{DoxyReturn}
+\Hypertarget{class_open_ai_api_manager_a6476ee332ad2ed0c25c3199e83ee2e47}\label{class_open_ai_api_manager_a6476ee332ad2ed0c25c3199e83ee2e47} 
+\index{OpenAiApiManager@{OpenAiApiManager}!ParseOpenApiResponse@{ParseOpenApiResponse}}
+\index{ParseOpenApiResponse@{ParseOpenApiResponse}!OpenAiApiManager@{OpenAiApiManager}}
+\doxysubsubsection{\texorpdfstring{ParseOpenApiResponse()}{ParseOpenApiResponse()}}
+{\footnotesize\ttfamily static string Open\+Ai\+Api\+Manager.\+Parse\+Open\+Api\+Response (\begin{DoxyParamCaption}\item[{string}]{json\+Response,  }\item[{bool}]{is\+Completion = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Parses the response of the Open\+AI API and returns the response as a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em json\+Response} & The response of the Open\+AI API as a string. \\
+\hline
+{\em is\+Completion} & Whether the response is a completion response or not. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The response of the Open\+AI API as a string. 
+\end{DoxyReturn}
+\Hypertarget{class_open_ai_api_manager_a99ce2123c25e5d1307e5762f0c1a9a2e}\label{class_open_ai_api_manager_a99ce2123c25e5d1307e5762f0c1a9a2e} 
+\index{OpenAiApiManager@{OpenAiApiManager}!RequestToGpt@{RequestToGpt}}
+\index{RequestToGpt@{RequestToGpt}!OpenAiApiManager@{OpenAiApiManager}}
+\doxysubsubsection{\texorpdfstring{RequestToGpt()}{RequestToGpt()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily static async Uni\+Task$<$ string $>$ Open\+Ai\+Api\+Manager.\+Request\+To\+Gpt (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}}}]{message\+List\+Builder }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Sends a list of messages to the GPT model and returns the response. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message\+List\+Builder} & The message list builder that contains the messages that should be sent to the GPT model. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The response of the GPT model. 
+\end{DoxyReturn}
+\Hypertarget{class_open_ai_api_manager_a29cdbddf8169f82f0064e0f18d055148}\label{class_open_ai_api_manager_a29cdbddf8169f82f0064e0f18d055148} 
+\index{OpenAiApiManager@{OpenAiApiManager}!RequestToGpt@{RequestToGpt}}
+\index{RequestToGpt@{RequestToGpt}!OpenAiApiManager@{OpenAiApiManager}}
+\doxysubsubsection{\texorpdfstring{RequestToGpt()}{RequestToGpt()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily static async Uni\+Task$<$ string $>$ Open\+Ai\+Api\+Manager.\+Request\+To\+Gpt (\begin{DoxyParamCaption}\item[{string}]{request\+Message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Sends a single message to the GPT model and returns the response. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request\+Message} & The message that should be sent to the GPT model. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The response of the GPT model. 
+\end{DoxyReturn}
+\Hypertarget{class_open_ai_api_manager_a213b4975a68d1e4b652dfc1d1ad4d4bd}\label{class_open_ai_api_manager_a213b4975a68d1e4b652dfc1d1ad4d4bd} 
+\index{OpenAiApiManager@{OpenAiApiManager}!SendGptApiRequestAsync@{SendGptApiRequestAsync}}
+\index{SendGptApiRequestAsync@{SendGptApiRequestAsync}!OpenAiApiManager@{OpenAiApiManager}}
+\doxysubsubsection{\texorpdfstring{SendGptApiRequestAsync()}{SendGptApiRequestAsync()}}
+{\footnotesize\ttfamily static async Uni\+Task$<$ string $>$ Open\+Ai\+Api\+Manager.\+Send\+Gpt\+Api\+Request\+Async (\begin{DoxyParamCaption}\item[{string}]{api\+Key,  }\item[{string}]{endpoint,  }\item[{string}]{request\+Body,  }\item[{int}]{timeout\+In\+Seconds = {\ttfamily 20} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Sends a request to the Open\+AI API and returns the response. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em api\+Key} & The API key that should be used to send the request. \\
+\hline
+{\em endpoint} & The endpoint that should be used to send the request. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_open_ai_api_manager_aa641c8d73182be5a200ecf3747f18d42}\label{class_open_ai_api_manager_aa641c8d73182be5a200ecf3747f18d42} 
+\index{OpenAiApiManager@{OpenAiApiManager}!SendMessagesToGpt@{SendMessagesToGpt}}
+\index{SendMessagesToGpt@{SendMessagesToGpt}!OpenAiApiManager@{OpenAiApiManager}}
+\doxysubsubsection{\texorpdfstring{SendMessagesToGpt()}{SendMessagesToGpt()}}
+{\footnotesize\ttfamily static async Uni\+Task$<$ string $>$ Open\+Ai\+Api\+Manager.\+Send\+Messages\+To\+Gpt (\begin{DoxyParamCaption}\item[{string}]{api\+Key,  }\item[{\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}}}]{message\+List\+Builder,  }\item[{string}]{gpt\+Model,  }\item[{float?}]{temperature,  }\item[{int}]{timeout\+In\+Seconds }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Sends a list of messages to the GPT model and returns the response. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em api\+Key} & The API key that should be used to send the request. \\
+\hline
+{\em message\+List\+Builder} & The message list builder that contains the messages that should be sent to the GPT model. \\
+\hline
+{\em gpt\+Model} & The GPT model that should be used to send the request. \\
+\hline
+{\em temperature} & The temperature that should be used to send the request. \\
+\hline
+{\em timeout\+In\+Seconds} & The timeout in seconds that should be used to send the request. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The response of the GPT model. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_open_ai_api_manager_a5f6e921fa3f25409f361712f4d1e704e}\label{class_open_ai_api_manager_a5f6e921fa3f25409f361712f4d1e704e} 
+\index{OpenAiApiManager@{OpenAiApiManager}!chatEndpoint@{chatEndpoint}}
+\index{chatEndpoint@{chatEndpoint}!OpenAiApiManager@{OpenAiApiManager}}
+\doxysubsubsection{\texorpdfstring{chatEndpoint}{chatEndpoint}}
+{\footnotesize\ttfamily const string Open\+Ai\+Api\+Manager.\+chat\+Endpoint = "{}https\+://api.\+openai.\+com/v1/chat/completions"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The endpoint for the chat model. 
+
+\Hypertarget{class_open_ai_api_manager_a130890b4d401dba0a2fe2e864eb1221e}\label{class_open_ai_api_manager_a130890b4d401dba0a2fe2e864eb1221e} 
+\index{OpenAiApiManager@{OpenAiApiManager}!completionsEndpoint@{completionsEndpoint}}
+\index{completionsEndpoint@{completionsEndpoint}!OpenAiApiManager@{OpenAiApiManager}}
+\doxysubsubsection{\texorpdfstring{completionsEndpoint}{completionsEndpoint}}
+{\footnotesize\ttfamily const string Open\+Ai\+Api\+Manager.\+completions\+Endpoint = "{}https\+://api.\+openai.\+com/v1/completions"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The endpoint for the completion model. (Davinci and Gpt Instruct) 
+
+\Hypertarget{class_open_ai_api_manager_ab8ebb958a31576c98334a370303d4c5b}\label{class_open_ai_api_manager_ab8ebb958a31576c98334a370303d4c5b} 
+\index{OpenAiApiManager@{OpenAiApiManager}!settingsFM@{settingsFM}}
+\index{settingsFM@{settingsFM}!OpenAiApiManager@{OpenAiApiManager}}
+\doxysubsubsection{\texorpdfstring{settingsFM}{settingsFM}}
+{\footnotesize\ttfamily readonly \mbox{\hyperlink{class_a_i_settings_file_manager}{AISettings\+File\+Manager}} Open\+Ai\+Api\+Manager.\+settings\+FM = \mbox{\hyperlink{class_a_i_settings_file_manager_a332ab7f3e4bc0505ae71ecfff98a4cc2}{AISettings\+File\+Manager.\+Get\+Instance}}()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The singleton instance of the settings file manager that contains the settings for the AI. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_open_ai_api_manager_8cs}{Open\+Ai\+Api\+Manager.\+cs}}\end{DoxyCompactItemize}

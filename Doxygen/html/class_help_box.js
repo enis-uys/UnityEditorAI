@@ -1,0 +1,27 @@
+var class_help_box =
+[
+    [ "DebugMessageIfShould", "class_help_box.html#ad2178101498a73acc478a811f52c9ec6", null ],
+    [ "FinishProgressBarWithDelay", "class_help_box.html#afafeae1af94b9247cc917f201fbeb62d", null ],
+    [ "GetInstance", "class_help_box.html#a37157adbf2d543c032e06cf87be2c63f", null ],
+    [ "RemoveMessage", "class_help_box.html#ad05ac670e2c977321eceb31b7084372d", null ],
+    [ "RenderProgressBar", "class_help_box.html#a04d144c567fe42c3510c18d4435f31c7", null ],
+    [ "SetProgressBarActive", "class_help_box.html#afa1e1a6a3afa7bd648857d64490e83f6", null ],
+    [ "SetProgressBarProgress", "class_help_box.html#ae6efdace28d85a9f66d823649746ea1d", null ],
+    [ "TimerDelayInMilliseconds", "class_help_box.html#ad6360fa16f4ef0e205304ce23dd062c9", null ],
+    [ "TimeSinceLastFunctionInMilliseconds", "class_help_box.html#a9d13f3d84be8fa2ea8c57c22413ab112", null ],
+    [ "UpdateIntendedProgress", "class_help_box.html#a66f0fe8ab70036acb792e6fa52b05cf2", null ],
+    [ "UpdateLastFunctionCalltime", "class_help_box.html#a24f5f9701f1c65d0c758c6c64f032aaa", null ],
+    [ "UpdateMessage", "class_help_box.html#a5a629703bfc1a6b7ab3e9bcf482798f8", null ],
+    [ "UpdateProgressBar", "class_help_box.html#a397154d31dc718f36af59b814a8bc92d", null ],
+    [ "instance", "class_help_box.html#a89b7c87486e72c44923fbd70c2136d86", null ],
+    [ "intendedProgress", "class_help_box.html#ab62f5386784b59bd3c343e9722a78a3c", null ],
+    [ "isProgressBarActive", "class_help_box.html#ab5db8d15fcff4f8af2ecd3b3ee49f865", null ],
+    [ "lastFunctionCallTime", "class_help_box.html#a5bcf8908c345136339e2be31729c1dfd", null ],
+    [ "pogressBarProgress", "class_help_box.html#ac6f28faadfb3d7c431e789828dc9f1d5", null ],
+    [ "progressBarDelayInMilliseconds", "class_help_box.html#aa480c0d6c74c23814549f3d12a30d73a", null ],
+    [ "timerThresholdInMilliseconds", "class_help_box.html#a7d6e781f79541cb88c766bc9e8e517ff", null ],
+    [ "HBMessage", "class_help_box.html#a651e35f9b3618967a46abf0c907b99fc", null ],
+    [ "HBMessageType", "class_help_box.html#a82a6569498c63ed9db38452862704d6c", null ],
+    [ "IntendedProgress", "class_help_box.html#a79cb165a11188f4364762df17bf12e38", null ],
+    [ "ProgressBarDelayInMilliseconds", "class_help_box.html#aa8fe9e2cf6905dfff53b7b18a6d85679", null ]
+];

@@ -1,0 +1,154 @@
+\doxysection{Script\+Util Class Reference}
+\hypertarget{class_script_util}{}\label{class_script_util}\index{ScriptUtil@{ScriptUtil}}
+
+
+The class that contains utility methods for script editing.  
+
+
+
+
+Collaboration diagram for Script\+Util\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{class_script_util__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static string \mbox{\hyperlink{class_script_util_a9dc1448dea3d424e31a2c68219a4237b}{Clean\+Script}} (string input\+String)
+\begin{DoxyCompactList}\small\item\em Cleans the script string to remove unwanted characters. Within the Open\+AI Api these are backticks (\`{}\`{}\`{}) and the term csharp as well as additional comments outside the code. \end{DoxyCompactList}\item 
+static string \mbox{\hyperlink{class_script_util_a5a764106dca55610aa4d077bfa5c037e}{Extract\+Name\+After\+Key\+Word\+From\+Script}} (string script\+String, string keyword)
+\begin{DoxyCompactList}\small\item\em Extracts the name after a keyword from a script. This is used for finding class names and function names. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_script_util_a87de27e95041381767b7db1051b19249}{Is\+Valid\+Message\+Format}} (string message)
+\begin{DoxyCompactList}\small\item\em Checks if the message is in the format "{}\+User\+: message"{} or "{}\+System\+: message"{}. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_script_util_ab76faec259f9dbe979869431e5a1c37a}{Is\+Valid\+Script}} (string script\+String)
+\begin{DoxyCompactList}\small\item\em Checks if the script is valid. The script\+String will get cleaned first and is valid if it is not null or empty and contains a class name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const string \mbox{\hyperlink{class_script_util_a9cfbf052969d53295fcfafd843c1f625}{Name\+Not\+Found}} = "{}Name\+Not\+Found"{}
+\begin{DoxyCompactList}\small\item\em A const that will be used for scripts where the name was not found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static string \mbox{\hyperlink{class_script_util_a893fef5e4b581c63e747e6df70a61ec6}{Get\+Word\+After\+Key\+Word\+Pattern}} (string keyword)
+\begin{DoxyCompactList}\small\item\em Returns the pattern for finding a word after a keyword. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class that contains utility methods for script editing. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_script_util_a9dc1448dea3d424e31a2c68219a4237b}\label{class_script_util_a9dc1448dea3d424e31a2c68219a4237b} 
+\index{ScriptUtil@{ScriptUtil}!CleanScript@{CleanScript}}
+\index{CleanScript@{CleanScript}!ScriptUtil@{ScriptUtil}}
+\doxysubsubsection{\texorpdfstring{CleanScript()}{CleanScript()}}
+{\footnotesize\ttfamily static string Script\+Util.\+Clean\+Script (\begin{DoxyParamCaption}\item[{string}]{input\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Cleans the script string to remove unwanted characters. Within the Open\+AI Api these are backticks (\`{}\`{}\`{}) and the term csharp as well as additional comments outside the code. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+String} & The script string to clean. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the cleaned script string. 
+\end{DoxyReturn}
+\Hypertarget{class_script_util_a5a764106dca55610aa4d077bfa5c037e}\label{class_script_util_a5a764106dca55610aa4d077bfa5c037e} 
+\index{ScriptUtil@{ScriptUtil}!ExtractNameAfterKeyWordFromScript@{ExtractNameAfterKeyWordFromScript}}
+\index{ExtractNameAfterKeyWordFromScript@{ExtractNameAfterKeyWordFromScript}!ScriptUtil@{ScriptUtil}}
+\doxysubsubsection{\texorpdfstring{ExtractNameAfterKeyWordFromScript()}{ExtractNameAfterKeyWordFromScript()}}
+{\footnotesize\ttfamily static string Script\+Util.\+Extract\+Name\+After\+Key\+Word\+From\+Script (\begin{DoxyParamCaption}\item[{string}]{script\+String,  }\item[{string}]{keyword }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Extracts the name after a keyword from a script. This is used for finding class names and function names. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em script\+String} & The script string to extract the name from. \\
+\hline
+{\em keyword} & The keyword to find. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\Hypertarget{class_script_util_a893fef5e4b581c63e747e6df70a61ec6}\label{class_script_util_a893fef5e4b581c63e747e6df70a61ec6} 
+\index{ScriptUtil@{ScriptUtil}!GetWordAfterKeyWordPattern@{GetWordAfterKeyWordPattern}}
+\index{GetWordAfterKeyWordPattern@{GetWordAfterKeyWordPattern}!ScriptUtil@{ScriptUtil}}
+\doxysubsubsection{\texorpdfstring{GetWordAfterKeyWordPattern()}{GetWordAfterKeyWordPattern()}}
+{\footnotesize\ttfamily static string Script\+Util.\+Get\+Word\+After\+Key\+Word\+Pattern (\begin{DoxyParamCaption}\item[{string}]{keyword }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Returns the pattern for finding a word after a keyword. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em keyword} & The keyword to search for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the regex pattern for finding a word after a keyword. 
+\end{DoxyReturn}
+\Hypertarget{class_script_util_a87de27e95041381767b7db1051b19249}\label{class_script_util_a87de27e95041381767b7db1051b19249} 
+\index{ScriptUtil@{ScriptUtil}!IsValidMessageFormat@{IsValidMessageFormat}}
+\index{IsValidMessageFormat@{IsValidMessageFormat}!ScriptUtil@{ScriptUtil}}
+\doxysubsubsection{\texorpdfstring{IsValidMessageFormat()}{IsValidMessageFormat()}}
+{\footnotesize\ttfamily static bool Script\+Util.\+Is\+Valid\+Message\+Format (\begin{DoxyParamCaption}\item[{string}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Checks if the message is in the format "{}\+User\+: message"{} or "{}\+System\+: message"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the message is in the format "{}\+User\+: message"{} or "{}\+System\+: message"{}, false otherwise.
+\end{DoxyReturn}
+NOTE\+: This method is not used anymore, but is kept for future use. \Hypertarget{class_script_util_ab76faec259f9dbe979869431e5a1c37a}\label{class_script_util_ab76faec259f9dbe979869431e5a1c37a} 
+\index{ScriptUtil@{ScriptUtil}!IsValidScript@{IsValidScript}}
+\index{IsValidScript@{IsValidScript}!ScriptUtil@{ScriptUtil}}
+\doxysubsubsection{\texorpdfstring{IsValidScript()}{IsValidScript()}}
+{\footnotesize\ttfamily static bool Script\+Util.\+Is\+Valid\+Script (\begin{DoxyParamCaption}\item[{string}]{script\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Checks if the script is valid. The script\+String will get cleaned first and is valid if it is not null or empty and contains a class name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em script\+String} & The script string to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the script is valid, false otherwise. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_script_util_a9cfbf052969d53295fcfafd843c1f625}\label{class_script_util_a9cfbf052969d53295fcfafd843c1f625} 
+\index{ScriptUtil@{ScriptUtil}!NameNotFound@{NameNotFound}}
+\index{NameNotFound@{NameNotFound}!ScriptUtil@{ScriptUtil}}
+\doxysubsubsection{\texorpdfstring{NameNotFound}{NameNotFound}}
+{\footnotesize\ttfamily const string Script\+Util.\+Name\+Not\+Found = "{}Name\+Not\+Found"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+A const that will be used for scripts where the name was not found. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_script_util_8cs}{Script\+Util.\+cs}}\end{DoxyCompactItemize}

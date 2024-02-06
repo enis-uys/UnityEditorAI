@@ -1,0 +1,7 @@
+<map id="ColorExtruder" name="ColorExtruder">
+<area shape="rect" id="Node000001" title="The color extruder, that extracts the colors of an image and saves them as a color array object." alt="" coords="5,645,205,1136"/>
+<area shape="rect" id="Node000002" href="$class_single_extension_application.html" title="The abstract class for a single application in the extension." alt="" coords="5,123,205,597"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,612,108,646,103,646,103,612"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="51,5,160,75"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="108,89,108,123,103,123,103,89"/>
+</map>

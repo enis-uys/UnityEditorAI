@@ -1,0 +1,167 @@
+\doxysection{Extension\+Tabs Class Reference}
+\hypertarget{class_extension_tabs}{}\label{class_extension_tabs}\index{ExtensionTabs@{ExtensionTabs}}
+
+
+The main window of the AI extension.  
+
+
+
+
+Inheritance diagram for Extension\+Tabs\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=176pt]{class_extension_tabs__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Extension\+Tabs\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_extension_tabs__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_extension_tabs_afed4ef09ae18ad63407e81edaa63bbaa}{Show\+Window}} ()
+\begin{DoxyCompactList}\small\item\em Opens the window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static string\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{class_extension_tabs_a7032c431c95b470469ac9fac05847771}{Display\+Names}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The list of display names for the applications. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_extension_tabs_a260a86add7fcea9e7dc8bad3d71783ce}{Has\+Init}} = false\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Whether the window has been initialized. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_extension_tabs_a2d6d5dc248c1b815ebfbf79e72d2b8c1}{On\+Enable}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_extension_tabs_ac63460a69b918da050e07a2ec90cff89}{Initialize}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the applications. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_extension_tabs_a64c48f7d46090291f2202ab331f8598f}{On\+GUI}} ()
+\begin{DoxyCompactList}\small\item\em Draws the window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_extension_tabs_a3044e6c042474f81d57016fc93a171c4}{current\+Application}}
+\begin{DoxyCompactList}\small\item\em The index of the current application. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{class_extension_tabs_a05b50dd9c5aab182d7e8ae43ff3a1c09}{scroll\+Position}}
+\begin{DoxyCompactList}\small\item\em The scroll position of the whole extension window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{class_extension_tabs_aadfa3626eaa591f595d36e984855a933}{applications}}
+\begin{DoxyCompactList}\small\item\em The list of applications to display in the toolbar. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The main window of the AI extension. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_extension_tabs_ac63460a69b918da050e07a2ec90cff89}\label{class_extension_tabs_ac63460a69b918da050e07a2ec90cff89} 
+\index{ExtensionTabs@{ExtensionTabs}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!ExtensionTabs@{ExtensionTabs}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily void Extension\+Tabs.\+Initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initializes the applications. 
+
+\Hypertarget{class_extension_tabs_a2d6d5dc248c1b815ebfbf79e72d2b8c1}\label{class_extension_tabs_a2d6d5dc248c1b815ebfbf79e72d2b8c1} 
+\index{ExtensionTabs@{ExtensionTabs}!OnEnable@{OnEnable}}
+\index{OnEnable@{OnEnable}!ExtensionTabs@{ExtensionTabs}}
+\doxysubsubsection{\texorpdfstring{OnEnable()}{OnEnable()}}
+{\footnotesize\ttfamily void Extension\+Tabs.\+On\+Enable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initializes the window. 
+
+\Hypertarget{class_extension_tabs_a64c48f7d46090291f2202ab331f8598f}\label{class_extension_tabs_a64c48f7d46090291f2202ab331f8598f} 
+\index{ExtensionTabs@{ExtensionTabs}!OnGUI@{OnGUI}}
+\index{OnGUI@{OnGUI}!ExtensionTabs@{ExtensionTabs}}
+\doxysubsubsection{\texorpdfstring{OnGUI()}{OnGUI()}}
+{\footnotesize\ttfamily void Extension\+Tabs.\+On\+GUI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Draws the window. 
+
+\Hypertarget{class_extension_tabs_afed4ef09ae18ad63407e81edaa63bbaa}\label{class_extension_tabs_afed4ef09ae18ad63407e81edaa63bbaa} 
+\index{ExtensionTabs@{ExtensionTabs}!ShowWindow@{ShowWindow}}
+\index{ShowWindow@{ShowWindow}!ExtensionTabs@{ExtensionTabs}}
+\doxysubsubsection{\texorpdfstring{ShowWindow()}{ShowWindow()}}
+{\footnotesize\ttfamily static void Extension\+Tabs.\+Show\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Opens the window. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_extension_tabs_aadfa3626eaa591f595d36e984855a933}\label{class_extension_tabs_aadfa3626eaa591f595d36e984855a933} 
+\index{ExtensionTabs@{ExtensionTabs}!applications@{applications}}
+\index{applications@{applications}!ExtensionTabs@{ExtensionTabs}}
+\doxysubsubsection{\texorpdfstring{applications}{applications}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}} \mbox{[}$\,$\mbox{]} Extension\+Tabs.\+applications\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The list of applications to display in the toolbar. 
+
+\Hypertarget{class_extension_tabs_a3044e6c042474f81d57016fc93a171c4}\label{class_extension_tabs_a3044e6c042474f81d57016fc93a171c4} 
+\index{ExtensionTabs@{ExtensionTabs}!currentApplication@{currentApplication}}
+\index{currentApplication@{currentApplication}!ExtensionTabs@{ExtensionTabs}}
+\doxysubsubsection{\texorpdfstring{currentApplication}{currentApplication}}
+{\footnotesize\ttfamily int Extension\+Tabs.\+current\+Application\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The index of the current application. 
+
+\Hypertarget{class_extension_tabs_a05b50dd9c5aab182d7e8ae43ff3a1c09}\label{class_extension_tabs_a05b50dd9c5aab182d7e8ae43ff3a1c09} 
+\index{ExtensionTabs@{ExtensionTabs}!scrollPosition@{scrollPosition}}
+\index{scrollPosition@{scrollPosition}!ExtensionTabs@{ExtensionTabs}}
+\doxysubsubsection{\texorpdfstring{scrollPosition}{scrollPosition}}
+{\footnotesize\ttfamily Vector2 Extension\+Tabs.\+scroll\+Position\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The scroll position of the whole extension window. 
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_extension_tabs_a7032c431c95b470469ac9fac05847771}\label{class_extension_tabs_a7032c431c95b470469ac9fac05847771} 
+\index{ExtensionTabs@{ExtensionTabs}!DisplayNames@{DisplayNames}}
+\index{DisplayNames@{DisplayNames}!ExtensionTabs@{ExtensionTabs}}
+\doxysubsubsection{\texorpdfstring{DisplayNames}{DisplayNames}}
+{\footnotesize\ttfamily string \mbox{[}$\,$\mbox{]} Extension\+Tabs.\+Display\+Names\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}, {\ttfamily [private]}}
+
+
+
+The list of display names for the applications. 
+
+\Hypertarget{class_extension_tabs_a260a86add7fcea9e7dc8bad3d71783ce}\label{class_extension_tabs_a260a86add7fcea9e7dc8bad3d71783ce} 
+\index{ExtensionTabs@{ExtensionTabs}!HasInit@{HasInit}}
+\index{HasInit@{HasInit}!ExtensionTabs@{ExtensionTabs}}
+\doxysubsubsection{\texorpdfstring{HasInit}{HasInit}}
+{\footnotesize\ttfamily bool Extension\+Tabs.\+Has\+Init = false\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [private]}}
+
+
+
+Whether the window has been initialized. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_extension_tabs_8cs}{Extension\+Tabs.\+cs}}\end{DoxyCompactItemize}

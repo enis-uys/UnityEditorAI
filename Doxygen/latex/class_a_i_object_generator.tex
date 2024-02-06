@@ -1,0 +1,432 @@
+\doxysection{AIObject\+Generator Class Reference}
+\hypertarget{class_a_i_object_generator}{}\label{class_a_i_object_generator}\index{AIObjectGenerator@{AIObjectGenerator}}
+
+
+Single application for the AI extension. It is used to generate new Game\+Objects inside a Unity Scene.  
+
+
+
+
+Inheritance diagram for AIObject\+Generator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_a_i_object_generator__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for AIObject\+Generator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_a_i_object_generator__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2}{Editor\+Pref\+Key}} \{ \mbox{\hyperlink{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2a717005ccd2210f4a10053ae83b6d2c37}{Input\+Object\+Text}}
+, \mbox{\hyperlink{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2ab7406a7f718dae0f688c34607325b4b3}{Do\+Task\+Script\+Content}}
+, \mbox{\hyperlink{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2a87c14da1211fe0b23b35526d6f0a72f8}{Do\+Task\+Path}}
+, \mbox{\hyperlink{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2a56eb40e1e4f91e64bd81691e15f64502}{Selected\+Prompt}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override void \mbox{\hyperlink{class_a_i_object_generator_a880171a088ff454d536c6d4ee57e88cb}{On\+GUI}} ()
+\begin{DoxyCompactList}\small\item\em GUI callback for rendering the AI Object Generator extension. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_single_extension_application_ad4c53dc687f77685921ecbc18952eed8}{Initialize}} (Editor\+Window \mbox{\hyperlink{class_single_extension_application_aed64f61e6f6d5d8ba0ccaabd9fc3b7fe}{window}})
+\begin{DoxyCompactList}\small\item\em Initializes the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_aa51a43317f0bbf7265cf8cc1113f6150}{On\+GUI}} ()
+\begin{DoxyCompactList}\small\item\em Abstract method that renders the GUI of the application. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_single_extension_application_a6a4b4a85bfcd37cc26515d9bf290717f}{On\+Enable}} ()
+\begin{DoxyCompactList}\small\item\em Abstract method that is called when the application is enabled. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_aa1cd2c244df403bc0cd4ed3130ff60b7}{Repaint}} ()
+\begin{DoxyCompactList}\small\item\em Method that repaints the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ac790580eb6b04325403418919ae004a2}{Focus}} ()
+\begin{DoxyCompactList}\small\item\em Method that focuses the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_af7566e21f700c97714206139bc8b3fa8}{Show}} ()
+\begin{DoxyCompactList}\small\item\em Method that shows the window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_single_extension_application_a70cd16b4dcbc26cf2b270333c3d5a3ba}{Get\+Help\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a1891a14e184b830a220f00f730facf30}{Close}} ()
+\begin{DoxyCompactList}\small\item\em Method that closes the window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_a_i_object_generator_aaca741e364ca36adeb0938aa951d1d38}{Reload\+Prompt\+List}} ()
+\begin{DoxyCompactList}\small\item\em Reloads the prompt list from the JSON file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+override string \mbox{\hyperlink{class_a_i_object_generator_a5261b9a3526efb7c7621894c677ddd85}{Display\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The display name of the application. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_a_i_object_generator_a59d67a3a53f4d2a500baebf93042dd58}{Has\+Init}} = false\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_single_extension_application_ae12cba99589c5a8b18cd4fa02033ef3b}{Display\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The display name of a single application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_a_i_object_generator_aa3ac8fd600dc813b702c8368bd734319}{Render\+Prefab\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Renders the prefab field. (not used yet) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_object_generator_a50648814a860d026dd9133b39dab8c14}{Render\+Input\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Renders the input field. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_object_generator_af578a29dcc19d663c5760d3c994402e6}{Render\+Popup\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Renders the prompt popup field. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_object_generator_acb125677113167aff25c9f456d5b4d92}{Render\+Temp\+Do\+Task\+Content}} ()
+\begin{DoxyCompactList}\small\item\em Renders the temporary script content (if it exists) \end{DoxyCompactList}\item 
+async void \mbox{\hyperlink{class_a_i_object_generator_a5fe7e36ce879716cf8dc46c5a0038bcc}{Process\+Input\+Prompt\+For\+Generate}} (string input\+Prompt)
+\begin{DoxyCompactList}\small\item\em Processes the input prompt and sends it to the Open\+AI API to generate a new Game\+Object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_object_generator_aeee63a53cd8f70cd40dd0d2354ff68d9}{Write\+Do\+Task\+Script\+In\+File}} ()
+\begin{DoxyCompactList}\small\item\em Creates a script with reflection inside a temporary file and refreshes the asset database. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_object_generator_a777fd7cd1ba98811faf607a667f6675a}{Load\+Editor\+Prefs}} ()
+\begin{DoxyCompactList}\small\item\em Loads the editor prefs. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_i_object_generator_ac693360c8d007a06202ff274f8f994d8}{Set\+Editor\+Prefs}} ()
+\begin{DoxyCompactList}\small\item\em Sets the editor prefs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_a_i_object_generator_aa875bb5fbcd0466bbc8ebc2480b0bc87}{Execute\+And\+Delete\+After\+Reload}} ()
+\begin{DoxyCompactList}\small\item\em Executes the temporary script and deletes it afterwards. It is called after the asset database is refreshed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_a_i_object_generator_a09b022984a20ae8f0bcf9cc9fb75688e}{input\+Text}} = "{}"{}
+\begin{DoxyCompactList}\small\item\em The input text for the prompt. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{class_a_i_object_generator_acbfdf402120516d00c198e97a65d2d36}{input\+Scroll\+Position}}
+\begin{DoxyCompactList}\small\item\em The scroll position of the input text. \end{DoxyCompactList}\item 
+Game\+Object \mbox{\hyperlink{class_a_i_object_generator_a8f03c7da513f72fd9e0033d10919128d}{cs\+Prefab}}
+\begin{DoxyCompactList}\small\item\em The prefab that is used to generate the new Game\+Object. It is not used yet. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_a_i_object_generator_a2aee9bb84745601b62810a6b69d05189}{do\+Task\+Script\+Content}}
+\begin{DoxyCompactList}\small\item\em The content of the temporary script that is used to generate the new Game\+Object. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_a_i_object_generator_ae90ebd2ee8ab51bc7bdef7fa31b5a5e5}{selected\+Prompt\+Key}} = 0
+\begin{DoxyCompactList}\small\item\em The index of the selected prompt. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const string \mbox{\hyperlink{class_a_i_object_generator_a7dd13dc315a650207e92992560ee386a}{Do\+Task\+Temp}} = "{}Do\+Task\+Temp"{}
+\begin{DoxyCompactList}\small\item\em The name of the temporary script that is used to generate the new Game\+Object. \end{DoxyCompactList}\item 
+static string \mbox{\hyperlink{class_a_i_object_generator_add758382aabf39191fd996d6a6d33074}{do\+Task\+Path}}
+\begin{DoxyCompactList}\small\item\em The path of the temporary script that is used to generate the new Game\+Object. \end{DoxyCompactList}\item 
+static List$<$(string Title, string Content)$>$ \mbox{\hyperlink{class_a_i_object_generator_aa242c50491895e28d62b48af881db0b2}{loaded\+Prompt\+List}} = new()
+\begin{DoxyCompactList}\small\item\em The list of prompts that are loaded from the JSON file. \end{DoxyCompactList}\item 
+static readonly Dictionary$<$ \mbox{\hyperlink{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2}{Editor\+Pref\+Key}}, string $>$ \mbox{\hyperlink{class_a_i_object_generator_a8680679a1f6028348accc7c4fba71d66}{editor\+Pref\+Keys}}
+\begin{DoxyCompactList}\small\item\em The dictionary that contains the keys for the editor prefs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_a5c8eb26811e8e8be2adef8de8ce9e9cc}{Create\+Rich\+Text\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a rich text style for colored text. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_aaf0f5f643db07bf144406930febd6825}{Create\+Code\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a code style for displaying code. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_a10fbb10372723562264b8450fb97d8bd}{Create\+Highlight\+Button\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ae44d34c95f1d6d1b639397672061d642}{Render\+Help\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Method that renders the help box of the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ac7196ccc94638a9c937835e929ba8149}{Show\+Progress\+Bar}} (float progress)
+\begin{DoxyCompactList}\small\item\em Method that renders the help box of the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_af44fba8eb1f4e67690bb9125ef8c695c}{Finish\+Progress\+Bar\+With\+Delay}} (int milli\+Seconds=700)
+\begin{DoxyCompactList}\small\item\em Method that finishes the progress bar of the help box and closes it after a delay. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a227b21fbcd7615885b5942123a496d09}{Add\+Default\+Space}} ()
+\begin{DoxyCompactList}\small\item\em Method to add a default space between GUI elements. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a00d19da43cb9c34bb4fb9256c0fba86a}{Reset\+Keyboard\+Control}} ()
+\begin{DoxyCompactList}\small\item\em Method to Reset the keyboard control. It is used, if a user should focus out of a textfield. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_single_extension_application_a542a28ee031c28c77091b8684ed972e4}{default\+Space}} = 10
+\begin{DoxyCompactList}\small\item\em The default space between GUI elements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_single_extension_application_abd98e67099069da3b0fccbd439d8edf2}{help\+Box}} = \mbox{\hyperlink{class_help_box_a37157adbf2d543c032e06cf87be2c63f}{Help\+Box.\+Get\+Instance}}()
+\begin{DoxyCompactList}\small\item\em The help box of a single application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Single application for the AI extension. It is used to generate new Game\+Objects inside a Unity Scene. 
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2}\label{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2} 
+\index{AIObjectGenerator@{AIObjectGenerator}!EditorPrefKey@{EditorPrefKey}}
+\index{EditorPrefKey@{EditorPrefKey}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{EditorPrefKey}{EditorPrefKey}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2}{AIObject\+Generator.\+Editor\+Pref\+Key}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{InputObjectText@{InputObjectText}!AIObjectGenerator@{AIObjectGenerator}}\index{AIObjectGenerator@{AIObjectGenerator}!InputObjectText@{InputObjectText}}}\Hypertarget{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2a717005ccd2210f4a10053ae83b6d2c37}\label{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2a717005ccd2210f4a10053ae83b6d2c37} 
+Input\+Object\+Text&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DoTaskScriptContent@{DoTaskScriptContent}!AIObjectGenerator@{AIObjectGenerator}}\index{AIObjectGenerator@{AIObjectGenerator}!DoTaskScriptContent@{DoTaskScriptContent}}}\Hypertarget{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2ab7406a7f718dae0f688c34607325b4b3}\label{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2ab7406a7f718dae0f688c34607325b4b3} 
+Do\+Task\+Script\+Content&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DoTaskPath@{DoTaskPath}!AIObjectGenerator@{AIObjectGenerator}}\index{AIObjectGenerator@{AIObjectGenerator}!DoTaskPath@{DoTaskPath}}}\Hypertarget{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2a87c14da1211fe0b23b35526d6f0a72f8}\label{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2a87c14da1211fe0b23b35526d6f0a72f8} 
+Do\+Task\+Path&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SelectedPrompt@{SelectedPrompt}!AIObjectGenerator@{AIObjectGenerator}}\index{AIObjectGenerator@{AIObjectGenerator}!SelectedPrompt@{SelectedPrompt}}}\Hypertarget{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2a56eb40e1e4f91e64bd81691e15f64502}\label{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2a56eb40e1e4f91e64bd81691e15f64502} 
+Selected\+Prompt&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_i_object_generator_aa875bb5fbcd0466bbc8ebc2480b0bc87}\label{class_a_i_object_generator_aa875bb5fbcd0466bbc8ebc2480b0bc87} 
+\index{AIObjectGenerator@{AIObjectGenerator}!ExecuteAndDeleteAfterReload@{ExecuteAndDeleteAfterReload}}
+\index{ExecuteAndDeleteAfterReload@{ExecuteAndDeleteAfterReload}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{ExecuteAndDeleteAfterReload()}{ExecuteAndDeleteAfterReload()}}
+{\footnotesize\ttfamily static void AIObject\+Generator.\+Execute\+And\+Delete\+After\+Reload (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Executes the temporary script and deletes it afterwards. It is called after the asset database is refreshed. 
+
+\Hypertarget{class_a_i_object_generator_a777fd7cd1ba98811faf607a667f6675a}\label{class_a_i_object_generator_a777fd7cd1ba98811faf607a667f6675a} 
+\index{AIObjectGenerator@{AIObjectGenerator}!LoadEditorPrefs@{LoadEditorPrefs}}
+\index{LoadEditorPrefs@{LoadEditorPrefs}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{LoadEditorPrefs()}{LoadEditorPrefs()}}
+{\footnotesize\ttfamily void AIObject\+Generator.\+Load\+Editor\+Prefs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Loads the editor prefs. 
+
+\Hypertarget{class_a_i_object_generator_a880171a088ff454d536c6d4ee57e88cb}\label{class_a_i_object_generator_a880171a088ff454d536c6d4ee57e88cb} 
+\index{AIObjectGenerator@{AIObjectGenerator}!OnGUI@{OnGUI}}
+\index{OnGUI@{OnGUI}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{OnGUI()}{OnGUI()}}
+{\footnotesize\ttfamily override void AIObject\+Generator.\+On\+GUI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+GUI callback for rendering the AI Object Generator extension. 
+
+\Hypertarget{class_a_i_object_generator_a5fe7e36ce879716cf8dc46c5a0038bcc}\label{class_a_i_object_generator_a5fe7e36ce879716cf8dc46c5a0038bcc} 
+\index{AIObjectGenerator@{AIObjectGenerator}!ProcessInputPromptForGenerate@{ProcessInputPromptForGenerate}}
+\index{ProcessInputPromptForGenerate@{ProcessInputPromptForGenerate}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{ProcessInputPromptForGenerate()}{ProcessInputPromptForGenerate()}}
+{\footnotesize\ttfamily async void AIObject\+Generator.\+Process\+Input\+Prompt\+For\+Generate (\begin{DoxyParamCaption}\item[{string}]{input\+Prompt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Processes the input prompt and sends it to the Open\+AI API to generate a new Game\+Object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Prompt} & The input prompt that is used to generate the new Game\+Object. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_i_object_generator_aaca741e364ca36adeb0938aa951d1d38}\label{class_a_i_object_generator_aaca741e364ca36adeb0938aa951d1d38} 
+\index{AIObjectGenerator@{AIObjectGenerator}!ReloadPromptList@{ReloadPromptList}}
+\index{ReloadPromptList@{ReloadPromptList}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{ReloadPromptList()}{ReloadPromptList()}}
+{\footnotesize\ttfamily static void AIObject\+Generator.\+Reload\+Prompt\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Reloads the prompt list from the JSON file. 
+
+\Hypertarget{class_a_i_object_generator_a50648814a860d026dd9133b39dab8c14}\label{class_a_i_object_generator_a50648814a860d026dd9133b39dab8c14} 
+\index{AIObjectGenerator@{AIObjectGenerator}!RenderInputField@{RenderInputField}}
+\index{RenderInputField@{RenderInputField}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{RenderInputField()}{RenderInputField()}}
+{\footnotesize\ttfamily void AIObject\+Generator.\+Render\+Input\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the input field. 
+
+\Hypertarget{class_a_i_object_generator_af578a29dcc19d663c5760d3c994402e6}\label{class_a_i_object_generator_af578a29dcc19d663c5760d3c994402e6} 
+\index{AIObjectGenerator@{AIObjectGenerator}!RenderPopupField@{RenderPopupField}}
+\index{RenderPopupField@{RenderPopupField}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{RenderPopupField()}{RenderPopupField()}}
+{\footnotesize\ttfamily void AIObject\+Generator.\+Render\+Popup\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the prompt popup field. 
+
+\Hypertarget{class_a_i_object_generator_aa3ac8fd600dc813b702c8368bd734319}\label{class_a_i_object_generator_aa3ac8fd600dc813b702c8368bd734319} 
+\index{AIObjectGenerator@{AIObjectGenerator}!RenderPrefabField@{RenderPrefabField}}
+\index{RenderPrefabField@{RenderPrefabField}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{RenderPrefabField()}{RenderPrefabField()}}
+{\footnotesize\ttfamily void AIObject\+Generator.\+Render\+Prefab\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the prefab field. (not used yet) 
+
+\Hypertarget{class_a_i_object_generator_acb125677113167aff25c9f456d5b4d92}\label{class_a_i_object_generator_acb125677113167aff25c9f456d5b4d92} 
+\index{AIObjectGenerator@{AIObjectGenerator}!RenderTempDoTaskContent@{RenderTempDoTaskContent}}
+\index{RenderTempDoTaskContent@{RenderTempDoTaskContent}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{RenderTempDoTaskContent()}{RenderTempDoTaskContent()}}
+{\footnotesize\ttfamily void AIObject\+Generator.\+Render\+Temp\+Do\+Task\+Content (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the temporary script content (if it exists) 
+
+\Hypertarget{class_a_i_object_generator_ac693360c8d007a06202ff274f8f994d8}\label{class_a_i_object_generator_ac693360c8d007a06202ff274f8f994d8} 
+\index{AIObjectGenerator@{AIObjectGenerator}!SetEditorPrefs@{SetEditorPrefs}}
+\index{SetEditorPrefs@{SetEditorPrefs}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{SetEditorPrefs()}{SetEditorPrefs()}}
+{\footnotesize\ttfamily void AIObject\+Generator.\+Set\+Editor\+Prefs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sets the editor prefs. 
+
+\Hypertarget{class_a_i_object_generator_aeee63a53cd8f70cd40dd0d2354ff68d9}\label{class_a_i_object_generator_aeee63a53cd8f70cd40dd0d2354ff68d9} 
+\index{AIObjectGenerator@{AIObjectGenerator}!WriteDoTaskScriptInFile@{WriteDoTaskScriptInFile}}
+\index{WriteDoTaskScriptInFile@{WriteDoTaskScriptInFile}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{WriteDoTaskScriptInFile()}{WriteDoTaskScriptInFile()}}
+{\footnotesize\ttfamily void AIObject\+Generator.\+Write\+Do\+Task\+Script\+In\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Creates a script with reflection inside a temporary file and refreshes the asset database. 
+
+$<$\+Availability$>$ \href{https://github.com/keijiro/AICommand/}{\texttt{ https\+://github.\+com/keijiro/\+AICommand/}} $<$/\+Availability$>$ License\texorpdfstring{$>$}{>} Free To Use Public Domain License. View LICENSE.\+md to see the license and information. $<$/\+License$>$ Description\texorpdfstring{$>$}{>} AICommand is a Unity extension that experiment with a command window for executing C\# scripts from the gpt api.  
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_a_i_object_generator_a8f03c7da513f72fd9e0033d10919128d}\label{class_a_i_object_generator_a8f03c7da513f72fd9e0033d10919128d} 
+\index{AIObjectGenerator@{AIObjectGenerator}!csPrefab@{csPrefab}}
+\index{csPrefab@{csPrefab}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{csPrefab}{csPrefab}}
+{\footnotesize\ttfamily Game\+Object AIObject\+Generator.\+cs\+Prefab\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The prefab that is used to generate the new Game\+Object. It is not used yet. 
+
+\Hypertarget{class_a_i_object_generator_add758382aabf39191fd996d6a6d33074}\label{class_a_i_object_generator_add758382aabf39191fd996d6a6d33074} 
+\index{AIObjectGenerator@{AIObjectGenerator}!doTaskPath@{doTaskPath}}
+\index{doTaskPath@{doTaskPath}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{doTaskPath}{doTaskPath}}
+{\footnotesize\ttfamily string AIObject\+Generator.\+do\+Task\+Path\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The path of the temporary script that is used to generate the new Game\+Object. 
+
+\Hypertarget{class_a_i_object_generator_a2aee9bb84745601b62810a6b69d05189}\label{class_a_i_object_generator_a2aee9bb84745601b62810a6b69d05189} 
+\index{AIObjectGenerator@{AIObjectGenerator}!doTaskScriptContent@{doTaskScriptContent}}
+\index{doTaskScriptContent@{doTaskScriptContent}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{doTaskScriptContent}{doTaskScriptContent}}
+{\footnotesize\ttfamily string AIObject\+Generator.\+do\+Task\+Script\+Content\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The content of the temporary script that is used to generate the new Game\+Object. 
+
+\Hypertarget{class_a_i_object_generator_a7dd13dc315a650207e92992560ee386a}\label{class_a_i_object_generator_a7dd13dc315a650207e92992560ee386a} 
+\index{AIObjectGenerator@{AIObjectGenerator}!DoTaskTemp@{DoTaskTemp}}
+\index{DoTaskTemp@{DoTaskTemp}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{DoTaskTemp}{DoTaskTemp}}
+{\footnotesize\ttfamily const string AIObject\+Generator.\+Do\+Task\+Temp = "{}Do\+Task\+Temp"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The name of the temporary script that is used to generate the new Game\+Object. 
+
+\Hypertarget{class_a_i_object_generator_a8680679a1f6028348accc7c4fba71d66}\label{class_a_i_object_generator_a8680679a1f6028348accc7c4fba71d66} 
+\index{AIObjectGenerator@{AIObjectGenerator}!editorPrefKeys@{editorPrefKeys}}
+\index{editorPrefKeys@{editorPrefKeys}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{editorPrefKeys}{editorPrefKeys}}
+{\footnotesize\ttfamily readonly Dictionary$<$\mbox{\hyperlink{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2}{Editor\+Pref\+Key}}, string$>$ AIObject\+Generator.\+editor\+Pref\+Keys\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{new}()}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2}{EditorPrefKey}}.InputObjectText,\ \textcolor{stringliteral}{"{}InputObjectTextKey"{}}\ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2}{EditorPrefKey}}.DoTaskScriptContent,\ \textcolor{stringliteral}{"{}DoTaskScriptContentKey"{}}\ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2}{EditorPrefKey}}.DoTaskPath,\ \textcolor{stringliteral}{"{}DoTaskPathKey"{}}\ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_a_i_object_generator_a29bf945bb71101f393eae91599b562f2}{EditorPrefKey}}.SelectedPrompt,\ \textcolor{stringliteral}{"{}SelectedPromptKey"{}}\ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The dictionary that contains the keys for the editor prefs. 
+
+\Hypertarget{class_a_i_object_generator_acbfdf402120516d00c198e97a65d2d36}\label{class_a_i_object_generator_acbfdf402120516d00c198e97a65d2d36} 
+\index{AIObjectGenerator@{AIObjectGenerator}!inputScrollPosition@{inputScrollPosition}}
+\index{inputScrollPosition@{inputScrollPosition}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{inputScrollPosition}{inputScrollPosition}}
+{\footnotesize\ttfamily Vector2 AIObject\+Generator.\+input\+Scroll\+Position\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The scroll position of the input text. 
+
+\Hypertarget{class_a_i_object_generator_a09b022984a20ae8f0bcf9cc9fb75688e}\label{class_a_i_object_generator_a09b022984a20ae8f0bcf9cc9fb75688e} 
+\index{AIObjectGenerator@{AIObjectGenerator}!inputText@{inputText}}
+\index{inputText@{inputText}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{inputText}{inputText}}
+{\footnotesize\ttfamily string AIObject\+Generator.\+input\+Text = "{}"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The input text for the prompt. 
+
+\Hypertarget{class_a_i_object_generator_aa242c50491895e28d62b48af881db0b2}\label{class_a_i_object_generator_aa242c50491895e28d62b48af881db0b2} 
+\index{AIObjectGenerator@{AIObjectGenerator}!loadedPromptList@{loadedPromptList}}
+\index{loadedPromptList@{loadedPromptList}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{loadedPromptList}{loadedPromptList}}
+{\footnotesize\ttfamily List$<$(string Title, string Content)$>$ AIObject\+Generator.\+loaded\+Prompt\+List = new()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The list of prompts that are loaded from the JSON file. 
+
+\Hypertarget{class_a_i_object_generator_ae90ebd2ee8ab51bc7bdef7fa31b5a5e5}\label{class_a_i_object_generator_ae90ebd2ee8ab51bc7bdef7fa31b5a5e5} 
+\index{AIObjectGenerator@{AIObjectGenerator}!selectedPromptKey@{selectedPromptKey}}
+\index{selectedPromptKey@{selectedPromptKey}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{selectedPromptKey}{selectedPromptKey}}
+{\footnotesize\ttfamily int AIObject\+Generator.\+selected\+Prompt\+Key = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The index of the selected prompt. 
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_a_i_object_generator_a5261b9a3526efb7c7621894c677ddd85}\label{class_a_i_object_generator_a5261b9a3526efb7c7621894c677ddd85} 
+\index{AIObjectGenerator@{AIObjectGenerator}!DisplayName@{DisplayName}}
+\index{DisplayName@{DisplayName}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{DisplayName}{DisplayName}}
+{\footnotesize\ttfamily override string AIObject\+Generator.\+Display\+Name\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+The display name of the application. 
+
+\Hypertarget{class_a_i_object_generator_a59d67a3a53f4d2a500baebf93042dd58}\label{class_a_i_object_generator_a59d67a3a53f4d2a500baebf93042dd58} 
+\index{AIObjectGenerator@{AIObjectGenerator}!HasInit@{HasInit}}
+\index{HasInit@{HasInit}!AIObjectGenerator@{AIObjectGenerator}}
+\doxysubsubsection{\texorpdfstring{HasInit}{HasInit}}
+{\footnotesize\ttfamily bool AIObject\+Generator.\+Has\+Init = false\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_a_i_object_generator_8cs}{AIObject\+Generator.\+cs}}\end{DoxyCompactItemize}

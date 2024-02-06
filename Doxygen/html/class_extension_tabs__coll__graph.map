@@ -1,0 +1,12 @@
+<map id="ExtensionTabs" name="ExtensionTabs">
+<area shape="rect" id="Node000001" title="The main window of the AI extension." alt="" coords="9,1104,137,1301"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,779,99,848"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="57,863,71,1104,65,1104,52,863"/>
+<area shape="rect" id="Node000003" href="$class_single_extension_application.html" title="The abstract class for a single application in the extension." alt="" coords="123,587,323,1040"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="138,1041,119,1089,114,1087,133,1039"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="107,229,216,299"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="169,313,200,586,195,587,164,313"/>
+<area shape="rect" id="Node000005" href="$class_help_box.html" title="The help box class that is used to display messages and progress bars to the user." alt="" coords="241,5,490,523"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="301,523,288,571,283,570,296,522"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="491,215,510,234,517,264,513,285,505,301,500,299,508,284,511,264,505,237,488,219"/>
+</map>

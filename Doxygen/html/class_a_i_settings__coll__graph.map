@@ -1,0 +1,14 @@
+<map id="AISettings" name="AISettings">
+<area shape="rect" id="Node000001" title="The AI Settings application." alt="" coords="114,1296,326,1760"/>
+<area shape="rect" id="Node000002" href="$class_single_extension_application.html" title="The abstract class for a single application in the extension." alt="" coords="5,683,205,1136"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,1150,180,1296,174,1297,147,1151"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="51,229,160,299"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="108,313,108,683,103,683,103,313"/>
+<area shape="rect" id="Node000004" href="$class_help_box.html" title="The help box class that is used to display messages and progress bars to the user." alt="" coords="198,5,447,523"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="238,523,189,668,184,666,233,522"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="449,215,467,234,474,264,471,285,462,301,457,299,466,284,469,264,462,237,445,219"/>
+<area shape="rect" id="Node000005" href="$class_a_i_settings_file_manager.html" title="The file manager for the AI settings." alt="" coords="230,587,442,1232"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="331,523,332,570,326,570,325,523"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="278,1232,269,1280,264,1279,273,1231"/>
+<area shape="poly" id="edge6_Node000005_Node000005" title=" " alt="" coords="443,848,454,858,462,871,469,909,465,937,456,958,451,955,460,936,463,909,457,873,450,861,440,852"/>
+</map>

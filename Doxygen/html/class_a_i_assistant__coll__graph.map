@@ -1,0 +1,12 @@
+<map id="AIAssistant" name="AIAssistant">
+<area shape="rect" id="Node000001" title="Single application for the AI extension. It is used to chat with the AI model." alt="" coords="99,1104,307,1552"/>
+<area shape="rect" id="Node000002" href="$class_single_extension_application.html" title="The abstract class for a single application in the extension." alt="" coords="5,587,205,1040"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,1055,163,1104,158,1105,148,1056"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="29,229,139,299"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,313,99,587,94,587,83,314"/>
+<area shape="rect" id="Node000004" href="$class_help_box.html" title="The help box class that is used to display messages and progress bars to the user." alt="" coords="163,5,413,523"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="205,524,189,571,184,570,199,522"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="414,215,432,234,439,264,436,285,427,301,423,299,431,284,434,264,428,237,410,219"/>
+<area shape="rect" id="Node000005" href="$class_message_list_builder.html" title="The message list builder class that is used to build a list of AI api messages to be sent to the AI a..." alt="" coords="229,683,373,944"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="279,944,251,1088,246,1087,274,943"/>
+</map>

@@ -1,0 +1,237 @@
+\doxysection{Message\+List\+Builder Class Reference}
+\hypertarget{class_message_list_builder}{}\label{class_message_list_builder}\index{MessageListBuilder@{MessageListBuilder}}
+
+
+The message list builder class that is used to build a list of AI api messages to be sent to the AI api.  
+
+
+
+
+Collaboration diagram for Message\+List\+Builder\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=188pt]{class_message_list_builder__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} \mbox{\hyperlink{class_message_list_builder_a8158288e1234c4872e4ab814f6a2c4a6}{Add\+Message}} (string content, string role="{}user"{})
+\begin{DoxyCompactList}\small\item\em Adds a message to the message list builder with the given content and role. The default role is "{}user"{}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} \mbox{\hyperlink{class_message_list_builder_ac224537b90859eeb65b663578e5c2d02}{Add\+Message}} (\mbox{\hyperlink{class_request_message}{Request\+Message}} message)
+\begin{DoxyCompactList}\small\item\em Adds a message to the message list builder with the given message. It uses a \doxylink{class_request_message}{Request\+Message} object. If the role is invalid, it will be set to "{}user"{}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} \mbox{\hyperlink{class_message_list_builder_a6520752986c2f1dcfbb8ea15a941d95d}{Add\+Messages}} (List$<$ \mbox{\hyperlink{class_request_message}{Request\+Message}} $>$ add\+Message\+List)
+\begin{DoxyCompactList}\small\item\em Adds a list of messages to the message list builder with the given list of messages. It uses a \doxylink{class_request_message}{Request\+Message} object. If the role is invalid, it will be set to "{}user"{}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_request_message}{Request\+Message}} \mbox{\hyperlink{class_message_list_builder_afb1414626c409de20fad01d1cdd694b5}{Get\+Message\+At}} (int index)
+\begin{DoxyCompactList}\small\item\em Returns the message at the given index. If the index is out of range, it will return a message with empty content and role "{}system"{}. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_message_list_builder_a9408d0a44398b1ca94549242d22377fb}{Get\+Message\+Count}} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of messages in the message list. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} \mbox{\hyperlink{class_message_list_builder_aa360b2eb10342b778f340e6a63372242}{Remove\+Message}} (string content)
+\begin{DoxyCompactList}\small\item\em Removes the messages with the given content from the message list. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} \mbox{\hyperlink{class_message_list_builder_ac1bc67ed2f159a7ee4b214572f81911c}{Remove\+Message\+At}} (int index)
+\begin{DoxyCompactList}\small\item\em Removes the message at the given index from the message list. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} \mbox{\hyperlink{class_message_list_builder_a918099588af9a1e4761907e28e02ab56}{Clear\+Messages}} ()
+\begin{DoxyCompactList}\small\item\em Clears the message list. \end{DoxyCompactList}\item 
+List$<$ \mbox{\hyperlink{class_request_message}{Request\+Message}} $>$ \mbox{\hyperlink{class_message_list_builder_a6151b491839a69829ec8383c8c262569}{Build}} ()
+\begin{DoxyCompactList}\small\item\em Builds the message list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static readonly List$<$ string $>$ \mbox{\hyperlink{class_message_list_builder_a3779877c55cbfa92dc705fa194137267}{valid\+Roles}}
+\begin{DoxyCompactList}\small\item\em The list of valid roles for a message. These are the roles that the GPT api accepts at the moment. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+readonly List$<$ \mbox{\hyperlink{class_request_message}{Request\+Message}} $>$ \mbox{\hyperlink{class_message_list_builder_a97ad3b7c26889555a37521423d156cb4}{message\+List}} = new()
+\begin{DoxyCompactList}\small\item\em The list of messages that will be built. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The message list builder class that is used to build a list of AI api messages to be sent to the AI api. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_message_list_builder_ac224537b90859eeb65b663578e5c2d02}\label{class_message_list_builder_ac224537b90859eeb65b663578e5c2d02} 
+\index{MessageListBuilder@{MessageListBuilder}!AddMessage@{AddMessage}}
+\index{AddMessage@{AddMessage}!MessageListBuilder@{MessageListBuilder}}
+\doxysubsubsection{\texorpdfstring{AddMessage()}{AddMessage()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} Message\+List\+Builder.\+Add\+Message (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_request_message}{Request\+Message}}}]{message }\end{DoxyParamCaption})}
+
+
+
+Adds a message to the message list builder with the given message. It uses a \doxylink{class_request_message}{Request\+Message} object. If the role is invalid, it will be set to "{}user"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to be added. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The updated message list builder. 
+\end{DoxyReturn}
+\Hypertarget{class_message_list_builder_a8158288e1234c4872e4ab814f6a2c4a6}\label{class_message_list_builder_a8158288e1234c4872e4ab814f6a2c4a6} 
+\index{MessageListBuilder@{MessageListBuilder}!AddMessage@{AddMessage}}
+\index{AddMessage@{AddMessage}!MessageListBuilder@{MessageListBuilder}}
+\doxysubsubsection{\texorpdfstring{AddMessage()}{AddMessage()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} Message\+List\+Builder.\+Add\+Message (\begin{DoxyParamCaption}\item[{string}]{content,  }\item[{string}]{role = {\ttfamily "{}user"{}} }\end{DoxyParamCaption})}
+
+
+
+Adds a message to the message list builder with the given content and role. The default role is "{}user"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em content} & The content of the message. \\
+\hline
+{\em role} & The role of the message. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The updated message list builder. 
+\end{DoxyReturn}
+\Hypertarget{class_message_list_builder_a6520752986c2f1dcfbb8ea15a941d95d}\label{class_message_list_builder_a6520752986c2f1dcfbb8ea15a941d95d} 
+\index{MessageListBuilder@{MessageListBuilder}!AddMessages@{AddMessages}}
+\index{AddMessages@{AddMessages}!MessageListBuilder@{MessageListBuilder}}
+\doxysubsubsection{\texorpdfstring{AddMessages()}{AddMessages()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} Message\+List\+Builder.\+Add\+Messages (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{class_request_message}{Request\+Message}} $>$}]{add\+Message\+List }\end{DoxyParamCaption})}
+
+
+
+Adds a list of messages to the message list builder with the given list of messages. It uses a \doxylink{class_request_message}{Request\+Message} object. If the role is invalid, it will be set to "{}user"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em add\+Message\+List} & The list of messages to be added.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The updated message list builder. 
+\end{DoxyReturn}
+\Hypertarget{class_message_list_builder_a6151b491839a69829ec8383c8c262569}\label{class_message_list_builder_a6151b491839a69829ec8383c8c262569} 
+\index{MessageListBuilder@{MessageListBuilder}!Build@{Build}}
+\index{Build@{Build}!MessageListBuilder@{MessageListBuilder}}
+\doxysubsubsection{\texorpdfstring{Build()}{Build()}}
+{\footnotesize\ttfamily List$<$ \mbox{\hyperlink{class_request_message}{Request\+Message}} $>$ Message\+List\+Builder.\+Build (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Builds the message list. 
+
+\begin{DoxyReturn}{Returns}
+The built message list. 
+\end{DoxyReturn}
+\Hypertarget{class_message_list_builder_a918099588af9a1e4761907e28e02ab56}\label{class_message_list_builder_a918099588af9a1e4761907e28e02ab56} 
+\index{MessageListBuilder@{MessageListBuilder}!ClearMessages@{ClearMessages}}
+\index{ClearMessages@{ClearMessages}!MessageListBuilder@{MessageListBuilder}}
+\doxysubsubsection{\texorpdfstring{ClearMessages()}{ClearMessages()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} Message\+List\+Builder.\+Clear\+Messages (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clears the message list. 
+
+\begin{DoxyReturn}{Returns}
+The updated message list builder. 
+\end{DoxyReturn}
+\Hypertarget{class_message_list_builder_afb1414626c409de20fad01d1cdd694b5}\label{class_message_list_builder_afb1414626c409de20fad01d1cdd694b5} 
+\index{MessageListBuilder@{MessageListBuilder}!GetMessageAt@{GetMessageAt}}
+\index{GetMessageAt@{GetMessageAt}!MessageListBuilder@{MessageListBuilder}}
+\doxysubsubsection{\texorpdfstring{GetMessageAt()}{GetMessageAt()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_request_message}{Request\+Message}} Message\+List\+Builder.\+Get\+Message\+At (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+Returns the message at the given index. If the index is out of range, it will return a message with empty content and role "{}system"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the message to be returned. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The message at the given index. 
+\end{DoxyReturn}
+\Hypertarget{class_message_list_builder_a9408d0a44398b1ca94549242d22377fb}\label{class_message_list_builder_a9408d0a44398b1ca94549242d22377fb} 
+\index{MessageListBuilder@{MessageListBuilder}!GetMessageCount@{GetMessageCount}}
+\index{GetMessageCount@{GetMessageCount}!MessageListBuilder@{MessageListBuilder}}
+\doxysubsubsection{\texorpdfstring{GetMessageCount()}{GetMessageCount()}}
+{\footnotesize\ttfamily int Message\+List\+Builder.\+Get\+Message\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the number of messages in the message list. 
+
+\begin{DoxyReturn}{Returns}
+The number of messages in the message list. 
+\end{DoxyReturn}
+\Hypertarget{class_message_list_builder_aa360b2eb10342b778f340e6a63372242}\label{class_message_list_builder_aa360b2eb10342b778f340e6a63372242} 
+\index{MessageListBuilder@{MessageListBuilder}!RemoveMessage@{RemoveMessage}}
+\index{RemoveMessage@{RemoveMessage}!MessageListBuilder@{MessageListBuilder}}
+\doxysubsubsection{\texorpdfstring{RemoveMessage()}{RemoveMessage()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} Message\+List\+Builder.\+Remove\+Message (\begin{DoxyParamCaption}\item[{string}]{content }\end{DoxyParamCaption})}
+
+
+
+Removes the messages with the given content from the message list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em content} & The content of the message to be removed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The updated message list builder. 
+\end{DoxyReturn}
+\Hypertarget{class_message_list_builder_ac1bc67ed2f159a7ee4b214572f81911c}\label{class_message_list_builder_ac1bc67ed2f159a7ee4b214572f81911c} 
+\index{MessageListBuilder@{MessageListBuilder}!RemoveMessageAt@{RemoveMessageAt}}
+\index{RemoveMessageAt@{RemoveMessageAt}!MessageListBuilder@{MessageListBuilder}}
+\doxysubsubsection{\texorpdfstring{RemoveMessageAt()}{RemoveMessageAt()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} Message\+List\+Builder.\+Remove\+Message\+At (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+Removes the message at the given index from the message list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the message to be removed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The updated message list builder. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_message_list_builder_a97ad3b7c26889555a37521423d156cb4}\label{class_message_list_builder_a97ad3b7c26889555a37521423d156cb4} 
+\index{MessageListBuilder@{MessageListBuilder}!messageList@{messageList}}
+\index{messageList@{messageList}!MessageListBuilder@{MessageListBuilder}}
+\doxysubsubsection{\texorpdfstring{messageList}{messageList}}
+{\footnotesize\ttfamily readonly List$<$\mbox{\hyperlink{class_request_message}{Request\+Message}}$>$ Message\+List\+Builder.\+message\+List = new()\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The list of messages that will be built. 
+
+\Hypertarget{class_message_list_builder_a3779877c55cbfa92dc705fa194137267}\label{class_message_list_builder_a3779877c55cbfa92dc705fa194137267} 
+\index{MessageListBuilder@{MessageListBuilder}!validRoles@{validRoles}}
+\index{validRoles@{validRoles}!MessageListBuilder@{MessageListBuilder}}
+\doxysubsubsection{\texorpdfstring{validRoles}{validRoles}}
+{\footnotesize\ttfamily readonly List$<$string$>$ Message\+List\+Builder.\+valid\+Roles\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{new}()\ \{\ \textcolor{stringliteral}{"{}system"{}},\ \textcolor{stringliteral}{"{}assistant"{}},\ \textcolor{stringliteral}{"{}user"{}},\ \textcolor{stringliteral}{"{}function"{}}\ \}}
+
+\end{DoxyCode}
+
+
+The list of valid roles for a message. These are the roles that the GPT api accepts at the moment. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_message_list_builder_8cs}{Message\+List\+Builder.\+cs}}\end{DoxyCompactItemize}

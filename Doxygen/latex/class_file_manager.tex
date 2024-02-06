@@ -1,0 +1,235 @@
+\doxysection{File\+Manager\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_file_manager}{}\label{class_file_manager}\index{FileManager$<$ T $>$@{FileManager$<$ T $>$}}
+
+
+The file manager class that contains methods for saving and loading json files.  
+
+
+
+
+Collaboration diagram for File\+Manager\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_file_manager__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static string \mbox{\hyperlink{class_file_manager_a360dfa6ef7897294bc595ae077ce82a1}{Save\+Json\+File\+To\+Default\+Path}} (T data, string file\+Name)
+\begin{DoxyCompactList}\small\item\em Saves a json file to the default path of the extension. \end{DoxyCompactList}\item 
+static string \mbox{\hyperlink{class_file_manager_adfa6bafed45b40ce691595575ad54bc7}{Save\+To\+Json\+File\+With\+Path}} (T data, string file\+Path)
+\begin{DoxyCompactList}\small\item\em Saves a json file to a specified path. \end{DoxyCompactList}\item 
+static T \mbox{\hyperlink{class_file_manager_ae198c71fc3fabdeae03f4a964e90620e}{Load\+Deserialized\+Json\+Panel}} (string screen\+Title="{}Load Json File"{})
+\begin{DoxyCompactList}\small\item\em Loads a json file from a file panel and deserializes it to a generic type. \end{DoxyCompactList}\item 
+static T \mbox{\hyperlink{class_file_manager_a6250edca1c0d11386ce4533bf2235ddb}{Load\+Deserialized\+Json\+From\+Path}} (string folder\+Path, string file\+Name)
+\begin{DoxyCompactList}\small\item\em Loads a json file from a specified path and deserializes it to a generic type. It combines the folder path and the file name to a path and calls an overloaded method with the path as parameter. \end{DoxyCompactList}\item 
+static T \mbox{\hyperlink{class_file_manager_ad710fdd70e573bdfa6312856a70defe7}{Load\+Deserialized\+Json\+From\+Path}} (string file\+Path)
+\begin{DoxyCompactList}\small\item\em Loads a json file from a specified path and deserializes it to a generic type. \end{DoxyCompactList}\item 
+static T \mbox{\hyperlink{class_file_manager_a4037615773f7cd7c57aa77f87f662454}{Return\+EmptyT}} ()
+\begin{DoxyCompactList}\small\item\em Returns an empty generic type. This is used when the deserialization of a json file fails. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_file_manager_ae915e9a80725abb1ede659b149c92ca5}{Create\+File\+If\+Not\+Existing}} (string file\+Path)
+\begin{DoxyCompactList}\small\item\em Creates a file if it does not exist. \end{DoxyCompactList}\item 
+static string \mbox{\hyperlink{class_file_manager_a23ca47bae2b6b96b42c3fd173fb10467}{Serialize\+Data\+To\+Json}} (T data, Formatting? formatting=Formatting.\+Indented)
+\begin{DoxyCompactList}\small\item\em Serializes data to a json string. \end{DoxyCompactList}\item 
+static T \mbox{\hyperlink{class_file_manager_a119478ca200b363f0a51185ee765d20b}{Deserialize\+Json\+String}} (string json\+Data)
+\begin{DoxyCompactList}\small\item\em Deserializes a json string to a generic type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_a_i_settings_file_manager}{AISettings\+File\+Manager}} \mbox{\hyperlink{class_file_manager_a03515d81b08ac7a96620c2dfb452efc0}{settings\+FM}} = \mbox{\hyperlink{class_a_i_settings_file_manager_a332ab7f3e4bc0505ae71ecfff98a4cc2}{AISettings\+File\+Manager.\+Get\+Instance}}()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The file manager class that contains methods for saving and loading json files. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The generic type that is used for saving and loading json files. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_file_manager_ae915e9a80725abb1ede659b149c92ca5}\label{class_file_manager_ae915e9a80725abb1ede659b149c92ca5} 
+\index{FileManager$<$ T $>$@{FileManager$<$ T $>$}!CreateFileIfNotExisting@{CreateFileIfNotExisting}}
+\index{CreateFileIfNotExisting@{CreateFileIfNotExisting}!FileManager$<$ T $>$@{FileManager$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CreateFileIfNotExisting()}{CreateFileIfNotExisting()}}
+{\footnotesize\ttfamily static bool \mbox{\hyperlink{class_file_manager}{File\+Manager}}$<$ T $>$.Create\+File\+If\+Not\+Existing (\begin{DoxyParamCaption}\item[{string}]{file\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a file if it does not exist. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Path} & The path of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the file exists, false if the file does not exist. 
+\end{DoxyReturn}
+\Hypertarget{class_file_manager_a119478ca200b363f0a51185ee765d20b}\label{class_file_manager_a119478ca200b363f0a51185ee765d20b} 
+\index{FileManager$<$ T $>$@{FileManager$<$ T $>$}!DeserializeJsonString@{DeserializeJsonString}}
+\index{DeserializeJsonString@{DeserializeJsonString}!FileManager$<$ T $>$@{FileManager$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{DeserializeJsonString()}{DeserializeJsonString()}}
+{\footnotesize\ttfamily static T \mbox{\hyperlink{class_file_manager}{File\+Manager}}$<$ T $>$.Deserialize\+Json\+String (\begin{DoxyParamCaption}\item[{string}]{json\+Data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Deserializes a json string to a generic type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em json\+Data} & The json string that is deserialized to a generic type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the deserialized data as a generic type. 
+\end{DoxyReturn}
+\Hypertarget{class_file_manager_ad710fdd70e573bdfa6312856a70defe7}\label{class_file_manager_ad710fdd70e573bdfa6312856a70defe7} 
+\index{FileManager$<$ T $>$@{FileManager$<$ T $>$}!LoadDeserializedJsonFromPath@{LoadDeserializedJsonFromPath}}
+\index{LoadDeserializedJsonFromPath@{LoadDeserializedJsonFromPath}!FileManager$<$ T $>$@{FileManager$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{LoadDeserializedJsonFromPath()}{LoadDeserializedJsonFromPath()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily static T \mbox{\hyperlink{class_file_manager}{File\+Manager}}$<$ T $>$.Load\+Deserialized\+Json\+From\+Path (\begin{DoxyParamCaption}\item[{string}]{file\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Loads a json file from a specified path and deserializes it to a generic type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Path} & The path of the json file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The generic data that is deserialized from the json file. 
+\end{DoxyReturn}
+\Hypertarget{class_file_manager_a6250edca1c0d11386ce4533bf2235ddb}\label{class_file_manager_a6250edca1c0d11386ce4533bf2235ddb} 
+\index{FileManager$<$ T $>$@{FileManager$<$ T $>$}!LoadDeserializedJsonFromPath@{LoadDeserializedJsonFromPath}}
+\index{LoadDeserializedJsonFromPath@{LoadDeserializedJsonFromPath}!FileManager$<$ T $>$@{FileManager$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{LoadDeserializedJsonFromPath()}{LoadDeserializedJsonFromPath()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily static T \mbox{\hyperlink{class_file_manager}{File\+Manager}}$<$ T $>$.Load\+Deserialized\+Json\+From\+Path (\begin{DoxyParamCaption}\item[{string}]{folder\+Path,  }\item[{string}]{file\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Loads a json file from a specified path and deserializes it to a generic type. It combines the folder path and the file name to a path and calls an overloaded method with the path as parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em folder\+Path} & The path of the folder that contains the json file. \\
+\hline
+{\em file\+Name} & The name of the loaded json file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The generic data that is deserialized from the json file. 
+\end{DoxyReturn}
+\Hypertarget{class_file_manager_ae198c71fc3fabdeae03f4a964e90620e}\label{class_file_manager_ae198c71fc3fabdeae03f4a964e90620e} 
+\index{FileManager$<$ T $>$@{FileManager$<$ T $>$}!LoadDeserializedJsonPanel@{LoadDeserializedJsonPanel}}
+\index{LoadDeserializedJsonPanel@{LoadDeserializedJsonPanel}!FileManager$<$ T $>$@{FileManager$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{LoadDeserializedJsonPanel()}{LoadDeserializedJsonPanel()}}
+{\footnotesize\ttfamily static T \mbox{\hyperlink{class_file_manager}{File\+Manager}}$<$ T $>$.Load\+Deserialized\+Json\+Panel (\begin{DoxyParamCaption}\item[{string}]{screen\+Title = {\ttfamily "{}Load~Json~File"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Loads a json file from a file panel and deserializes it to a generic type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em screen\+Title} & The title of the file panel. The default value is "{}\+Load Json File"{}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The generic data that is deserialized from the json file. 
+\end{DoxyReturn}
+\Hypertarget{class_file_manager_a4037615773f7cd7c57aa77f87f662454}\label{class_file_manager_a4037615773f7cd7c57aa77f87f662454} 
+\index{FileManager$<$ T $>$@{FileManager$<$ T $>$}!ReturnEmptyT@{ReturnEmptyT}}
+\index{ReturnEmptyT@{ReturnEmptyT}!FileManager$<$ T $>$@{FileManager$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ReturnEmptyT()}{ReturnEmptyT()}}
+{\footnotesize\ttfamily static T \mbox{\hyperlink{class_file_manager}{File\+Manager}}$<$ T $>$.Return\+EmptyT (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Returns an empty generic type. This is used when the deserialization of a json file fails. 
+
+\begin{DoxyReturn}{Returns}
+An empty generic type. 
+\end{DoxyReturn}
+\Hypertarget{class_file_manager_a360dfa6ef7897294bc595ae077ce82a1}\label{class_file_manager_a360dfa6ef7897294bc595ae077ce82a1} 
+\index{FileManager$<$ T $>$@{FileManager$<$ T $>$}!SaveJsonFileToDefaultPath@{SaveJsonFileToDefaultPath}}
+\index{SaveJsonFileToDefaultPath@{SaveJsonFileToDefaultPath}!FileManager$<$ T $>$@{FileManager$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{SaveJsonFileToDefaultPath()}{SaveJsonFileToDefaultPath()}}
+{\footnotesize\ttfamily static string \mbox{\hyperlink{class_file_manager}{File\+Manager}}$<$ T $>$.Save\+Json\+File\+To\+Default\+Path (\begin{DoxyParamCaption}\item[{T}]{data,  }\item[{string}]{file\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Saves a json file to the default path of the extension. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The generic data that is saved to the json file.\\
+\hline
+{\em file\+Name} & The name of the json file. This will be converted to a path by adding the default path of the extension. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The json data that is saved to the file. 
+\end{DoxyReturn}
+\Hypertarget{class_file_manager_adfa6bafed45b40ce691595575ad54bc7}\label{class_file_manager_adfa6bafed45b40ce691595575ad54bc7} 
+\index{FileManager$<$ T $>$@{FileManager$<$ T $>$}!SaveToJsonFileWithPath@{SaveToJsonFileWithPath}}
+\index{SaveToJsonFileWithPath@{SaveToJsonFileWithPath}!FileManager$<$ T $>$@{FileManager$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{SaveToJsonFileWithPath()}{SaveToJsonFileWithPath()}}
+{\footnotesize\ttfamily static string \mbox{\hyperlink{class_file_manager}{File\+Manager}}$<$ T $>$.Save\+To\+Json\+File\+With\+Path (\begin{DoxyParamCaption}\item[{T}]{data,  }\item[{string}]{file\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Saves a json file to a specified path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The generic data that is saved to the json file. \\
+\hline
+{\em file\+Path} & The path of the json file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The json string that is saved to the file. 
+\end{DoxyReturn}
+\Hypertarget{class_file_manager_a23ca47bae2b6b96b42c3fd173fb10467}\label{class_file_manager_a23ca47bae2b6b96b42c3fd173fb10467} 
+\index{FileManager$<$ T $>$@{FileManager$<$ T $>$}!SerializeDataToJson@{SerializeDataToJson}}
+\index{SerializeDataToJson@{SerializeDataToJson}!FileManager$<$ T $>$@{FileManager$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{SerializeDataToJson()}{SerializeDataToJson()}}
+{\footnotesize\ttfamily static string \mbox{\hyperlink{class_file_manager}{File\+Manager}}$<$ T $>$.Serialize\+Data\+To\+Json (\begin{DoxyParamCaption}\item[{T}]{data,  }\item[{Formatting?}]{formatting = {\ttfamily Formatting\+:\+:Indented} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Serializes data to a json string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The generic data that is serialized to a json string. \\
+\hline
+{\em formatting} & The formatting of the json string. The default value is Formatting.\+Indented. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the serialized data as a json string. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_file_manager_a03515d81b08ac7a96620c2dfb452efc0}\label{class_file_manager_a03515d81b08ac7a96620c2dfb452efc0} 
+\index{FileManager$<$ T $>$@{FileManager$<$ T $>$}!settingsFM@{settingsFM}}
+\index{settingsFM@{settingsFM}!FileManager$<$ T $>$@{FileManager$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{settingsFM}{settingsFM}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_a_i_settings_file_manager}{AISettings\+File\+Manager}} \mbox{\hyperlink{class_file_manager}{File\+Manager}}$<$ T $>$.settings\+FM = \mbox{\hyperlink{class_a_i_settings_file_manager_a332ab7f3e4bc0505ae71ecfff98a4cc2}{AISettings\+File\+Manager.\+Get\+Instance}}()\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_file_manager_8cs}{File\+Manager.\+cs}}\end{DoxyCompactItemize}

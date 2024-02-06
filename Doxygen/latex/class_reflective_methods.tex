@@ -1,0 +1,54 @@
+\doxysection{Reflective\+Methods Class Reference}
+\hypertarget{class_reflective_methods}{}\label{class_reflective_methods}\index{ReflectiveMethods@{ReflectiveMethods}}
+
+
+Collaboration diagram for Reflective\+Methods\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=246pt]{class_reflective_methods__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_reflective_methods_a9ca97b52cb7f7ba49e8128549c102291}{Create\+Script\+Asset\+With\+Reflection}} (string path, string data)
+\begin{DoxyCompactList}\small\item\em Creates a script asset in Unity by invoking a private method in Unity\textquotesingle{}s Project\+Window\+Util. It is not possible to use the method directly, so reflection is used to access the method. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_reflective_methods_adbfb1277a4b013edf55fc855187c7189}{Invoke\+Function}} (string class\+Name, string method\+Name)
+\begin{DoxyCompactList}\small\item\em Invokes a static method in a class by using reflection. The method must be public or private. It is used to invoke a method when it is not available in runtime. (AI Object Generation) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_reflective_methods_a9ca97b52cb7f7ba49e8128549c102291}\label{class_reflective_methods_a9ca97b52cb7f7ba49e8128549c102291} 
+\index{ReflectiveMethods@{ReflectiveMethods}!CreateScriptAssetWithReflection@{CreateScriptAssetWithReflection}}
+\index{CreateScriptAssetWithReflection@{CreateScriptAssetWithReflection}!ReflectiveMethods@{ReflectiveMethods}}
+\doxysubsubsection{\texorpdfstring{CreateScriptAssetWithReflection()}{CreateScriptAssetWithReflection()}}
+{\footnotesize\ttfamily static void Reflective\+Methods.\+Create\+Script\+Asset\+With\+Reflection (\begin{DoxyParamCaption}\item[{string}]{path,  }\item[{string}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a script asset in Unity by invoking a private method in Unity\textquotesingle{}s Project\+Window\+Util. It is not possible to use the method directly, so reflection is used to access the method. 
+
+$<$\+Availability$>$ \href{https://github.com/keijiro/AICommand/}{\texttt{ https\+://github.\+com/keijiro/\+AICommand/}} $<$/\+Availability$>$ License\texorpdfstring{$>$}{>} Unlicense (Public Domain) View LICENSE.\+md to see the license and information. $<$/\+License$>$ Description\texorpdfstring{$>$}{>} AICommand is a Unity extension that experiment with a command window for executing C\# scripts from the gpt api.  \Hypertarget{class_reflective_methods_adbfb1277a4b013edf55fc855187c7189}\label{class_reflective_methods_adbfb1277a4b013edf55fc855187c7189} 
+\index{ReflectiveMethods@{ReflectiveMethods}!InvokeFunction@{InvokeFunction}}
+\index{InvokeFunction@{InvokeFunction}!ReflectiveMethods@{ReflectiveMethods}}
+\doxysubsubsection{\texorpdfstring{InvokeFunction()}{InvokeFunction()}}
+{\footnotesize\ttfamily static void Reflective\+Methods.\+Invoke\+Function (\begin{DoxyParamCaption}\item[{string}]{class\+Name,  }\item[{string}]{method\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Invokes a static method in a class by using reflection. The method must be public or private. It is used to invoke a method when it is not available in runtime. (AI Object Generation) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em class\+Name} & The name of the class that contains the method. \\
+\hline
+{\em method\+Name} & The name of the method that is invoked. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_reflective_methods_8cs}{Reflective\+Methods.\+cs}}\end{DoxyCompactItemize}

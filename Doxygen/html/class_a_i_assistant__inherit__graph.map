@@ -1,0 +1,7 @@
+<map id="AIAssistant" name="AIAssistant">
+<area shape="rect" id="Node000001" title="Single application for the AI extension. It is used to chat with the AI model." alt="" coords="5,645,213,1115"/>
+<area shape="rect" id="Node000002" href="$class_single_extension_application.html" title="The abstract class for a single application in the extension." alt="" coords="9,123,209,597"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,612,112,645,107,645,107,612"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="55,5,164,75"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,89,112,123,107,123,107,89"/>
+</map>

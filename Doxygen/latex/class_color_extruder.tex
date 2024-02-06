@@ -1,0 +1,423 @@
+\doxysection{Color\+Extruder Class Reference}
+\hypertarget{class_color_extruder}{}\label{class_color_extruder}\index{ColorExtruder@{ColorExtruder}}
+
+
+The color extruder, that extracts the colors of an image and saves them as a color array object.  
+
+
+
+
+Inheritance diagram for Color\+Extruder\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_color_extruder__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Color\+Extruder\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_color_extruder__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_color_extruder_a74318e26263cd0256315a9857b77d7d2}{Editor\+Pref\+Key}} \{ \mbox{\hyperlink{class_color_extruder_a74318e26263cd0256315a9857b77d7d2a1bdfe6899ab7229dd3067bac475ceef8}{Sprite\+GUID}}
+, \mbox{\hyperlink{class_color_extruder_a74318e26263cd0256315a9857b77d7d2aae065fd3ef1108ebf56bc18b83073e15}{Color\+Array\+Object\+String}}
+, \mbox{\hyperlink{class_color_extruder_a74318e26263cd0256315a9857b77d7d2a5da3afd2460401ef27e1703ecc70f4cc}{Show\+Color\+Array\+Content}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override void \mbox{\hyperlink{class_color_extruder_a5f3df8eef93979e4580990216b63db77}{On\+GUI}} ()
+\begin{DoxyCompactList}\small\item\em The GUI of the color extruder. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_single_extension_application_ad4c53dc687f77685921ecbc18952eed8}{Initialize}} (Editor\+Window \mbox{\hyperlink{class_single_extension_application_aed64f61e6f6d5d8ba0ccaabd9fc3b7fe}{window}})
+\begin{DoxyCompactList}\small\item\em Initializes the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_aa51a43317f0bbf7265cf8cc1113f6150}{On\+GUI}} ()
+\begin{DoxyCompactList}\small\item\em Abstract method that renders the GUI of the application. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_single_extension_application_a6a4b4a85bfcd37cc26515d9bf290717f}{On\+Enable}} ()
+\begin{DoxyCompactList}\small\item\em Abstract method that is called when the application is enabled. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_aa1cd2c244df403bc0cd4ed3130ff60b7}{Repaint}} ()
+\begin{DoxyCompactList}\small\item\em Method that repaints the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ac790580eb6b04325403418919ae004a2}{Focus}} ()
+\begin{DoxyCompactList}\small\item\em Method that focuses the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_af7566e21f700c97714206139bc8b3fa8}{Show}} ()
+\begin{DoxyCompactList}\small\item\em Method that shows the window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_single_extension_application_a70cd16b4dcbc26cf2b270333c3d5a3ba}{Get\+Help\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a1891a14e184b830a220f00f730facf30}{Close}} ()
+\begin{DoxyCompactList}\small\item\em Method that closes the window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_color_array_object}{Color\+Array\+Object}} \mbox{\hyperlink{class_color_extruder_a5ea1b04b4167fd924e54ef238d5a0cb0}{Color\+Array\+Object\+From\+File}} ()
+\begin{DoxyCompactList}\small\item\em Method that reads a color array string from a file and returns it as a color array object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Sprite \mbox{\hyperlink{class_color_extruder_a87d083eac2eb9289a54c857ca7dc2e94}{image\+Sprite}}
+\begin{DoxyCompactList}\small\item\em The image that should be used to extract the colors. Can be dragged into the field. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static string \mbox{\hyperlink{class_color_extruder_a28198975e5d196067960d80a506721d4}{color\+Array\+Output}} = "{}"{}
+\begin{DoxyCompactList}\small\item\em The output of the color array object as a string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+override string \mbox{\hyperlink{class_color_extruder_ae71b9d9eed30dfa1ee7a7eac8eb5984e}{Display\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The display name of the color extruder. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_color_extruder_a679a5d5277e551d76dd899679934e5a8}{Has\+Init}} = false\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_single_extension_application_ae12cba99589c5a8b18cd4fa02033ef3b}{Display\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The display name of a single application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_color_extruder_a249c7c1c2e9507aa430f9e1dfe591a11}{Render\+Image\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Method that renders the Image\+Field and a prompt that is used for "{}\+Let AI Generate Color Generation Code"{}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_color_extruder_a63483d20c7019f4158b3812bad5c557c}{Render\+Action\+Buttons}} ()
+\begin{DoxyCompactList}\small\item\em Method that renders the action buttons of the color extruder. \end{DoxyCompactList}\item 
+async void \mbox{\hyperlink{class_color_extruder_a76326dc709be9c57abd15efb780b6627}{Send\+AIColor\+Array\+Prompt}} ()
+\begin{DoxyCompactList}\small\item\em Method that sends the color array prompt to the Open\+AI API. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_color_extruder_ac0b369202aac4cb3489ab8a81f8c4b72}{Get\+Color\+Array\+And\+Save\+It\+To\+File}} ()
+\begin{DoxyCompactList}\small\item\em Method that gets the color array of the image and saves it to a file inside the User\+Files folder. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_color_extruder_a8d5a56e741eb2d7a5e9b6da340f9f969}{Save\+Color\+Array\+Object\+To\+File}} (\mbox{\hyperlink{class_color_array_object}{Color\+Array\+Object}} color\+Array\+Object)
+\begin{DoxyCompactList}\small\item\em Method that saves a color array object to a file as a json string. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_color_extruder_a3febd6fa58f166ed17554e7e8a4ead86}{Render\+Output\+Script\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Method that renders the output script field. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_color_extruder_a1fef007de185625118a55ae7a981b8b2}{Write\+Color\+Script\+In\+File}} ()
+\begin{DoxyCompactList}\small\item\em Saves the generated script into a file inside the Generate\+Folder. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_color_extruder_ae4d9fae9d21de0c08c1ae33b4c339e83}{Render\+Output\+Color\+Array\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Method that renders the output color array field. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_color_extruder_a3a0e3eb6ba0993963a89953ffa851851}{Load\+Editor\+Prefs}} ()
+\begin{DoxyCompactList}\small\item\em Method that loads the editor prefs. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_color_extruder_a8575692896973d5806206f93fb156c66}{Set\+Editor\+Prefs}} ()
+\begin{DoxyCompactList}\small\item\em Method that sets the editor prefs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_color_extruder_a2e4667f7d093035333e1acb0ca0513a6}{show\+Color\+Array\+Content}} = false
+\begin{DoxyCompactList}\small\item\em Bool that indicates if the color array content should be shown because it is too long. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_color_extruder_a5687cf7acb1aaea9f72713acd2c11e60}{color\+Script\+Content}}
+\begin{DoxyCompactList}\small\item\em The content of the color script that the AI did generate. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{class_color_extruder_ac87d5c561a95081ff506a057c2b3122e}{scroll\+Position}}
+\begin{DoxyCompactList}\small\item\em The scroll position of the displayed prompt text. \end{DoxyCompactList}\item 
+readonly Dictionary$<$ \mbox{\hyperlink{class_color_extruder_a74318e26263cd0256315a9857b77d7d2}{Editor\+Pref\+Key}}, string $>$ \mbox{\hyperlink{class_color_extruder_ac907f44f4d2a514ea5715a5c4fb67e19}{editor\+Pref\+Keys}}
+\begin{DoxyCompactList}\small\item\em Dictionary that contains the keys for the editor prefs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const string \mbox{\hyperlink{class_color_extruder_a602b7c1dbbe53ed0555137f17811dec9}{color\+Array\+Object\+File\+Name}} = "{}color\+Array\+Object.\+json"{}
+\begin{DoxyCompactList}\small\item\em The name of the file that the color array object is saved to. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_a5c8eb26811e8e8be2adef8de8ce9e9cc}{Create\+Rich\+Text\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a rich text style for colored text. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_aaf0f5f643db07bf144406930febd6825}{Create\+Code\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a code style for displaying code. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_a10fbb10372723562264b8450fb97d8bd}{Create\+Highlight\+Button\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ae44d34c95f1d6d1b639397672061d642}{Render\+Help\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Method that renders the help box of the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ac7196ccc94638a9c937835e929ba8149}{Show\+Progress\+Bar}} (float progress)
+\begin{DoxyCompactList}\small\item\em Method that renders the help box of the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_af44fba8eb1f4e67690bb9125ef8c695c}{Finish\+Progress\+Bar\+With\+Delay}} (int milli\+Seconds=700)
+\begin{DoxyCompactList}\small\item\em Method that finishes the progress bar of the help box and closes it after a delay. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a227b21fbcd7615885b5942123a496d09}{Add\+Default\+Space}} ()
+\begin{DoxyCompactList}\small\item\em Method to add a default space between GUI elements. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a00d19da43cb9c34bb4fb9256c0fba86a}{Reset\+Keyboard\+Control}} ()
+\begin{DoxyCompactList}\small\item\em Method to Reset the keyboard control. It is used, if a user should focus out of a textfield. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_single_extension_application_a542a28ee031c28c77091b8684ed972e4}{default\+Space}} = 10
+\begin{DoxyCompactList}\small\item\em The default space between GUI elements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_single_extension_application_abd98e67099069da3b0fccbd439d8edf2}{help\+Box}} = \mbox{\hyperlink{class_help_box_a37157adbf2d543c032e06cf87be2c63f}{Help\+Box.\+Get\+Instance}}()
+\begin{DoxyCompactList}\small\item\em The help box of a single application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The color extruder, that extracts the colors of an image and saves them as a color array object. 
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_color_extruder_a74318e26263cd0256315a9857b77d7d2}\label{class_color_extruder_a74318e26263cd0256315a9857b77d7d2} 
+\index{ColorExtruder@{ColorExtruder}!EditorPrefKey@{EditorPrefKey}}
+\index{EditorPrefKey@{EditorPrefKey}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{EditorPrefKey}{EditorPrefKey}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_color_extruder_a74318e26263cd0256315a9857b77d7d2}{Color\+Extruder.\+Editor\+Pref\+Key}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SpriteGUID@{SpriteGUID}!ColorExtruder@{ColorExtruder}}\index{ColorExtruder@{ColorExtruder}!SpriteGUID@{SpriteGUID}}}\Hypertarget{class_color_extruder_a74318e26263cd0256315a9857b77d7d2a1bdfe6899ab7229dd3067bac475ceef8}\label{class_color_extruder_a74318e26263cd0256315a9857b77d7d2a1bdfe6899ab7229dd3067bac475ceef8} 
+Sprite\+GUID&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ColorArrayObjectString@{ColorArrayObjectString}!ColorExtruder@{ColorExtruder}}\index{ColorExtruder@{ColorExtruder}!ColorArrayObjectString@{ColorArrayObjectString}}}\Hypertarget{class_color_extruder_a74318e26263cd0256315a9857b77d7d2aae065fd3ef1108ebf56bc18b83073e15}\label{class_color_extruder_a74318e26263cd0256315a9857b77d7d2aae065fd3ef1108ebf56bc18b83073e15} 
+Color\+Array\+Object\+String&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ShowColorArrayContent@{ShowColorArrayContent}!ColorExtruder@{ColorExtruder}}\index{ColorExtruder@{ColorExtruder}!ShowColorArrayContent@{ShowColorArrayContent}}}\Hypertarget{class_color_extruder_a74318e26263cd0256315a9857b77d7d2a5da3afd2460401ef27e1703ecc70f4cc}\label{class_color_extruder_a74318e26263cd0256315a9857b77d7d2a5da3afd2460401ef27e1703ecc70f4cc} 
+Show\+Color\+Array\+Content&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_color_extruder_a5ea1b04b4167fd924e54ef238d5a0cb0}\label{class_color_extruder_a5ea1b04b4167fd924e54ef238d5a0cb0} 
+\index{ColorExtruder@{ColorExtruder}!ColorArrayObjectFromFile@{ColorArrayObjectFromFile}}
+\index{ColorArrayObjectFromFile@{ColorArrayObjectFromFile}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{ColorArrayObjectFromFile()}{ColorArrayObjectFromFile()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_color_array_object}{Color\+Array\+Object}} Color\+Extruder.\+Color\+Array\+Object\+From\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Method that reads a color array string from a file and returns it as a color array object. 
+
+\begin{DoxyReturn}{Returns}
+Returns the color array object that was read from the file or null if the file could not be read. 
+\end{DoxyReturn}
+\Hypertarget{class_color_extruder_ac0b369202aac4cb3489ab8a81f8c4b72}\label{class_color_extruder_ac0b369202aac4cb3489ab8a81f8c4b72} 
+\index{ColorExtruder@{ColorExtruder}!GetColorArrayAndSaveItToFile@{GetColorArrayAndSaveItToFile}}
+\index{GetColorArrayAndSaveItToFile@{GetColorArrayAndSaveItToFile}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{GetColorArrayAndSaveItToFile()}{GetColorArrayAndSaveItToFile()}}
+{\footnotesize\ttfamily void Color\+Extruder.\+Get\+Color\+Array\+And\+Save\+It\+To\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method that gets the color array of the image and saves it to a file inside the User\+Files folder. 
+
+\Hypertarget{class_color_extruder_a3a0e3eb6ba0993963a89953ffa851851}\label{class_color_extruder_a3a0e3eb6ba0993963a89953ffa851851} 
+\index{ColorExtruder@{ColorExtruder}!LoadEditorPrefs@{LoadEditorPrefs}}
+\index{LoadEditorPrefs@{LoadEditorPrefs}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{LoadEditorPrefs()}{LoadEditorPrefs()}}
+{\footnotesize\ttfamily void Color\+Extruder.\+Load\+Editor\+Prefs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method that loads the editor prefs. 
+
+\Hypertarget{class_color_extruder_a5f3df8eef93979e4580990216b63db77}\label{class_color_extruder_a5f3df8eef93979e4580990216b63db77} 
+\index{ColorExtruder@{ColorExtruder}!OnGUI@{OnGUI}}
+\index{OnGUI@{OnGUI}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{OnGUI()}{OnGUI()}}
+{\footnotesize\ttfamily override void Color\+Extruder.\+On\+GUI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The GUI of the color extruder. 
+
+\Hypertarget{class_color_extruder_a63483d20c7019f4158b3812bad5c557c}\label{class_color_extruder_a63483d20c7019f4158b3812bad5c557c} 
+\index{ColorExtruder@{ColorExtruder}!RenderActionButtons@{RenderActionButtons}}
+\index{RenderActionButtons@{RenderActionButtons}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{RenderActionButtons()}{RenderActionButtons()}}
+{\footnotesize\ttfamily void Color\+Extruder.\+Render\+Action\+Buttons (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method that renders the action buttons of the color extruder. 
+
+\Hypertarget{class_color_extruder_a249c7c1c2e9507aa430f9e1dfe591a11}\label{class_color_extruder_a249c7c1c2e9507aa430f9e1dfe591a11} 
+\index{ColorExtruder@{ColorExtruder}!RenderImageField@{RenderImageField}}
+\index{RenderImageField@{RenderImageField}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{RenderImageField()}{RenderImageField()}}
+{\footnotesize\ttfamily void Color\+Extruder.\+Render\+Image\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method that renders the Image\+Field and a prompt that is used for "{}\+Let AI Generate Color Generation Code"{}. 
+
+\Hypertarget{class_color_extruder_ae4d9fae9d21de0c08c1ae33b4c339e83}\label{class_color_extruder_ae4d9fae9d21de0c08c1ae33b4c339e83} 
+\index{ColorExtruder@{ColorExtruder}!RenderOutputColorArrayField@{RenderOutputColorArrayField}}
+\index{RenderOutputColorArrayField@{RenderOutputColorArrayField}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{RenderOutputColorArrayField()}{RenderOutputColorArrayField()}}
+{\footnotesize\ttfamily void Color\+Extruder.\+Render\+Output\+Color\+Array\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method that renders the output color array field. 
+
+\Hypertarget{class_color_extruder_a3febd6fa58f166ed17554e7e8a4ead86}\label{class_color_extruder_a3febd6fa58f166ed17554e7e8a4ead86} 
+\index{ColorExtruder@{ColorExtruder}!RenderOutputScriptField@{RenderOutputScriptField}}
+\index{RenderOutputScriptField@{RenderOutputScriptField}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{RenderOutputScriptField()}{RenderOutputScriptField()}}
+{\footnotesize\ttfamily void Color\+Extruder.\+Render\+Output\+Script\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method that renders the output script field. 
+
+\Hypertarget{class_color_extruder_a8d5a56e741eb2d7a5e9b6da340f9f969}\label{class_color_extruder_a8d5a56e741eb2d7a5e9b6da340f9f969} 
+\index{ColorExtruder@{ColorExtruder}!SaveColorArrayObjectToFile@{SaveColorArrayObjectToFile}}
+\index{SaveColorArrayObjectToFile@{SaveColorArrayObjectToFile}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{SaveColorArrayObjectToFile()}{SaveColorArrayObjectToFile()}}
+{\footnotesize\ttfamily string Color\+Extruder.\+Save\+Color\+Array\+Object\+To\+File (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_color_array_object}{Color\+Array\+Object}}}]{color\+Array\+Object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method that saves a color array object to a file as a json string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color\+Array\+Object} & The color array object that should be saved to a file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The json string of the color array object. 
+\end{DoxyReturn}
+\Hypertarget{class_color_extruder_a76326dc709be9c57abd15efb780b6627}\label{class_color_extruder_a76326dc709be9c57abd15efb780b6627} 
+\index{ColorExtruder@{ColorExtruder}!SendAIColorArrayPrompt@{SendAIColorArrayPrompt}}
+\index{SendAIColorArrayPrompt@{SendAIColorArrayPrompt}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{SendAIColorArrayPrompt()}{SendAIColorArrayPrompt()}}
+{\footnotesize\ttfamily async void Color\+Extruder.\+Send\+AIColor\+Array\+Prompt (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method that sends the color array prompt to the Open\+AI API. 
+
+\Hypertarget{class_color_extruder_a8575692896973d5806206f93fb156c66}\label{class_color_extruder_a8575692896973d5806206f93fb156c66} 
+\index{ColorExtruder@{ColorExtruder}!SetEditorPrefs@{SetEditorPrefs}}
+\index{SetEditorPrefs@{SetEditorPrefs}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{SetEditorPrefs()}{SetEditorPrefs()}}
+{\footnotesize\ttfamily void Color\+Extruder.\+Set\+Editor\+Prefs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method that sets the editor prefs. 
+
+\Hypertarget{class_color_extruder_a1fef007de185625118a55ae7a981b8b2}\label{class_color_extruder_a1fef007de185625118a55ae7a981b8b2} 
+\index{ColorExtruder@{ColorExtruder}!WriteColorScriptInFile@{WriteColorScriptInFile}}
+\index{WriteColorScriptInFile@{WriteColorScriptInFile}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{WriteColorScriptInFile()}{WriteColorScriptInFile()}}
+{\footnotesize\ttfamily void Color\+Extruder.\+Write\+Color\+Script\+In\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Saves the generated script into a file inside the Generate\+Folder. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_color_extruder_a602b7c1dbbe53ed0555137f17811dec9}\label{class_color_extruder_a602b7c1dbbe53ed0555137f17811dec9} 
+\index{ColorExtruder@{ColorExtruder}!colorArrayObjectFileName@{colorArrayObjectFileName}}
+\index{colorArrayObjectFileName@{colorArrayObjectFileName}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{colorArrayObjectFileName}{colorArrayObjectFileName}}
+{\footnotesize\ttfamily const string Color\+Extruder.\+color\+Array\+Object\+File\+Name = "{}color\+Array\+Object.\+json"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The name of the file that the color array object is saved to. 
+
+\Hypertarget{class_color_extruder_a28198975e5d196067960d80a506721d4}\label{class_color_extruder_a28198975e5d196067960d80a506721d4} 
+\index{ColorExtruder@{ColorExtruder}!colorArrayOutput@{colorArrayOutput}}
+\index{colorArrayOutput@{colorArrayOutput}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{colorArrayOutput}{colorArrayOutput}}
+{\footnotesize\ttfamily string Color\+Extruder.\+color\+Array\+Output = "{}"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The output of the color array object as a string. 
+
+\Hypertarget{class_color_extruder_a5687cf7acb1aaea9f72713acd2c11e60}\label{class_color_extruder_a5687cf7acb1aaea9f72713acd2c11e60} 
+\index{ColorExtruder@{ColorExtruder}!colorScriptContent@{colorScriptContent}}
+\index{colorScriptContent@{colorScriptContent}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{colorScriptContent}{colorScriptContent}}
+{\footnotesize\ttfamily string Color\+Extruder.\+color\+Script\+Content\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The content of the color script that the AI did generate. 
+
+\Hypertarget{class_color_extruder_ac907f44f4d2a514ea5715a5c4fb67e19}\label{class_color_extruder_ac907f44f4d2a514ea5715a5c4fb67e19} 
+\index{ColorExtruder@{ColorExtruder}!editorPrefKeys@{editorPrefKeys}}
+\index{editorPrefKeys@{editorPrefKeys}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{editorPrefKeys}{editorPrefKeys}}
+{\footnotesize\ttfamily readonly Dictionary$<$\mbox{\hyperlink{class_color_extruder_a74318e26263cd0256315a9857b77d7d2}{Editor\+Pref\+Key}}, string$>$ Color\+Extruder.\+editor\+Pref\+Keys\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{new}()}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_color_extruder_a74318e26263cd0256315a9857b77d7d2}{EditorPrefKey}}.SpriteGUID,\ \textcolor{stringliteral}{"{}SpriteGUIDKey"{}}\ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_color_extruder_a74318e26263cd0256315a9857b77d7d2}{EditorPrefKey}}.ColorArrayObjectString,\ \textcolor{stringliteral}{"{}ColorArrayObjectStringKey"{}}\ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ \mbox{\hyperlink{class_color_extruder_a74318e26263cd0256315a9857b77d7d2}{EditorPrefKey}}.ShowColorArrayContent,\ \textcolor{stringliteral}{"{}ShowColorArrayContentKey"{}}\ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+Dictionary that contains the keys for the editor prefs. 
+
+\Hypertarget{class_color_extruder_a87d083eac2eb9289a54c857ca7dc2e94}\label{class_color_extruder_a87d083eac2eb9289a54c857ca7dc2e94} 
+\index{ColorExtruder@{ColorExtruder}!imageSprite@{imageSprite}}
+\index{imageSprite@{imageSprite}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{imageSprite}{imageSprite}}
+{\footnotesize\ttfamily Sprite Color\+Extruder.\+image\+Sprite}
+
+
+
+The image that should be used to extract the colors. Can be dragged into the field. 
+
+\Hypertarget{class_color_extruder_ac87d5c561a95081ff506a057c2b3122e}\label{class_color_extruder_ac87d5c561a95081ff506a057c2b3122e} 
+\index{ColorExtruder@{ColorExtruder}!scrollPosition@{scrollPosition}}
+\index{scrollPosition@{scrollPosition}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{scrollPosition}{scrollPosition}}
+{\footnotesize\ttfamily Vector2 Color\+Extruder.\+scroll\+Position\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The scroll position of the displayed prompt text. 
+
+\Hypertarget{class_color_extruder_a2e4667f7d093035333e1acb0ca0513a6}\label{class_color_extruder_a2e4667f7d093035333e1acb0ca0513a6} 
+\index{ColorExtruder@{ColorExtruder}!showColorArrayContent@{showColorArrayContent}}
+\index{showColorArrayContent@{showColorArrayContent}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{showColorArrayContent}{showColorArrayContent}}
+{\footnotesize\ttfamily bool Color\+Extruder.\+show\+Color\+Array\+Content = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Bool that indicates if the color array content should be shown because it is too long. 
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_color_extruder_ae71b9d9eed30dfa1ee7a7eac8eb5984e}\label{class_color_extruder_ae71b9d9eed30dfa1ee7a7eac8eb5984e} 
+\index{ColorExtruder@{ColorExtruder}!DisplayName@{DisplayName}}
+\index{DisplayName@{DisplayName}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{DisplayName}{DisplayName}}
+{\footnotesize\ttfamily override string Color\+Extruder.\+Display\+Name\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+The display name of the color extruder. 
+
+\Hypertarget{class_color_extruder_a679a5d5277e551d76dd899679934e5a8}\label{class_color_extruder_a679a5d5277e551d76dd899679934e5a8} 
+\index{ColorExtruder@{ColorExtruder}!HasInit@{HasInit}}
+\index{HasInit@{HasInit}!ColorExtruder@{ColorExtruder}}
+\doxysubsubsection{\texorpdfstring{HasInit}{HasInit}}
+{\footnotesize\ttfamily bool Color\+Extruder.\+Has\+Init = false\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_color_extruder_8cs}{Color\+Extruder.\+cs}}\end{DoxyCompactItemize}

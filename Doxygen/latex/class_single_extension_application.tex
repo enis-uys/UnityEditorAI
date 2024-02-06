@@ -1,0 +1,344 @@
+\doxysection{Single\+Extension\+Application Class Reference}
+\hypertarget{class_single_extension_application}{}\label{class_single_extension_application}\index{SingleExtensionApplication@{SingleExtensionApplication}}
+
+
+The abstract class for a single application in the extension.  
+
+
+
+
+Inheritance diagram for Single\+Extension\+Application\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_single_extension_application__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Single\+Extension\+Application\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_single_extension_application__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_single_extension_application_ad4c53dc687f77685921ecbc18952eed8}{Initialize}} (Editor\+Window \mbox{\hyperlink{class_single_extension_application_aed64f61e6f6d5d8ba0ccaabd9fc3b7fe}{window}})
+\begin{DoxyCompactList}\small\item\em Initializes the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_aa51a43317f0bbf7265cf8cc1113f6150}{On\+GUI}} ()
+\begin{DoxyCompactList}\small\item\em Abstract method that renders the GUI of the application. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_single_extension_application_a6a4b4a85bfcd37cc26515d9bf290717f}{On\+Enable}} ()
+\begin{DoxyCompactList}\small\item\em Abstract method that is called when the application is enabled. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_aa1cd2c244df403bc0cd4ed3130ff60b7}{Repaint}} ()
+\begin{DoxyCompactList}\small\item\em Method that repaints the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ac790580eb6b04325403418919ae004a2}{Focus}} ()
+\begin{DoxyCompactList}\small\item\em Method that focuses the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_af7566e21f700c97714206139bc8b3fa8}{Show}} ()
+\begin{DoxyCompactList}\small\item\em Method that shows the window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_single_extension_application_a70cd16b4dcbc26cf2b270333c3d5a3ba}{Get\+Help\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a1891a14e184b830a220f00f730facf30}{Close}} ()
+\begin{DoxyCompactList}\small\item\em Method that closes the window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_a5c8eb26811e8e8be2adef8de8ce9e9cc}{Create\+Rich\+Text\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a rich text style for colored text. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_aaf0f5f643db07bf144406930febd6825}{Create\+Code\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a code style for displaying code. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_a10fbb10372723562264b8450fb97d8bd}{Create\+Highlight\+Button\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ae44d34c95f1d6d1b639397672061d642}{Render\+Help\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Method that renders the help box of the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ac7196ccc94638a9c937835e929ba8149}{Show\+Progress\+Bar}} (float progress)
+\begin{DoxyCompactList}\small\item\em Method that renders the help box of the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_af44fba8eb1f4e67690bb9125ef8c695c}{Finish\+Progress\+Bar\+With\+Delay}} (int milli\+Seconds=700)
+\begin{DoxyCompactList}\small\item\em Method that finishes the progress bar of the help box and closes it after a delay. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a227b21fbcd7615885b5942123a496d09}{Add\+Default\+Space}} ()
+\begin{DoxyCompactList}\small\item\em Method to add a default space between GUI elements. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a00d19da43cb9c34bb4fb9256c0fba86a}{Reset\+Keyboard\+Control}} ()
+\begin{DoxyCompactList}\small\item\em Method to Reset the keyboard control. It is used, if a user should focus out of a textfield. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_single_extension_application_a542a28ee031c28c77091b8684ed972e4}{default\+Space}} = 10
+\begin{DoxyCompactList}\small\item\em The default space between GUI elements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_single_extension_application_abd98e67099069da3b0fccbd439d8edf2}{help\+Box}} = \mbox{\hyperlink{class_help_box_a37157adbf2d543c032e06cf87be2c63f}{Help\+Box.\+Get\+Instance}}()
+\begin{DoxyCompactList}\small\item\em The help box of a single application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_single_extension_application_ae12cba99589c5a8b18cd4fa02033ef3b}{Display\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The display name of a single application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Editor\+Window \mbox{\hyperlink{class_single_extension_application_aed64f61e6f6d5d8ba0ccaabd9fc3b7fe}{window}}
+\begin{DoxyCompactList}\small\item\em The window that this application is displayed in. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const string \mbox{\hyperlink{class_single_extension_application_aacc12231cbad1e8602fc67dc70c39779}{Highlight\+Button\+Ressource\+Path}} = "{}Highlight\+Button"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The abstract class for a single application in the extension. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_single_extension_application_a227b21fbcd7615885b5942123a496d09}\label{class_single_extension_application_a227b21fbcd7615885b5942123a496d09} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!AddDefaultSpace@{AddDefaultSpace}}
+\index{AddDefaultSpace@{AddDefaultSpace}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{AddDefaultSpace()}{AddDefaultSpace()}}
+{\footnotesize\ttfamily void Single\+Extension\+Application.\+Add\+Default\+Space (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Method to add a default space between GUI elements. 
+
+\Hypertarget{class_single_extension_application_a1891a14e184b830a220f00f730facf30}\label{class_single_extension_application_a1891a14e184b830a220f00f730facf30} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!Close@{Close}}
+\index{Close@{Close}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{Close()}{Close()}}
+{\footnotesize\ttfamily void Single\+Extension\+Application.\+Close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Method that closes the window. 
+
+\Hypertarget{class_single_extension_application_aaf0f5f643db07bf144406930febd6825}\label{class_single_extension_application_aaf0f5f643db07bf144406930febd6825} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!CreateCodeStyle@{CreateCodeStyle}}
+\index{CreateCodeStyle@{CreateCodeStyle}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{CreateCodeStyle()}{CreateCodeStyle()}}
+{\footnotesize\ttfamily GUIStyle Single\+Extension\+Application.\+Create\+Code\+Style (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Method that creates a code style for displaying code. 
+
+\begin{DoxyReturn}{Returns}
+Returns a GUIStyle that can be used to display code. 
+\end{DoxyReturn}
+\Hypertarget{class_single_extension_application_a10fbb10372723562264b8450fb97d8bd}\label{class_single_extension_application_a10fbb10372723562264b8450fb97d8bd} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!CreateHighlightButtonStyle@{CreateHighlightButtonStyle}}
+\index{CreateHighlightButtonStyle@{CreateHighlightButtonStyle}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{CreateHighlightButtonStyle()}{CreateHighlightButtonStyle()}}
+{\footnotesize\ttfamily GUIStyle Single\+Extension\+Application.\+Create\+Highlight\+Button\+Style (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) 
+
+\begin{DoxyReturn}{Returns}
+Returns a GUIStyle that can be used to display buttons. 
+\end{DoxyReturn}
+\Hypertarget{class_single_extension_application_a5c8eb26811e8e8be2adef8de8ce9e9cc}\label{class_single_extension_application_a5c8eb26811e8e8be2adef8de8ce9e9cc} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!CreateRichTextStyle@{CreateRichTextStyle}}
+\index{CreateRichTextStyle@{CreateRichTextStyle}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{CreateRichTextStyle()}{CreateRichTextStyle()}}
+{\footnotesize\ttfamily GUIStyle Single\+Extension\+Application.\+Create\+Rich\+Text\+Style (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Method that creates a rich text style for colored text. 
+
+\begin{DoxyReturn}{Returns}
+Returns a GUIStyle that can be used to display colored text. 
+\end{DoxyReturn}
+\Hypertarget{class_single_extension_application_af44fba8eb1f4e67690bb9125ef8c695c}\label{class_single_extension_application_af44fba8eb1f4e67690bb9125ef8c695c} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!FinishProgressBarWithDelay@{FinishProgressBarWithDelay}}
+\index{FinishProgressBarWithDelay@{FinishProgressBarWithDelay}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{FinishProgressBarWithDelay()}{FinishProgressBarWithDelay()}}
+{\footnotesize\ttfamily void Single\+Extension\+Application.\+Finish\+Progress\+Bar\+With\+Delay (\begin{DoxyParamCaption}\item[{int}]{milli\+Seconds = {\ttfamily 700} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Method that finishes the progress bar of the help box and closes it after a delay. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em milli\+Seconds} & The delay in milliseconds. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_single_extension_application_ac790580eb6b04325403418919ae004a2}\label{class_single_extension_application_ac790580eb6b04325403418919ae004a2} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!Focus@{Focus}}
+\index{Focus@{Focus}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{Focus()}{Focus()}}
+{\footnotesize\ttfamily void Single\+Extension\+Application.\+Focus (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Method that focuses the window. 
+
+\Hypertarget{class_single_extension_application_a70cd16b4dcbc26cf2b270333c3d5a3ba}\label{class_single_extension_application_a70cd16b4dcbc26cf2b270333c3d5a3ba} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!GetHelpBox@{GetHelpBox}}
+\index{GetHelpBox@{GetHelpBox}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{GetHelpBox()}{GetHelpBox()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_help_box}{Help\+Box}} Single\+Extension\+Application.\+Get\+Help\+Box (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) 
+
+\begin{DoxyReturn}{Returns}
+Returns the helpbox of the application. 
+\end{DoxyReturn}
+\Hypertarget{class_single_extension_application_ad4c53dc687f77685921ecbc18952eed8}\label{class_single_extension_application_ad4c53dc687f77685921ecbc18952eed8} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily void Single\+Extension\+Application.\+Initialize (\begin{DoxyParamCaption}\item[{Editor\+Window}]{window }\end{DoxyParamCaption})}
+
+
+
+Initializes the application. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & The window that this application is displayed in.\\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_single_extension_application_a6a4b4a85bfcd37cc26515d9bf290717f}\label{class_single_extension_application_a6a4b4a85bfcd37cc26515d9bf290717f} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!OnEnable@{OnEnable}}
+\index{OnEnable@{OnEnable}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{OnEnable()}{OnEnable()}}
+{\footnotesize\ttfamily virtual void Single\+Extension\+Application.\+On\+Enable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Abstract method that is called when the application is enabled. 
+
+
+
+Reimplemented in \mbox{\hyperlink{class_a_i_settings_adffee9badc8633f7ccda36dc3d3299fb}{AISettings}}.
+
+\Hypertarget{class_single_extension_application_aa51a43317f0bbf7265cf8cc1113f6150}\label{class_single_extension_application_aa51a43317f0bbf7265cf8cc1113f6150} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!OnGUI@{OnGUI}}
+\index{OnGUI@{OnGUI}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{OnGUI()}{OnGUI()}}
+{\footnotesize\ttfamily void Single\+Extension\+Application.\+On\+GUI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+
+
+Abstract method that renders the GUI of the application. 
+
+\Hypertarget{class_single_extension_application_ae44d34c95f1d6d1b639397672061d642}\label{class_single_extension_application_ae44d34c95f1d6d1b639397672061d642} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!RenderHelpBox@{RenderHelpBox}}
+\index{RenderHelpBox@{RenderHelpBox}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{RenderHelpBox()}{RenderHelpBox()}}
+{\footnotesize\ttfamily void Single\+Extension\+Application.\+Render\+Help\+Box (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Method that renders the help box of the application. 
+
+\Hypertarget{class_single_extension_application_aa1cd2c244df403bc0cd4ed3130ff60b7}\label{class_single_extension_application_aa1cd2c244df403bc0cd4ed3130ff60b7} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!Repaint@{Repaint}}
+\index{Repaint@{Repaint}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{Repaint()}{Repaint()}}
+{\footnotesize\ttfamily void Single\+Extension\+Application.\+Repaint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Method that repaints the window. 
+
+\Hypertarget{class_single_extension_application_a00d19da43cb9c34bb4fb9256c0fba86a}\label{class_single_extension_application_a00d19da43cb9c34bb4fb9256c0fba86a} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!ResetKeyboardControl@{ResetKeyboardControl}}
+\index{ResetKeyboardControl@{ResetKeyboardControl}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{ResetKeyboardControl()}{ResetKeyboardControl()}}
+{\footnotesize\ttfamily void Single\+Extension\+Application.\+Reset\+Keyboard\+Control (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Method to Reset the keyboard control. It is used, if a user should focus out of a textfield. 
+
+\Hypertarget{class_single_extension_application_af7566e21f700c97714206139bc8b3fa8}\label{class_single_extension_application_af7566e21f700c97714206139bc8b3fa8} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!Show@{Show}}
+\index{Show@{Show}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{Show()}{Show()}}
+{\footnotesize\ttfamily void Single\+Extension\+Application.\+Show (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Method that shows the window. 
+
+\Hypertarget{class_single_extension_application_ac7196ccc94638a9c937835e929ba8149}\label{class_single_extension_application_ac7196ccc94638a9c937835e929ba8149} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!ShowProgressBar@{ShowProgressBar}}
+\index{ShowProgressBar@{ShowProgressBar}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{ShowProgressBar()}{ShowProgressBar()}}
+{\footnotesize\ttfamily void Single\+Extension\+Application.\+Show\+Progress\+Bar (\begin{DoxyParamCaption}\item[{float}]{progress }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Method that renders the help box of the application. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em progress} & The intended progress of the progress bar. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_single_extension_application_a542a28ee031c28c77091b8684ed972e4}\label{class_single_extension_application_a542a28ee031c28c77091b8684ed972e4} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!defaultSpace@{defaultSpace}}
+\index{defaultSpace@{defaultSpace}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{defaultSpace}{defaultSpace}}
+{\footnotesize\ttfamily int Single\+Extension\+Application.\+default\+Space = 10\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The default space between GUI elements. 
+
+\Hypertarget{class_single_extension_application_abd98e67099069da3b0fccbd439d8edf2}\label{class_single_extension_application_abd98e67099069da3b0fccbd439d8edf2} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!helpBox@{helpBox}}
+\index{helpBox@{helpBox}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{helpBox}{helpBox}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_help_box}{Help\+Box}} Single\+Extension\+Application.\+help\+Box = \mbox{\hyperlink{class_help_box_a37157adbf2d543c032e06cf87be2c63f}{Help\+Box.\+Get\+Instance}}()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+
+
+The help box of a single application. 
+
+\Hypertarget{class_single_extension_application_aacc12231cbad1e8602fc67dc70c39779}\label{class_single_extension_application_aacc12231cbad1e8602fc67dc70c39779} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!HighlightButtonRessourcePath@{HighlightButtonRessourcePath}}
+\index{HighlightButtonRessourcePath@{HighlightButtonRessourcePath}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{HighlightButtonRessourcePath}{HighlightButtonRessourcePath}}
+{\footnotesize\ttfamily const string Single\+Extension\+Application.\+Highlight\+Button\+Ressource\+Path = "{}Highlight\+Button"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_single_extension_application_aed64f61e6f6d5d8ba0ccaabd9fc3b7fe}\label{class_single_extension_application_aed64f61e6f6d5d8ba0ccaabd9fc3b7fe} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!window@{window}}
+\index{window@{window}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{window}{window}}
+{\footnotesize\ttfamily Editor\+Window Single\+Extension\+Application.\+window\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The window that this application is displayed in. 
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_single_extension_application_ae12cba99589c5a8b18cd4fa02033ef3b}\label{class_single_extension_application_ae12cba99589c5a8b18cd4fa02033ef3b} 
+\index{SingleExtensionApplication@{SingleExtensionApplication}!DisplayName@{DisplayName}}
+\index{DisplayName@{DisplayName}!SingleExtensionApplication@{SingleExtensionApplication}}
+\doxysubsubsection{\texorpdfstring{DisplayName}{DisplayName}}
+{\footnotesize\ttfamily string Single\+Extension\+Application.\+Display\+Name\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [abstract]}}
+
+
+
+The display name of a single application. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_single_extension_application_8cs}{Single\+Extension\+Application.\+cs}}\end{DoxyCompactItemize}

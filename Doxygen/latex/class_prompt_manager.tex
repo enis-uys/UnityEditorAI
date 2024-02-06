@@ -1,0 +1,415 @@
+\doxysection{Prompt\+Manager Class Reference}
+\hypertarget{class_prompt_manager}{}\label{class_prompt_manager}\index{PromptManager@{PromptManager}}
+
+
+The prompt manager is used to manage custom prompts and display pre-\/defined prompts.  
+
+
+
+
+Inheritance diagram for Prompt\+Manager\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_prompt_manager__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Prompt\+Manager\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_prompt_manager__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override void \mbox{\hyperlink{class_prompt_manager_aef06e756477ffb929f3217a4bd78c1e1}{On\+GUI}} ()
+\begin{DoxyCompactList}\small\item\em The method that renders the GUI of the prompt manager. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_single_extension_application_ad4c53dc687f77685921ecbc18952eed8}{Initialize}} (Editor\+Window \mbox{\hyperlink{class_single_extension_application_aed64f61e6f6d5d8ba0ccaabd9fc3b7fe}{window}})
+\begin{DoxyCompactList}\small\item\em Initializes the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_aa51a43317f0bbf7265cf8cc1113f6150}{On\+GUI}} ()
+\begin{DoxyCompactList}\small\item\em Abstract method that renders the GUI of the application. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_single_extension_application_a6a4b4a85bfcd37cc26515d9bf290717f}{On\+Enable}} ()
+\begin{DoxyCompactList}\small\item\em Abstract method that is called when the application is enabled. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_aa1cd2c244df403bc0cd4ed3130ff60b7}{Repaint}} ()
+\begin{DoxyCompactList}\small\item\em Method that repaints the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ac790580eb6b04325403418919ae004a2}{Focus}} ()
+\begin{DoxyCompactList}\small\item\em Method that focuses the window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_af7566e21f700c97714206139bc8b3fa8}{Show}} ()
+\begin{DoxyCompactList}\small\item\em Method that shows the window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_single_extension_application_a70cd16b4dcbc26cf2b270333c3d5a3ba}{Get\+Help\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a1891a14e184b830a220f00f730facf30}{Close}} ()
+\begin{DoxyCompactList}\small\item\em Method that closes the window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static List$<$(string Title, string Content)$>$ \mbox{\hyperlink{class_prompt_manager_a6a29f685b01c34fa7da1be1fd3d82988}{Load\+Prompt\+List\+From\+Json}} ()
+\begin{DoxyCompactList}\small\item\em Loads the prompt list from the json file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static readonly string \mbox{\hyperlink{class_prompt_manager_a1a0b15038b82f748a542a595301d4910}{prompt\+List\+File\+Name}} = "{}prompt\+List.\+json"{}
+\begin{DoxyCompactList}\small\item\em The name of the prompt list file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+override string \mbox{\hyperlink{class_prompt_manager_a698f3f535f0621826c437ba786178c5a}{Display\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The display name of the prompt manager. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_prompt_manager_ac268f910517e4f870d07df075745829d}{Has\+Init}} = false\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The boolean that indicates if the prompt manager has been initialized. \end{DoxyCompactList}\item 
+static List$<$(string Title, string Content)$>$ \mbox{\hyperlink{class_prompt_manager_a45c5587e1c48a364767f2e41ca48b4bf}{Custom\+Prompt\+List}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The getter and setter for the custom prompt list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_single_extension_application_ae12cba99589c5a8b18cd4fa02033ef3b}{Display\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The display name of a single application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_prompt_manager_a451abe247a651862f4ffbc1655800aae}{Render\+Prompt\+Lists}} ()
+\begin{DoxyCompactList}\small\item\em Renders the custom and default prompt lists. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_prompt_manager_a5705bb08a3fdedf4202f4879a2f5d578}{Render\+Custom\+Prompt\+List}} ()
+\begin{DoxyCompactList}\small\item\em Renders the custom prompt list. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_prompt_manager_a1b925c8aeba1334888bc29b717a4690b}{Render\+Default\+Prompt\+List}} ()
+\begin{DoxyCompactList}\small\item\em Renders the default. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_prompt_manager_a2ca98575db713d066e7cc35457f71d78}{Save\+Prompt\+List\+In\+Json}} ()
+\begin{DoxyCompactList}\small\item\em Saves the prompt list in the json file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_prompt_manager_ac00aafd80d49640f805dcdfa52f0d133}{Render\+New\+Prompt\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Renders the the new prompt field. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_prompt_manager_a100ab3b1827742ccd306f0762921da06}{Reset\+Current\+Prompt\+Texts}} ()
+\begin{DoxyCompactList}\small\item\em Resets the current prompt texts to reload the custom prompt list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Vector2 \mbox{\hyperlink{class_prompt_manager_aa2a01361b133efb44be90c230df2f608}{scroll\+Position}}
+\begin{DoxyCompactList}\small\item\em The scroll position of the prompt manager. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_prompt_manager_a2d5f6d8f9093c2623ff68c016b7de6aa}{add\+Field}} = false
+\begin{DoxyCompactList}\small\item\em The boolean that indicates if a new prompt should be added. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_prompt_manager_a54233cb613687381448f0bb3ef2af652}{selected\+Index}} = -\/1
+\begin{DoxyCompactList}\small\item\em The index of the selected prompt. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_prompt_manager_a488a2a2f50adf6609e213915cfa8f0b1}{new\+Prompt\+Content}}
+\begin{DoxyCompactList}\small\item\em The content of the new prompt. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_prompt_manager_a11a086b04e423d34f57cb39e27bcea5a}{new\+Prompt\+Title}}
+\begin{DoxyCompactList}\small\item\em The title of the new prompt. \end{DoxyCompactList}\item 
+List$<$ string $>$ \mbox{\hyperlink{class_prompt_manager_a93c9d257f3270f7cd0c7e29fc6ebfb20}{current\+Prompt\+Texts}} = new()
+\begin{DoxyCompactList}\small\item\em The current prompt texts. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_prompt_manager_abdc9ed22db2c8b33242e9a05681682ee}{code\+Style}}
+\begin{DoxyCompactList}\small\item\em The GUIStyle for displaying strings as code. \end{DoxyCompactList}\item 
+readonly List$<$(string Title, string Content)$>$ \mbox{\hyperlink{class_prompt_manager_a75f98d4de8b37755e1e4fa8082636112}{default\+Prompt\+List}}
+\begin{DoxyCompactList}\small\item\em The default pre-\/defined prompt list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static List$<$(string Title, string Content)$>$ \mbox{\hyperlink{class_prompt_manager_a235b064314979f3acdf166e54108229f}{custom\+Prompt\+List}} = new()
+\begin{DoxyCompactList}\small\item\em The list of custom prompts. \end{DoxyCompactList}\item 
+static readonly List$<$(string Title, string Content)$>$ \mbox{\hyperlink{class_prompt_manager_abd358c8f969b6eea200a148b9c5fc30e}{default\+Custom\+Prompts}}
+\begin{DoxyCompactList}\small\item\em The default custom prompts that get loaded when no prompt is loaded. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_a5c8eb26811e8e8be2adef8de8ce9e9cc}{Create\+Rich\+Text\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a rich text style for colored text. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_aaf0f5f643db07bf144406930febd6825}{Create\+Code\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a code style for displaying code. \end{DoxyCompactList}\item 
+GUIStyle \mbox{\hyperlink{class_single_extension_application_a10fbb10372723562264b8450fb97d8bd}{Create\+Highlight\+Button\+Style}} ()
+\begin{DoxyCompactList}\small\item\em Method that creates a highlight button style for displaying buttons. Loads the style from a ressource file (Highlight\+Button.\+guiskin) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ae44d34c95f1d6d1b639397672061d642}{Render\+Help\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Method that renders the help box of the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_ac7196ccc94638a9c937835e929ba8149}{Show\+Progress\+Bar}} (float progress)
+\begin{DoxyCompactList}\small\item\em Method that renders the help box of the application. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_af44fba8eb1f4e67690bb9125ef8c695c}{Finish\+Progress\+Bar\+With\+Delay}} (int milli\+Seconds=700)
+\begin{DoxyCompactList}\small\item\em Method that finishes the progress bar of the help box and closes it after a delay. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a227b21fbcd7615885b5942123a496d09}{Add\+Default\+Space}} ()
+\begin{DoxyCompactList}\small\item\em Method to add a default space between GUI elements. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_single_extension_application_a00d19da43cb9c34bb4fb9256c0fba86a}{Reset\+Keyboard\+Control}} ()
+\begin{DoxyCompactList}\small\item\em Method to Reset the keyboard control. It is used, if a user should focus out of a textfield. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_single_extension_application_a542a28ee031c28c77091b8684ed972e4}{default\+Space}} = 10
+\begin{DoxyCompactList}\small\item\em The default space between GUI elements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{class_single_extension_application}{Single\+Extension\+Application}}}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_help_box}{Help\+Box}} \mbox{\hyperlink{class_single_extension_application_abd98e67099069da3b0fccbd439d8edf2}{help\+Box}} = \mbox{\hyperlink{class_help_box_a37157adbf2d543c032e06cf87be2c63f}{Help\+Box.\+Get\+Instance}}()
+\begin{DoxyCompactList}\small\item\em The help box of a single application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The prompt manager is used to manage custom prompts and display pre-\/defined prompts. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_prompt_manager_a6a29f685b01c34fa7da1be1fd3d82988}\label{class_prompt_manager_a6a29f685b01c34fa7da1be1fd3d82988} 
+\index{PromptManager@{PromptManager}!LoadPromptListFromJson@{LoadPromptListFromJson}}
+\index{LoadPromptListFromJson@{LoadPromptListFromJson}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{LoadPromptListFromJson()}{LoadPromptListFromJson()}}
+{\footnotesize\ttfamily static List$<$(string Title, string Content)$>$ Prompt\+Manager.\+Load\+Prompt\+List\+From\+Json (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Loads the prompt list from the json file. 
+
+\begin{DoxyReturn}{Returns}
+The loaded prompt list. 
+\end{DoxyReturn}
+\Hypertarget{class_prompt_manager_aef06e756477ffb929f3217a4bd78c1e1}\label{class_prompt_manager_aef06e756477ffb929f3217a4bd78c1e1} 
+\index{PromptManager@{PromptManager}!OnGUI@{OnGUI}}
+\index{OnGUI@{OnGUI}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{OnGUI()}{OnGUI()}}
+{\footnotesize\ttfamily override void Prompt\+Manager.\+On\+GUI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The method that renders the GUI of the prompt manager. 
+
+\Hypertarget{class_prompt_manager_a5705bb08a3fdedf4202f4879a2f5d578}\label{class_prompt_manager_a5705bb08a3fdedf4202f4879a2f5d578} 
+\index{PromptManager@{PromptManager}!RenderCustomPromptList@{RenderCustomPromptList}}
+\index{RenderCustomPromptList@{RenderCustomPromptList}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{RenderCustomPromptList()}{RenderCustomPromptList()}}
+{\footnotesize\ttfamily void Prompt\+Manager.\+Render\+Custom\+Prompt\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the custom prompt list. 
+
+\Hypertarget{class_prompt_manager_a1b925c8aeba1334888bc29b717a4690b}\label{class_prompt_manager_a1b925c8aeba1334888bc29b717a4690b} 
+\index{PromptManager@{PromptManager}!RenderDefaultPromptList@{RenderDefaultPromptList}}
+\index{RenderDefaultPromptList@{RenderDefaultPromptList}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{RenderDefaultPromptList()}{RenderDefaultPromptList()}}
+{\footnotesize\ttfamily void Prompt\+Manager.\+Render\+Default\+Prompt\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the default. 
+
+\Hypertarget{class_prompt_manager_ac00aafd80d49640f805dcdfa52f0d133}\label{class_prompt_manager_ac00aafd80d49640f805dcdfa52f0d133} 
+\index{PromptManager@{PromptManager}!RenderNewPromptField@{RenderNewPromptField}}
+\index{RenderNewPromptField@{RenderNewPromptField}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{RenderNewPromptField()}{RenderNewPromptField()}}
+{\footnotesize\ttfamily void Prompt\+Manager.\+Render\+New\+Prompt\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the the new prompt field. 
+
+\Hypertarget{class_prompt_manager_a451abe247a651862f4ffbc1655800aae}\label{class_prompt_manager_a451abe247a651862f4ffbc1655800aae} 
+\index{PromptManager@{PromptManager}!RenderPromptLists@{RenderPromptLists}}
+\index{RenderPromptLists@{RenderPromptLists}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{RenderPromptLists()}{RenderPromptLists()}}
+{\footnotesize\ttfamily void Prompt\+Manager.\+Render\+Prompt\+Lists (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Renders the custom and default prompt lists. 
+
+\Hypertarget{class_prompt_manager_a100ab3b1827742ccd306f0762921da06}\label{class_prompt_manager_a100ab3b1827742ccd306f0762921da06} 
+\index{PromptManager@{PromptManager}!ResetCurrentPromptTexts@{ResetCurrentPromptTexts}}
+\index{ResetCurrentPromptTexts@{ResetCurrentPromptTexts}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{ResetCurrentPromptTexts()}{ResetCurrentPromptTexts()}}
+{\footnotesize\ttfamily void Prompt\+Manager.\+Reset\+Current\+Prompt\+Texts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Resets the current prompt texts to reload the custom prompt list. 
+
+\Hypertarget{class_prompt_manager_a2ca98575db713d066e7cc35457f71d78}\label{class_prompt_manager_a2ca98575db713d066e7cc35457f71d78} 
+\index{PromptManager@{PromptManager}!SavePromptListInJson@{SavePromptListInJson}}
+\index{SavePromptListInJson@{SavePromptListInJson}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{SavePromptListInJson()}{SavePromptListInJson()}}
+{\footnotesize\ttfamily void Prompt\+Manager.\+Save\+Prompt\+List\+In\+Json (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Saves the prompt list in the json file. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_prompt_manager_a2d5f6d8f9093c2623ff68c016b7de6aa}\label{class_prompt_manager_a2d5f6d8f9093c2623ff68c016b7de6aa} 
+\index{PromptManager@{PromptManager}!addField@{addField}}
+\index{addField@{addField}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{addField}{addField}}
+{\footnotesize\ttfamily bool Prompt\+Manager.\+add\+Field = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The boolean that indicates if a new prompt should be added. 
+
+\Hypertarget{class_prompt_manager_abdc9ed22db2c8b33242e9a05681682ee}\label{class_prompt_manager_abdc9ed22db2c8b33242e9a05681682ee} 
+\index{PromptManager@{PromptManager}!codeStyle@{codeStyle}}
+\index{codeStyle@{codeStyle}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{codeStyle}{codeStyle}}
+{\footnotesize\ttfamily GUIStyle Prompt\+Manager.\+code\+Style\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The GUIStyle for displaying strings as code. 
+
+\Hypertarget{class_prompt_manager_a93c9d257f3270f7cd0c7e29fc6ebfb20}\label{class_prompt_manager_a93c9d257f3270f7cd0c7e29fc6ebfb20} 
+\index{PromptManager@{PromptManager}!currentPromptTexts@{currentPromptTexts}}
+\index{currentPromptTexts@{currentPromptTexts}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{currentPromptTexts}{currentPromptTexts}}
+{\footnotesize\ttfamily List$<$string$>$ Prompt\+Manager.\+current\+Prompt\+Texts = new()\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The current prompt texts. 
+
+\Hypertarget{class_prompt_manager_a235b064314979f3acdf166e54108229f}\label{class_prompt_manager_a235b064314979f3acdf166e54108229f} 
+\index{PromptManager@{PromptManager}!customPromptList@{customPromptList}}
+\index{customPromptList@{customPromptList}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{customPromptList}{customPromptList}}
+{\footnotesize\ttfamily List$<$(string Title, string Content)$>$ Prompt\+Manager.\+custom\+Prompt\+List = new()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The list of custom prompts. 
+
+\Hypertarget{class_prompt_manager_abd358c8f969b6eea200a148b9c5fc30e}\label{class_prompt_manager_abd358c8f969b6eea200a148b9c5fc30e} 
+\index{PromptManager@{PromptManager}!defaultCustomPrompts@{defaultCustomPrompts}}
+\index{defaultCustomPrompts@{defaultCustomPrompts}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{defaultCustomPrompts}{defaultCustomPrompts}}
+{\footnotesize\ttfamily readonly List$<$(string Title, string Content)$>$ Prompt\+Manager.\+default\+Custom\+Prompts\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{new}()}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.ImproveScriptPrompt,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.WriteCommentsPrompt,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.RemoveVariablesPrompt,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.RemoveDebugLogsPrompt,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.AutoGenerateSerializationPrompt,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.GenerateRotationScriptPrompt,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.GenerateParticleSystemPrompt,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.GenerateLightsPrompt,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The default custom prompts that get loaded when no prompt is loaded. 
+
+\Hypertarget{class_prompt_manager_a75f98d4de8b37755e1e4fa8082636112}\label{class_prompt_manager_a75f98d4de8b37755e1e4fa8082636112} 
+\index{PromptManager@{PromptManager}!defaultPromptList@{defaultPromptList}}
+\index{defaultPromptList@{defaultPromptList}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{defaultPromptList}{defaultPromptList}}
+{\footnotesize\ttfamily readonly List$<$(string Title, string Content)$>$ Prompt\+Manager.\+default\+Prompt\+List\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{new}()}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.ScriptEndNote,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.CreateNewScriptWithPrompt,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.ObjectGenerationPrompt,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.UpdateExistingScriptWithPrompt,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_open_ai_standard_prompts}{OpenAiStandardPrompts}}.ColorImageGenerationPrompt,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The default pre-\/defined prompt list. 
+
+\Hypertarget{class_prompt_manager_a488a2a2f50adf6609e213915cfa8f0b1}\label{class_prompt_manager_a488a2a2f50adf6609e213915cfa8f0b1} 
+\index{PromptManager@{PromptManager}!newPromptContent@{newPromptContent}}
+\index{newPromptContent@{newPromptContent}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{newPromptContent}{newPromptContent}}
+{\footnotesize\ttfamily string Prompt\+Manager.\+new\+Prompt\+Content\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The content of the new prompt. 
+
+\Hypertarget{class_prompt_manager_a11a086b04e423d34f57cb39e27bcea5a}\label{class_prompt_manager_a11a086b04e423d34f57cb39e27bcea5a} 
+\index{PromptManager@{PromptManager}!newPromptTitle@{newPromptTitle}}
+\index{newPromptTitle@{newPromptTitle}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{newPromptTitle}{newPromptTitle}}
+{\footnotesize\ttfamily string Prompt\+Manager.\+new\+Prompt\+Title\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The title of the new prompt. 
+
+\Hypertarget{class_prompt_manager_a1a0b15038b82f748a542a595301d4910}\label{class_prompt_manager_a1a0b15038b82f748a542a595301d4910} 
+\index{PromptManager@{PromptManager}!promptListFileName@{promptListFileName}}
+\index{promptListFileName@{promptListFileName}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{promptListFileName}{promptListFileName}}
+{\footnotesize\ttfamily readonly string Prompt\+Manager.\+prompt\+List\+File\+Name = "{}prompt\+List.\+json"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The name of the prompt list file. 
+
+\Hypertarget{class_prompt_manager_aa2a01361b133efb44be90c230df2f608}\label{class_prompt_manager_aa2a01361b133efb44be90c230df2f608} 
+\index{PromptManager@{PromptManager}!scrollPosition@{scrollPosition}}
+\index{scrollPosition@{scrollPosition}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{scrollPosition}{scrollPosition}}
+{\footnotesize\ttfamily Vector2 Prompt\+Manager.\+scroll\+Position\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The scroll position of the prompt manager. 
+
+\Hypertarget{class_prompt_manager_a54233cb613687381448f0bb3ef2af652}\label{class_prompt_manager_a54233cb613687381448f0bb3ef2af652} 
+\index{PromptManager@{PromptManager}!selectedIndex@{selectedIndex}}
+\index{selectedIndex@{selectedIndex}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{selectedIndex}{selectedIndex}}
+{\footnotesize\ttfamily int Prompt\+Manager.\+selected\+Index = -\/1\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The index of the selected prompt. 
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_prompt_manager_a45c5587e1c48a364767f2e41ca48b4bf}\label{class_prompt_manager_a45c5587e1c48a364767f2e41ca48b4bf} 
+\index{PromptManager@{PromptManager}!CustomPromptList@{CustomPromptList}}
+\index{CustomPromptList@{CustomPromptList}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{CustomPromptList}{CustomPromptList}}
+{\footnotesize\ttfamily List$<$(string Title, string Content)$>$ Prompt\+Manager.\+Custom\+Prompt\+List\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The getter and setter for the custom prompt list. 
+
+\Hypertarget{class_prompt_manager_a698f3f535f0621826c437ba786178c5a}\label{class_prompt_manager_a698f3f535f0621826c437ba786178c5a} 
+\index{PromptManager@{PromptManager}!DisplayName@{DisplayName}}
+\index{DisplayName@{DisplayName}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{DisplayName}{DisplayName}}
+{\footnotesize\ttfamily override string Prompt\+Manager.\+Display\+Name\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+The display name of the prompt manager. 
+
+\Hypertarget{class_prompt_manager_ac268f910517e4f870d07df075745829d}\label{class_prompt_manager_ac268f910517e4f870d07df075745829d} 
+\index{PromptManager@{PromptManager}!HasInit@{HasInit}}
+\index{HasInit@{HasInit}!PromptManager@{PromptManager}}
+\doxysubsubsection{\texorpdfstring{HasInit}{HasInit}}
+{\footnotesize\ttfamily bool Prompt\+Manager.\+Has\+Init = false\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [private]}}
+
+
+
+The boolean that indicates if the prompt manager has been initialized. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_prompt_manager_8cs}{Prompt\+Manager.\+cs}}\end{DoxyCompactItemize}

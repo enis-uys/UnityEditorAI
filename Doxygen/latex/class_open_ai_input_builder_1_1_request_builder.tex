@@ -1,0 +1,195 @@
+\doxysection{Open\+Ai\+Input\+Builder.\+Request\+Builder Class Reference}
+\hypertarget{class_open_ai_input_builder_1_1_request_builder}{}\label{class_open_ai_input_builder_1_1_request_builder}\index{OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}}
+
+
+The message list builder class that contains the message list.  
+
+
+
+
+Collaboration diagram for Open\+Ai\+Input\+Builder.\+Request\+Builder\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{class_open_ai_input_builder_1_1_request_builder__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder}{Request\+Builder}} \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_a516c1adf91ccfb0b43d9047e4e12082e}{With\+Model}} (string \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_a65e5621ca1cc5a1b39ebeb8b7cb64c74}{model}})
+\begin{DoxyCompactList}\small\item\em The model of the request. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder}{Request\+Builder}} \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_a9b231ad812913cc4fcd1db054a177891}{With\+Temperature}} (float? \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_a91e44f77f5bb3c8219ba27a70ff6e82e}{temperature}})
+\begin{DoxyCompactList}\small\item\em The temperature of the request. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder}{Request\+Builder}} \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_a39e26271cf96d1f608dc1850f6ef82e1}{With\+Message\+List\+Builder}} (\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_a21112a631e35a15ba393d8f4a9f0114f}{message\+List\+Builder}})
+\begin{DoxyCompactList}\small\item\em The message list builder of the request. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder}{Request\+Builder}} \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_ab2d9e5f40aa39929bbb9037dcc8e891c}{With\+Prompt}} (string \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_af5ebfe64ce265286c512edacf9fdb18a}{prompt}})
+\begin{DoxyCompactList}\small\item\em The prompt of the request. Used for completion requests. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_ab36fedbe8c56f9399c14efd5ccd96c19}{Build}} ()
+\begin{DoxyCompactList}\small\item\em The function that builds the request. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_abcbf720136994a02f23c93bed3472d82}{Build\+Completion\+Request}} ()
+\begin{DoxyCompactList}\small\item\em The function that builds the completion request. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_a65e5621ca1cc5a1b39ebeb8b7cb64c74}{model}}
+\begin{DoxyCompactList}\small\item\em The model of the request. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_af5ebfe64ce265286c512edacf9fdb18a}{prompt}}
+\begin{DoxyCompactList}\small\item\em The prompt of the request. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_a21112a631e35a15ba393d8f4a9f0114f}{message\+List\+Builder}} = new()
+\begin{DoxyCompactList}\small\item\em The message list builder of the request. \end{DoxyCompactList}\item 
+float? \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder_a91e44f77f5bb3c8219ba27a70ff6e82e}{temperature}}
+\begin{DoxyCompactList}\small\item\em The temperature of the request. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The message list builder class that contains the message list. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_open_ai_input_builder_1_1_request_builder_ab36fedbe8c56f9399c14efd5ccd96c19}\label{class_open_ai_input_builder_1_1_request_builder_ab36fedbe8c56f9399c14efd5ccd96c19} 
+\index{OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}!Build@{Build}}
+\index{Build@{Build}!OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}}
+\doxysubsubsection{\texorpdfstring{Build()}{Build()}}
+{\footnotesize\ttfamily string Open\+Ai\+Input\+Builder.\+Request\+Builder.\+Build (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The function that builds the request. 
+
+\begin{DoxyReturn}{Returns}
+The request. 
+\end{DoxyReturn}
+\Hypertarget{class_open_ai_input_builder_1_1_request_builder_abcbf720136994a02f23c93bed3472d82}\label{class_open_ai_input_builder_1_1_request_builder_abcbf720136994a02f23c93bed3472d82} 
+\index{OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}!BuildCompletionRequest@{BuildCompletionRequest}}
+\index{BuildCompletionRequest@{BuildCompletionRequest}!OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}}
+\doxysubsubsection{\texorpdfstring{BuildCompletionRequest()}{BuildCompletionRequest()}}
+{\footnotesize\ttfamily string Open\+Ai\+Input\+Builder.\+Request\+Builder.\+Build\+Completion\+Request (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The function that builds the completion request. 
+
+\begin{DoxyReturn}{Returns}
+The request. 
+\end{DoxyReturn}
+\Hypertarget{class_open_ai_input_builder_1_1_request_builder_a39e26271cf96d1f608dc1850f6ef82e1}\label{class_open_ai_input_builder_1_1_request_builder_a39e26271cf96d1f608dc1850f6ef82e1} 
+\index{OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}!WithMessageListBuilder@{WithMessageListBuilder}}
+\index{WithMessageListBuilder@{WithMessageListBuilder}!OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}}
+\doxysubsubsection{\texorpdfstring{WithMessageListBuilder()}{WithMessageListBuilder()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder}{Request\+Builder}} Open\+Ai\+Input\+Builder.\+Request\+Builder.\+With\+Message\+List\+Builder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}}}]{message\+List\+Builder }\end{DoxyParamCaption})}
+
+
+
+The message list builder of the request. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message\+List\+Builder} & The message list builder of the request. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The request builder. 
+\end{DoxyReturn}
+\Hypertarget{class_open_ai_input_builder_1_1_request_builder_a516c1adf91ccfb0b43d9047e4e12082e}\label{class_open_ai_input_builder_1_1_request_builder_a516c1adf91ccfb0b43d9047e4e12082e} 
+\index{OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}!WithModel@{WithModel}}
+\index{WithModel@{WithModel}!OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}}
+\doxysubsubsection{\texorpdfstring{WithModel()}{WithModel()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder}{Request\+Builder}} Open\+Ai\+Input\+Builder.\+Request\+Builder.\+With\+Model (\begin{DoxyParamCaption}\item[{string}]{model }\end{DoxyParamCaption})}
+
+
+
+The model of the request. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model} & The model of the request. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The request builder. 
+\end{DoxyReturn}
+\Hypertarget{class_open_ai_input_builder_1_1_request_builder_ab2d9e5f40aa39929bbb9037dcc8e891c}\label{class_open_ai_input_builder_1_1_request_builder_ab2d9e5f40aa39929bbb9037dcc8e891c} 
+\index{OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}!WithPrompt@{WithPrompt}}
+\index{WithPrompt@{WithPrompt}!OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}}
+\doxysubsubsection{\texorpdfstring{WithPrompt()}{WithPrompt()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder}{Request\+Builder}} Open\+Ai\+Input\+Builder.\+Request\+Builder.\+With\+Prompt (\begin{DoxyParamCaption}\item[{string}]{prompt }\end{DoxyParamCaption})}
+
+
+
+The prompt of the request. Used for completion requests. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prompt} & The prompt of the request \begin{DoxyReturn}{Returns}
+The request builder. 
+\end{DoxyReturn}
+\\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_open_ai_input_builder_1_1_request_builder_a9b231ad812913cc4fcd1db054a177891}\label{class_open_ai_input_builder_1_1_request_builder_a9b231ad812913cc4fcd1db054a177891} 
+\index{OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}!WithTemperature@{WithTemperature}}
+\index{WithTemperature@{WithTemperature}!OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}}
+\doxysubsubsection{\texorpdfstring{WithTemperature()}{WithTemperature()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_open_ai_input_builder_1_1_request_builder}{Request\+Builder}} Open\+Ai\+Input\+Builder.\+Request\+Builder.\+With\+Temperature (\begin{DoxyParamCaption}\item[{float?}]{temperature }\end{DoxyParamCaption})}
+
+
+
+The temperature of the request. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em temperature} & The temperature of the request. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The request builder. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_open_ai_input_builder_1_1_request_builder_a21112a631e35a15ba393d8f4a9f0114f}\label{class_open_ai_input_builder_1_1_request_builder_a21112a631e35a15ba393d8f4a9f0114f} 
+\index{OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}!messageListBuilder@{messageListBuilder}}
+\index{messageListBuilder@{messageListBuilder}!OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}}
+\doxysubsubsection{\texorpdfstring{messageListBuilder}{messageListBuilder}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_message_list_builder}{Message\+List\+Builder}} Open\+Ai\+Input\+Builder.\+Request\+Builder.\+message\+List\+Builder = new()\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The message list builder of the request. 
+
+\Hypertarget{class_open_ai_input_builder_1_1_request_builder_a65e5621ca1cc5a1b39ebeb8b7cb64c74}\label{class_open_ai_input_builder_1_1_request_builder_a65e5621ca1cc5a1b39ebeb8b7cb64c74} 
+\index{OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}!model@{model}}
+\index{model@{model}!OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}}
+\doxysubsubsection{\texorpdfstring{model}{model}}
+{\footnotesize\ttfamily string Open\+Ai\+Input\+Builder.\+Request\+Builder.\+model\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The model of the request. 
+
+\Hypertarget{class_open_ai_input_builder_1_1_request_builder_af5ebfe64ce265286c512edacf9fdb18a}\label{class_open_ai_input_builder_1_1_request_builder_af5ebfe64ce265286c512edacf9fdb18a} 
+\index{OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}!prompt@{prompt}}
+\index{prompt@{prompt}!OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}}
+\doxysubsubsection{\texorpdfstring{prompt}{prompt}}
+{\footnotesize\ttfamily string Open\+Ai\+Input\+Builder.\+Request\+Builder.\+prompt\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The prompt of the request. 
+
+\Hypertarget{class_open_ai_input_builder_1_1_request_builder_a91e44f77f5bb3c8219ba27a70ff6e82e}\label{class_open_ai_input_builder_1_1_request_builder_a91e44f77f5bb3c8219ba27a70ff6e82e} 
+\index{OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}!temperature@{temperature}}
+\index{temperature@{temperature}!OpenAiInputBuilder.RequestBuilder@{OpenAiInputBuilder.RequestBuilder}}
+\doxysubsubsection{\texorpdfstring{temperature}{temperature}}
+{\footnotesize\ttfamily float? Open\+Ai\+Input\+Builder.\+Request\+Builder.\+temperature\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The temperature of the request. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Enis/\+Documents/\+Unity Projects/\+Unity\+Editor\+AI/\+Assets/\+Unity\+Editor\+AI/\+Scripts/\mbox{\hyperlink{_open_ai_input_builder_8cs}{Open\+Ai\+Input\+Builder.\+cs}}\end{DoxyCompactItemize}

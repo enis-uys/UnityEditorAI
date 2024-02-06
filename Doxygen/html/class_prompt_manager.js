@@ -1,0 +1,25 @@
+var class_prompt_manager =
+[
+    [ "LoadPromptListFromJson", "class_prompt_manager.html#a6a29f685b01c34fa7da1be1fd3d82988", null ],
+    [ "OnGUI", "class_prompt_manager.html#aef06e756477ffb929f3217a4bd78c1e1", null ],
+    [ "RenderCustomPromptList", "class_prompt_manager.html#a5705bb08a3fdedf4202f4879a2f5d578", null ],
+    [ "RenderDefaultPromptList", "class_prompt_manager.html#a1b925c8aeba1334888bc29b717a4690b", null ],
+    [ "RenderNewPromptField", "class_prompt_manager.html#ac00aafd80d49640f805dcdfa52f0d133", null ],
+    [ "RenderPromptLists", "class_prompt_manager.html#a451abe247a651862f4ffbc1655800aae", null ],
+    [ "ResetCurrentPromptTexts", "class_prompt_manager.html#a100ab3b1827742ccd306f0762921da06", null ],
+    [ "SavePromptListInJson", "class_prompt_manager.html#a2ca98575db713d066e7cc35457f71d78", null ],
+    [ "addField", "class_prompt_manager.html#a2d5f6d8f9093c2623ff68c016b7de6aa", null ],
+    [ "codeStyle", "class_prompt_manager.html#abdc9ed22db2c8b33242e9a05681682ee", null ],
+    [ "currentPromptTexts", "class_prompt_manager.html#a93c9d257f3270f7cd0c7e29fc6ebfb20", null ],
+    [ "customPromptList", "class_prompt_manager.html#a235b064314979f3acdf166e54108229f", null ],
+    [ "defaultCustomPrompts", "class_prompt_manager.html#abd358c8f969b6eea200a148b9c5fc30e", null ],
+    [ "defaultPromptList", "class_prompt_manager.html#a75f98d4de8b37755e1e4fa8082636112", null ],
+    [ "newPromptContent", "class_prompt_manager.html#a488a2a2f50adf6609e213915cfa8f0b1", null ],
+    [ "newPromptTitle", "class_prompt_manager.html#a11a086b04e423d34f57cb39e27bcea5a", null ],
+    [ "promptListFileName", "class_prompt_manager.html#a1a0b15038b82f748a542a595301d4910", null ],
+    [ "scrollPosition", "class_prompt_manager.html#aa2a01361b133efb44be90c230df2f608", null ],
+    [ "selectedIndex", "class_prompt_manager.html#a54233cb613687381448f0bb3ef2af652", null ],
+    [ "CustomPromptList", "class_prompt_manager.html#a45c5587e1c48a364767f2e41ca48b4bf", null ],
+    [ "DisplayName", "class_prompt_manager.html#a698f3f535f0621826c437ba786178c5a", null ],
+    [ "HasInit", "class_prompt_manager.html#ac268f910517e4f870d07df075745829d", null ]
+];

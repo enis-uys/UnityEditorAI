@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['generatecolors_0',['GenerateColors',['../class_color_script_demo.html#a59e30dfd5ffc44510759b43aa14be0da',1,'ColorScriptDemo']]],
+  ['generatedfilesfolderpath_1',['generatedfilesfolderpath',['../class_a_i_settings_serializable.html#a42298a6d0ad64d1083125218d735ec20',1,'AISettingsSerializable.generatedFilesFolderPath'],['../class_a_i_settings_file_manager.html#a0c6c9e13a82e55fc60f3cf90f7106169',1,'AISettingsFileManager.GeneratedFilesFolderPath'],['../class_a_i_settings.html#afeffc99527895bfac31f497f28cdc67ca78964883f484c321f72af8f38351cb50',1,'AISettings.GeneratedFilesFolderPath']]],
+  ['generatescript_2',['GenerateScript',['../class_a_i_script.html#af93a9f192f1b56e43627fa8f39185064',1,'AIScript']]],
+  ['getcolorarrayandsaveittofile_3',['GetColorArrayAndSaveItToFile',['../class_color_extruder.html#ac0b369202aac4cb3489ab8a81f8c4b72',1,'ColorExtruder']]],
+  ['getendpoint_4',['GetEndPoint',['../class_open_ai_api_manager.html#a91b2492834104b6cd28cbc9c9cf89f2d',1,'OpenAiApiManager']]],
+  ['getgeneratefilesfolderpathfromeditorprefs_5',['GetGenerateFilesFolderPathFromEditorPrefs',['../class_a_i_settings.html#a2063c35459c2fcf40e1b0e048234f764',1,'AISettings']]],
+  ['gethelpbox_6',['GetHelpBox',['../class_single_extension_application.html#a70cd16b4dcbc26cf2b270333c3d5a3ba',1,'SingleExtensionApplication']]],
+  ['getinstance_7',['getinstance',['../class_a_i_settings_file_manager.html#a332ab7f3e4bc0505ae71ecfff98a4cc2',1,'AISettingsFileManager.GetInstance()'],['../class_help_box.html#a37157adbf2d543c032e06cf87be2c63f',1,'HelpBox.GetInstance()']]],
+  ['getmessageat_8',['GetMessageAt',['../class_message_list_builder.html#afb1414626c409de20fad01d1cdd694b5',1,'MessageListBuilder']]],
+  ['getmessagecount_9',['GetMessageCount',['../class_message_list_builder.html#a9408d0a44398b1ca94549242d22377fb',1,'MessageListBuilder']]],
+  ['getuserfilesfolderpathfromeditorprefs_10',['GetUserFilesFolderPathFromEditorPrefs',['../class_a_i_settings.html#a42aef4f6dbf4bfde4adfeba60180726a',1,'AISettings']]],
+  ['getwordafterkeywordpattern_11',['GetWordAfterKeyWordPattern',['../class_script_util.html#a893fef5e4b581c63e747e6df70a61ec6',1,'ScriptUtil']]],
+  ['gpt35turbo_12',['Gpt35Turbo',['../class_a_i_settings_file_manager.html#a368483cd05538f236151bb614717dcf8',1,'AISettingsFileManager']]],
+  ['gpt35turbo16k_13',['Gpt35Turbo16k',['../class_a_i_settings_file_manager.html#ae210cc111bdb13259e7e91a0ee3b2d67',1,'AISettingsFileManager']]],
+  ['gpt35turboinstruct_14',['Gpt35TurboInstruct',['../class_a_i_settings_file_manager.html#a4dde4f22a3159e0003fdb707114f6153',1,'AISettingsFileManager']]],
+  ['gpt4_15',['Gpt4',['../class_a_i_settings_file_manager.html#a37bbeca396974076af60fe5069159c2a',1,'AISettingsFileManager']]],
+  ['gpt4turbo_16',['Gpt4Turbo',['../class_a_i_settings_file_manager.html#af562a342af6f8c713c89f0af3ff20a07',1,'AISettingsFileManager']]],
+  ['gptcompletionrequest_17',['GptCompletionRequest',['../class_gpt_completion_request.html',1,'']]],
+  ['gptcompletionresponse_18',['GptCompletionResponse',['../struct_gpt_completion_response.html',1,'']]],
+  ['gptdefault_19',['GptDefault',['../class_a_i_settings_file_manager.html#ac4bce3849e53608c77a14556a785f89c',1,'AISettingsFileManager']]],
+  ['gptmodels_20',['gptModels',['../class_a_i_settings_file_manager.html#aff420eac26d41ff13ff451845ed1460a',1,'AISettingsFileManager']]],
+  ['gptmodelsarray_21',['gptModelsArray',['../class_a_i_settings_file_manager.html#ab7f42b5f2aab418395bb1b17f7e5fcaa',1,'AISettingsFileManager']]],
+  ['gptrequest_22',['GptRequest',['../class_gpt_request.html',1,'']]],
+  ['gptresponse_23',['GptResponse',['../class_gpt_response.html',1,'']]]
+];

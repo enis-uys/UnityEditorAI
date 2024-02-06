@@ -1,0 +1,7 @@
+<map id="AIObjectGenerator" name="AIObjectGenerator">
+<area shape="rect" id="Node000001" title="Single application for the AI extension. It is used to generate new GameObjects inside a Unity Scene." alt="" coords="5,645,227,1141"/>
+<area shape="rect" id="Node000002" href="$class_single_extension_application.html" title="The abstract class for a single application in the extension." alt="" coords="16,123,216,597"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,612,119,646,113,646,113,612"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="61,5,171,75"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="119,89,119,123,113,123,113,89"/>
+</map>

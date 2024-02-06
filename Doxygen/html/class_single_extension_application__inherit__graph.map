@@ -1,0 +1,17 @@
+<map id="SingleExtensionApplication" name="SingleExtensionApplication">
+<area shape="rect" id="Node000001" title="The abstract class for a single application in the extension." alt="" coords="593,123,793,597"/>
+<area shape="rect" id="Node000003" href="$class_a_i_assistant.html" title="Single application for the AI extension. It is used to chat with the AI model." alt="" coords="5,659,213,1128"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="581,410,496,451,402,505,310,570,267,607,227,647,215,662,211,658,223,644,263,603,306,566,399,500,493,446,579,405"/>
+<area shape="rect" id="Node000004" href="$class_a_i_object_generator.html" title="Single application for the AI extension. It is used to generate new GameObjects inside a Unity Scene." alt="" coords="237,645,459,1141"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="586,491,528,567,473,647,461,667,456,664,468,644,523,564,582,488"/>
+<area shape="rect" id="Node000005" href="$class_a_i_script.html" title="Single application for the AI extension. It is used to create new scripts or update existing ones." alt="" coords="483,648,677,1139"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="642,612,635,649,629,647,637,611"/>
+<area shape="rect" id="Node000006" href="$class_a_i_settings.html" title="The AI Settings application." alt="" coords="701,651,913,1136"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="749,611,758,650,753,652,744,612"/>
+<area shape="rect" id="Node000007" href="$class_color_extruder.html" title="The color extruder, that extracts the colors of an image and saves them as a color array object." alt="" coords="937,648,1137,1139"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="805,480,869,559,928,644,940,664,935,667,923,647,864,562,801,483"/>
+<area shape="rect" id="Node000008" href="$class_prompt_manager.html" title="The prompt manager is used to manage custom prompts and display pre&#45;defined prompts." alt="" coords="1161,645,1343,1141"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="808,405,891,447,982,500,1072,566,1114,603,1151,644,1164,659,1159,662,1147,647,1110,607,1069,570,980,505,889,451,805,410"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="639,5,748,75"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="696,89,696,123,691,123,691,89"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="OpenAiInputBuilder.RequestBuilder" name="OpenAiInputBuilder.RequestBuilder">
+<area shape="rect" id="Node000001" title="The message list builder class that contains the message list." alt="" coords="5,331,181,565"/>
+<area shape="rect" id="Node000002" href="$class_message_list_builder.html" title="The message list builder class that is used to build a list of AI api messages to be sent to the AI a..." alt="" coords="21,5,165,267"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,266,96,314,91,314,91,266"/>
+</map>
