@@ -2,7 +2,10 @@
  
 # Unity AI Assistant – Natural Language Automation for Unity Development
 
-![Hero Image Placeholder](docs/images/hero.png)
+![Scene generated with the prompt "Generate the floor and the walls of a light red room
+with a width of 40. Place 50 purple spheres and 50 green cubes inside, that have a rigidbody
+attached to them"](docs/images/prompt-scene.png)
+
 
 ## Overview
 
