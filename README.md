@@ -64,16 +64,6 @@ The tool streamlines repetitive development tasks and supports Unity developers 
 
 ---
 
-## Project Structure
-Assets/
-│
-├── Editor/
-│ ├── AI-Assistant/ # Main tool modules
-│ ├── OpenAI-Integration/ # API handling & messaging
-│ ├── Utilities/ # Prompt management, file handling, etc.
-│ └── GUI/ # Editor UI layout and visuals
-└── Resources/
-└── DefaultPrompts.json
 
 
 ## Usage
